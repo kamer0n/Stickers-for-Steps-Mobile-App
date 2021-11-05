@@ -1,3 +1,4 @@
+import 'package:darkmodetoggle/screens/friend_requests.dart';
 import 'package:darkmodetoggle/screens/friends.dart';
 import 'package:darkmodetoggle/screens/stickers_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,14 +15,14 @@ class _HomeState extends State<Home> {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return Center(child: Text('home'));
+        return const Center(child: Text('home'));
       case 1:
         return StickerScreen();
       case 2:
         return FriendScreen();
 
       default:
-        return Text("Error");
+        return const Text("Error");
     }
   }
 
@@ -35,8 +36,7 @@ class _HomeState extends State<Home> {
           leading: InkWell(
             child: const Icon(Icons.compare_arrows),
             onTap: () async {
-              SharedPreferences preferences =
-                  await SharedPreferences.getInstance();
+              SharedPreferences preferences = await SharedPreferences.getInstance();
               preferences.clear();
               Navigator.popUntil(context, (route) => false);
               Navigator.pushNamed(context, "/signin");
@@ -44,12 +44,22 @@ class _HomeState extends State<Home> {
           ),
           title: Text(
             "Stickers for Steps",
-            style: GoogleFonts.roboto(
-                textStyle: const TextStyle(fontSize: 18, letterSpacing: 1)),
+            style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 18, letterSpacing: 1)),
           ),
           backgroundColor: Colors.black87,
           centerTitle: true,
-          actions: const <Widget>[],
+          actions: _currentIndex != 2
+              ? null
+              : <Widget>[
+                  Padding(
+                      padding: const EdgeInsets.only(right: 20.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          displayFriends(context, key: UniqueKey());
+                        },
+                        child: const Icon(Icons.notifications),
+                      )),
+                ],
         ),
         bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
@@ -66,10 +76,8 @@ class _HomeState extends State<Home> {
             },
             items: const [
               BottomNavigationBarItem(label: ('Home'), icon: Icon(Icons.home)),
-              BottomNavigationBarItem(
-                  label: ('Stickers'), icon: Icon(Icons.sticky_note_2)),
-              BottomNavigationBarItem(
-                  label: ('Friends'), icon: Icon(Icons.person)),
+              BottomNavigationBarItem(label: ('Stickers'), icon: Icon(Icons.sticky_note_2)),
+              BottomNavigationBarItem(label: ('Friends'), icon: Icon(Icons.person)),
             ]),
         body: _getDrawerItemWidget(_currentIndex));
   }

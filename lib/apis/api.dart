@@ -6,3 +6,6 @@ const String loginurl = "$root/api-token-auth/";
 const String stickerurl = "$root/api/usersticks/";
 const String friendsurl = "$root/api/friends/";
 const String addfriendurl = "$root/api/friend/add/";
+const String friendrequestul = "$root/api/friend/requests/";
+const String friendaccept = "$root/api/friend/accept/";
+const String frienddecline = "$root/api/friend/reject/";

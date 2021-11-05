@@ -10,13 +10,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<List<Friend>> fetchFriends(http.Client client) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  print(defaultToken);
-  /* final response = await client.get(Uri.parse(stickerurl), headers: {
-    "authorization": "TOKEN " + (preferences.getString('token') ?? defaultToken)
-  }); */
-  final response = await client.get(Uri.parse(friendsurl), headers: {"authorization": "TOKEN " + (defaultToken)});
+  final response = await client.get(Uri.parse(friendsurl),
+      headers: {"authorization": "TOKEN " + (preferences.getString('token') ?? defaultToken)});
+  //final response = await client.get(Uri.parse(friendsurl), headers: {"authorization": "TOKEN " + (defaultToken)});
 
-  print(preferences.getString('token'));
   // Use the compute function to run parsePhotos in a separate isolate.
   return compute(parseFriend, response.body);
 }

@@ -42,10 +42,7 @@ class _SignInState extends State<SignIn> {
                     Text(
                       "Stickers for Steps",
                       style: GoogleFonts.roboto(
-                          textStyle: const TextStyle(
-                              fontSize: 27,
-                              color: Colors.white,
-                              letterSpacing: 1)),
+                          textStyle: const TextStyle(fontSize: 27, color: Colors.white, letterSpacing: 1)),
                     ),
                     const SizedBox(
                       height: 5,
@@ -56,10 +53,7 @@ class _SignInState extends State<SignIn> {
                         "------------",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.roboto(
-                          textStyle: const TextStyle(
-                              color: Colors.white54,
-                              letterSpacing: 0.6,
-                              fontSize: 11),
+                          textStyle: const TextStyle(color: Colors.white54, letterSpacing: 0.6, fontSize: 11),
                         ),
                       ),
                     ),
@@ -102,8 +96,7 @@ class _SignInState extends State<SignIn> {
                     Form(
                       key: _formKey,
                       child: Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 45),
+                        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 45),
                         child: Column(
                           children: <Widget>[
                             TextFormField(
@@ -112,12 +105,9 @@ class _SignInState extends State<SignIn> {
                               ),
                               controller: _emailController,
                               decoration: const InputDecoration(
-                                enabledBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.white)),
+                                enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
                                 hintText: "Email",
-                                hintStyle: TextStyle(
-                                    color: Colors.white70, fontSize: 15),
+                                hintStyle: TextStyle(color: Colors.white70, fontSize: 15),
                               ),
                               onSaved: (val) {
                                 email = val!;
@@ -133,12 +123,9 @@ class _SignInState extends State<SignIn> {
                               obscureText: true,
                               controller: _passwordController,
                               decoration: const InputDecoration(
-                                enabledBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.white)),
+                                enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
                                 hintText: "Password",
-                                hintStyle: TextStyle(
-                                    color: Colors.white70, fontSize: 15),
+                                hintStyle: TextStyle(color: Colors.white70, fontSize: 15),
                               ),
                               onSaved: (val) {
                                 email = val!;
@@ -154,16 +141,12 @@ class _SignInState extends State<SignIn> {
                                     if (isLoading) {
                                       return;
                                     }
-                                    if (_emailController.text.isEmpty ||
-                                        _passwordController.text.isEmpty) {
-                                      scaffoldMessenger.showSnackBar(
-                                          const SnackBar(
-                                              content: Text(
-                                                  "Please Fill all fileds")));
+                                    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+                                      scaffoldMessenger
+                                          .showSnackBar(const SnackBar(content: Text("Please Fill all fileds")));
                                       return;
                                     }
-                                    login(_emailController.text,
-                                        _passwordController.text);
+                                    login(_emailController.text, _passwordController.text);
                                     setState(() {
                                       isLoading = true;
                                     });
@@ -172,8 +155,7 @@ class _SignInState extends State<SignIn> {
                                   child: Container(
                                     alignment: Alignment.center,
                                     width: double.infinity,
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 0),
+                                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
                                     height: 50,
                                     decoration: BoxDecoration(
                                       border: Border.all(color: Colors.white),
@@ -183,10 +165,8 @@ class _SignInState extends State<SignIn> {
                                       "SUBMIT",
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.roboto(
-                                          textStyle: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              letterSpacing: 1)),
+                                          textStyle:
+                                              const TextStyle(color: Colors.white, fontSize: 16, letterSpacing: 1)),
                                     ),
                                   ),
                                 ),
@@ -249,10 +229,7 @@ class _SignInState extends State<SignIn> {
     Map data = {'username': username, 'password': password};
     print(data.toString());
     final response = await http.post(Uri.parse(loginurl),
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
+        headers: {"Accept": "application/json", "Content-Type": "application/x-www-form-urlencoded"},
         body: data,
         encoding: Encoding.getByName("utf-8"));
     setState(() {
@@ -265,25 +242,23 @@ class _SignInState extends State<SignIn> {
       if (!resposne.containsKey('error')) {
         String token = resposne['token'];
         print(" Token $token");
-        savePref(1, 1, token);
+        savePref(1, 1, token, username);
         Navigator.pushReplacementNamed(context, "/home");
       } else {
         print(" ${resposne['message']}");
       }
-      scaffoldMessenger
-          .showSnackBar(SnackBar(content: Text("${resposne} yoyo")));
+      scaffoldMessenger.showSnackBar(SnackBar(content: Text("${resposne} yoyo")));
     } else {
-      scaffoldMessenger
-          .showSnackBar(const SnackBar(content: Text("Please try again!")));
+      scaffoldMessenger.showSnackBar(const SnackBar(content: Text("Please try again!")));
     }
   }
 
-  savePref(int value, int id, String token) async {
+  savePref(int value, int id, String token, String username) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     preferences.setString("id", id.toString());
     preferences.setString("token", token);
-    //preferences.setString("email", email);
+    preferences.setString("username", username);
     preferences.setInt("value", value);
   }
 }

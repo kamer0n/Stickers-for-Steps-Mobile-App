@@ -10,12 +10,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<List<Collection>> fetchSticker(http.Client client) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
+  print('default token');
   print(defaultToken);
-  /* final response = await client.get(Uri.parse(stickerurl), headers: {
-    "authorization": "TOKEN " + (preferences.getString('token') ?? defaultToken)
-  }); */
+  print('\n');
   final response = await client.get(Uri.parse(stickerurl),
-      headers: {"authorization": "TOKEN " + (defaultToken)});
+      headers: {"authorization": "TOKEN " + (preferences.getString('token') ?? defaultToken)});
+  //final response = await client.get(Uri.parse(stickerurl), headers: {"authorization": "TOKEN " + (defaultToken)});
 
   print(preferences.getString('token'));
   // Use the compute function to run parsePhotos in a separate isolate.
@@ -27,9 +27,7 @@ List<Sticker> parseSticker(String responseBody) {
   print('hyuckle');
   //final parsed = jsonDecode(responseBody[0]).cast<Map<String, dynamic>>();
   final parsed = jsonDecode(responseBody);
-  return parsed[0]['stickers']
-      .map<Sticker>((json) => Sticker.fromJson(json))
-      .toList();
+  return parsed[0]['stickers'].map<Sticker>((json) => Sticker.fromJson(json)).toList();
 }
 
 class Sticker {
