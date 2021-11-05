@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:darkmodetoggle/screens/home.dart';
+import 'package:darkmodetoggle/screens/stickers_screen.dart';
 import 'package:darkmodetoggle/screens/signin.dart';
 import 'package:darkmodetoggle/screens/signup.dart';
+import 'package:darkmodetoggle/screens/home.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -36,6 +37,7 @@ class _MyAppState extends State<MyApp> {
       routes: <String, WidgetBuilder>{
         '/signin': (BuildContext context) => SignIn(),
         '/signup': (BuildContext context) => SignUp(),
+        '/stickerscreen': (BuildContext context) => StickerScreen(),
         '/home': (BuildContext context) => Home(),
       },
     );

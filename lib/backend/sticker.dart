@@ -18,11 +18,6 @@ Future<List<Collection>> fetchSticker(http.Client client) async {
       headers: {"authorization": "TOKEN " + (defaultToken)});
 
   print(preferences.getString('token'));
-  //print(response.body);
-  //print(jsonDecode(response.body)
-  // .map<Collection>((json) => Collection.fromJson(json)));
-  var test = jsonDecode(response.body)
-      .map<Collection>((json) => Collection.fromJson(json));
   // Use the compute function to run parsePhotos in a separate isolate.
   return compute(parseCollection, response.body);
 }

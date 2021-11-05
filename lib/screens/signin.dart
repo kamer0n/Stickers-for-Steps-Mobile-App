@@ -167,7 +167,7 @@ class _SignInState extends State<SignIn> {
                                     setState(() {
                                       isLoading = true;
                                     });
-                                    //Navigator.pushReplacementNamed(context, "/home");
+                                    //Navigator.pushReplacementNamed(context, "/stickerscreen");
                                   },
                                   child: Container(
                                     alignment: Alignment.center,
