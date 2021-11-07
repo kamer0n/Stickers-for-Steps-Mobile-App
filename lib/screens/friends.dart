@@ -5,15 +5,23 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class FriendScreen extends StatefulWidget {
+  const FriendScreen({Key? key}) : super(key: key);
+
   @override
   _FriendScreenState createState() => _FriendScreenState();
 }
 
 class _FriendScreenState extends State<FriendScreen> {
   bool isLoading = false;
+  bool rebuild = false;
 
   @override
   Widget build(BuildContext context) {
+    if (rebuild) {
+      setState(() {
+        rebuild = false;
+      });
+    }
     return Scaffold(
         backgroundColor: Colors.black54,
         body: SingleChildScrollView(
@@ -29,7 +37,10 @@ class _FriendScreenState extends State<FriendScreen> {
                 );
               } else if (snapshot.hasData) {
                 var list = FriendsList(Friends: snapshot.data!);
-                return list;
+                return Container(
+                    child: Column(
+                  children: [list, Text('lol')],
+                ));
               } else {
                 return const Center(
                   child: CircularProgressIndicator(),

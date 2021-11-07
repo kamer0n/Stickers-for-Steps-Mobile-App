@@ -1,3 +1,4 @@
+import 'package:darkmodetoggle/screens/friends.dart';
 import 'package:flutter/material.dart';
 
 import 'package:darkmodetoggle/screens/stickers_screen.dart';
@@ -30,7 +31,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Stack(
-        children: [(_loginStatus == 1) ? Home() : SignIn()],
+        children: [(_loginStatus == 1) ? Home('Home') : SignIn()],
       ),
       theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
@@ -38,7 +39,8 @@ class _MyAppState extends State<MyApp> {
         '/signin': (BuildContext context) => SignIn(),
         '/signup': (BuildContext context) => SignUp(),
         '/stickerscreen': (BuildContext context) => StickerScreen(),
-        '/home': (BuildContext context) => Home(),
+        '/friendsscreen': (BuildContext context) => Home('Friends'),
+        '/home': (BuildContext context) => Home('Home'),
       },
     );
   }

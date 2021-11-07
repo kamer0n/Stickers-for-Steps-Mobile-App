@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 
+import 'package:darkmodetoggle/screens/home.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -24,13 +25,16 @@ List<Friend> parseFriend(String responseBody) {
 
 class Friend {
   final String name;
+  final String id;
   Friend({
     required this.name,
+    required this.id,
   });
 
   factory Friend.fromJson(Map<String, dynamic> json) {
     return Friend(
       name: json['user'],
+      id: json['id'].toString(),
     );
   }
 
@@ -71,7 +75,18 @@ class FriendsList extends StatelessWidget {
                                 backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
                                 minimumSize: MaterialStateProperty.all<Size>(Size(10, 20))),
                             onPressed: () {
-                              deletefriend(Friends[index].name);
+                              deletefriend(Friends[index].id).then((value) {
+                                Navigator.pop(context);
+                                Navigator.push(
+                                  context,
+                                  PageRouteBuilder(
+                                    pageBuilder: (c, a1, a2) => Home('Friends'),
+                                    transitionsBuilder: (c, anim, a2, child) =>
+                                        FadeTransition(opacity: anim, child: child),
+                                    transitionDuration: Duration(milliseconds: 0),
+                                  ),
+                                );
+                              });
                             },
                             child: Text('Delete')),
                       ]),
@@ -83,9 +98,9 @@ class FriendsList extends StatelessWidget {
   }
 }
 
-deletefriend(username) async {
+deletefriend(id) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  Uri uri = Uri.parse(frienddelete + username.toString() + '/');
+  Uri uri = Uri.parse(frienddelete + id.toString() + '/');
 
   final response = await http.post(uri,
       headers: {
@@ -94,5 +109,7 @@ deletefriend(username) async {
         "authorization": ("TOKEN " + (preferences.getString('token') ?? defaultToken))
       },
       encoding: Encoding.getByName("utf-8"));
-  if (response.statusCode == 200) {}
+  if (response.statusCode != 200) {
+    print(response.body);
+  }
 }

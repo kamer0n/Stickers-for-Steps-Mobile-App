@@ -27,15 +27,9 @@ Future<void> displayTextInputDialog(BuildContext context, {UniqueKey? key}) asyn
             child: Text('OK'),
             onPressed: () async {
               SharedPreferences preferences = await SharedPreferences.getInstance();
-              print(preferences.getString('username'));
-              print(_textFieldController.text);
-              print(preferences.getString('token'));
-              print(addfriendurl);
               String url = (addfriendurl + _textFieldController.text + '/');
-              print(url);
               var jeff = await http.post(Uri.parse(url),
                   headers: {"authorization": "TOKEN " + (preferences.getString('token') ?? defaultToken)});
-              print(jeff.body);
               Navigator.pop(context);
             },
           ),
