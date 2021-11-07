@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_dartobservatory._tcp</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -9,7 +13,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
+	<string>1.0</string>
 	<key>CFBundleName</key>
 	<string>darkmodetoggle</string>
 	<key>CFBundlePackageType</key>
@@ -41,16 +45,22 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allow access your photo library</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow access your phone&apos;s camera</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow the app to record using your phone&apos;s microphone</string>
 	<key>CFBundleURLTypes</key>
-  <array>
-    <dict>
-      <key>CFBundleTypeRole</key>
-      <string>Editor</string>
-      <key>CFBundleURLSchemes</key>
-      <array>
-        <string>io.supabase.flutterquickstart</string>
-      </array>
-    </dict>
-  </array>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>io.supabase.flutterquickstart</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>

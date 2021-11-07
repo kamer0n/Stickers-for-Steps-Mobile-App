@@ -41,8 +41,8 @@ class FriendRequest {
   }
 }
 
-class friendRequestList extends StatelessWidget {
-  const friendRequestList({Key? key, required this.friendRequests}) : super(key: key);
+class FriendRequestList extends StatelessWidget {
+  const FriendRequestList({Key? key, required this.friendRequests}) : super(key: key);
 
   final List<FriendRequest> friendRequests;
   @override
@@ -84,6 +84,8 @@ class friendRequestList extends StatelessWidget {
                         child: Icon(Icons.check),
                         onPressed: () {
                           requestresponse(friendRequests[index].id, 'accept');
+                          Navigator.pop(context);
+                          displayFriends(context, key: UniqueKey());
                         },
                       ),
                       ElevatedButton(
@@ -93,6 +95,8 @@ class friendRequestList extends StatelessWidget {
                         child: Icon(Icons.close),
                         onPressed: () {
                           requestresponse(friendRequests[index].id, 'decline');
+                          Navigator.pop(context);
+                          displayFriends(context, key: UniqueKey());
                         },
                       ),
                     ]),

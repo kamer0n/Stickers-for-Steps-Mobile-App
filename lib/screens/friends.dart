@@ -28,7 +28,8 @@ class _FriendScreenState extends State<FriendScreen> {
                   child: Text('An error has occurred!'),
                 );
               } else if (snapshot.hasData) {
-                return FriendsList(Friends: snapshot.data!);
+                var list = FriendsList(Friends: snapshot.data!);
+                return list;
               } else {
                 return const Center(
                   child: CircularProgressIndicator(),

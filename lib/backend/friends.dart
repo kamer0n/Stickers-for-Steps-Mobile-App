@@ -10,10 +10,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<List<Friend>> fetchFriends(http.Client client) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  final response = await client.get(Uri.parse(friendsurl),
-      headers: {"authorization": "TOKEN " + (preferences.getString('token') ?? defaultToken)});
+  final token = preferences.getString('token') ?? defaultToken;
+  final response = await client.get(Uri.parse(friendsurl), headers: {"authorization": "TOKEN " + (token)});
   //final response = await client.get(Uri.parse(friendsurl), headers: {"authorization": "TOKEN " + (defaultToken)});
-
   // Use the compute function to run parsePhotos in a separate isolate.
   return compute(parseFriend, response.body);
 }
@@ -57,18 +56,43 @@ class FriendsList extends StatelessWidget {
         itemCount: Friends.length,
         itemBuilder: (context, index) {
           return Center(
-              child: Card(
-            child: InkWell(
-                splashColor: Colors.blue.withAlpha(30),
-                onTap: () {
-                  print(Friends);
-                },
-                child: SizedBox(
-                  child: Center(child: Text(Friends[index].name)),
-                  height: 100,
-                  width: 300,
-                )),
-          ));
+            child: Card(
+                child: InkWell(
+                    splashColor: Colors.blue.withAlpha(30),
+                    onTap: () {
+                      print("ya boyyyy");
+                      print(Friends);
+                    },
+                    child: SizedBox(
+                      child: Column(children: [
+                        Center(child: Text(Friends[index].name)),
+                        ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                                minimumSize: MaterialStateProperty.all<Size>(Size(10, 20))),
+                            onPressed: () {
+                              deletefriend(Friends[index].name);
+                            },
+                            child: Text('Delete')),
+                      ]),
+                      height: 100,
+                      width: 300,
+                    ))),
+          );
         });
   }
+}
+
+deletefriend(username) async {
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  Uri uri = Uri.parse(frienddelete + username.toString() + '/');
+
+  final response = await http.post(uri,
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "authorization": ("TOKEN " + (preferences.getString('token') ?? defaultToken))
+      },
+      encoding: Encoding.getByName("utf-8"));
+  if (response.statusCode == 200) {}
 }

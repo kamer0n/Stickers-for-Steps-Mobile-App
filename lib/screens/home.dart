@@ -55,7 +55,11 @@ class _HomeState extends State<Home> {
                       padding: const EdgeInsets.only(right: 20.0),
                       child: GestureDetector(
                         onTap: () {
-                          displayFriends(context, key: UniqueKey());
+                          displayFriends(context, key: UniqueKey()).then((value) {
+                            setState(() {
+                              _currentIndex = 2;
+                            });
+                          });
                         },
                         child: const Icon(Icons.notifications),
                       )),

@@ -32,7 +32,7 @@ Future<void> displayFriends(BuildContext context, {UniqueKey? key}) async {
                     child: Text('An error has occurred!'),
                   );
                 } else if (snapshot.hasData) {
-                  return friendRequestList(friendRequests: snapshot.data!);
+                  return FriendRequestList(friendRequests: snapshot.data!);
                 } else {
                   return const Center(
                     child: CircularProgressIndicator(),

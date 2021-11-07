@@ -9,3 +9,4 @@ const String addfriendurl = "$root/api/friend/add/";
 const String friendrequestul = "$root/api/friend/requests/";
 const String friendaccept = "$root/api/friend/accept/";
 const String frienddecline = "$root/api/friend/reject/";
+const String frienddelete = "$root/api/friend/delete/";
