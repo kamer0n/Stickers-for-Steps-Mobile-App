@@ -21,8 +21,7 @@ class _SignUpState extends State<SignUp> {
   bool isLoading = false;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   late ScaffoldMessengerState scaffoldMessenger;
-  var reg = RegExp(
-      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  var reg = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -50,28 +49,12 @@ class _SignUpState extends State<SignUp> {
                       height: 13,
                     ),
                     Text(
-                      "Learn With Us",
+                      "Stickers for Steps",
                       style: GoogleFonts.roboto(
-                          textStyle: const TextStyle(
-                              fontSize: 27,
-                              color: Colors.white,
-                              letterSpacing: 1)),
+                          textStyle: const TextStyle(fontSize: 27, color: Colors.white, letterSpacing: 1)),
                     ),
                     const SizedBox(
                       height: 5,
-                    ),
-                    SizedBox(
-                      width: 180,
-                      child: Text(
-                        "RRTutors, Hyderabad",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.roboto(
-                          textStyle: const TextStyle(
-                              color: Colors.white54,
-                              letterSpacing: 0.6,
-                              fontSize: 11),
-                        ),
-                      ),
                     ),
                     const SizedBox(
                       height: 20,
@@ -94,7 +77,7 @@ class _SignUpState extends State<SignUp> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          "Learn new Technologies 😋",
+                          "Have fun getting your steps!",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.roboto(
                             textStyle: const TextStyle(
@@ -112,8 +95,7 @@ class _SignUpState extends State<SignUp> {
                     Form(
                       key: _formKey,
                       child: Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 45),
+                        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 45),
                         child: Column(
                           children: <Widget>[
                             TextFormField(
@@ -122,12 +104,9 @@ class _SignUpState extends State<SignUp> {
                               ),
                               controller: _nameController,
                               decoration: const InputDecoration(
-                                enabledBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.white)),
-                                hintText: "Name",
-                                hintStyle: TextStyle(
-                                    color: Colors.white70, fontSize: 15),
+                                enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+                                hintText: "Username",
+                                hintStyle: TextStyle(color: Colors.white70, fontSize: 15),
                               ),
                               onSaved: (val) {
                                 name = val!;
@@ -142,12 +121,9 @@ class _SignUpState extends State<SignUp> {
                               ),
                               controller: _emailController,
                               decoration: const InputDecoration(
-                                enabledBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.white)),
+                                enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
                                 hintText: "Email",
-                                hintStyle: TextStyle(
-                                    color: Colors.white70, fontSize: 15),
+                                hintStyle: TextStyle(color: Colors.white70, fontSize: 15),
                               ),
                               onSaved: (val) {
                                 email = val!;
@@ -163,12 +139,9 @@ class _SignUpState extends State<SignUp> {
                               obscureText: true,
                               controller: _passwordController,
                               decoration: const InputDecoration(
-                                enabledBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.white)),
+                                enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
                                 hintText: "Password",
-                                hintStyle: TextStyle(
-                                    color: Colors.white70, fontSize: 15),
+                                hintStyle: TextStyle(color: Colors.white70, fontSize: 15),
                               ),
                               onSaved: (val) {
                                 password = val!;
@@ -182,8 +155,7 @@ class _SignUpState extends State<SignUp> {
                                 Container(
                                   alignment: Alignment.center,
                                   width: double.infinity,
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 0),
+                                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
                                   height: 50,
                                   decoration: BoxDecoration(
                                     border: Border.all(color: Colors.white),
@@ -195,41 +167,28 @@ class _SignUpState extends State<SignUp> {
                                         return;
                                       }
                                       if (_nameController.text.isEmpty) {
-                                        scaffoldMessenger.showSnackBar(
-                                            const SnackBar(
-                                                content:
-                                                    Text("Please Enter Name")));
+                                        scaffoldMessenger
+                                            .showSnackBar(const SnackBar(content: Text("Please Enter Name")));
                                         return;
                                       }
-                                      if (!reg
-                                          .hasMatch(_emailController.text)) {
-                                        scaffoldMessenger.showSnackBar(
-                                            const SnackBar(
-                                                content:
-                                                    Text("Enter Valid Email")));
+                                      if (!reg.hasMatch(_emailController.text)) {
+                                        scaffoldMessenger
+                                            .showSnackBar(const SnackBar(content: Text("Enter Valid Email")));
                                         return;
                                       }
-                                      if (_passwordController.text.isEmpty ||
-                                          _passwordController.text.length < 6) {
+                                      if (_passwordController.text.isEmpty || _passwordController.text.length < 6) {
                                         scaffoldMessenger.showSnackBar(
-                                            const SnackBar(
-                                                content: Text(
-                                                    "Password should be min 6 characters")));
+                                            const SnackBar(content: Text("Password should be min 6 characters")));
                                         return;
                                       }
-                                      signup(
-                                          _nameController.text,
-                                          _emailController.text,
-                                          _passwordController.text);
+                                      signup(_nameController.text, _emailController.text, _passwordController.text);
                                     },
                                     child: Text(
                                       "CREATE ACCOUNT",
                                       textAlign: TextAlign.center,
                                       style: GoogleFonts.roboto(
-                                          textStyle: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              letterSpacing: 1)),
+                                          textStyle:
+                                              const TextStyle(color: Colors.white, fontSize: 16, letterSpacing: 1)),
                                     ),
                                   ),
                                 ),
@@ -284,17 +243,13 @@ class _SignUpState extends State<SignUp> {
     });
     print("Calling");
 
-    Map<String, String> data = {
-      'email': email,
-      'password': password,
-      'username': name
-    };
+    Map<String, String> data = {'email': email, 'password': password, 'username': name};
     print(data);
     final response = await http.post(Uri.parse(registration),
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json",
-          "Authorization": "TOKEN d086ee50d219f3c1f93a32b462d7bb8da1c7e0d6"
+          "Authorization": "TOKEN 99f0855824c3cc4b97e90bfe63027ec88a7439dd"
         },
         body: jsonEncode(data),
         encoding: Encoding.getByName("utf-8"));
@@ -313,13 +268,11 @@ class _SignUpState extends State<SignUp> {
       } else {
         print(" ${resposne['message']}");
       }
-      scaffoldMessenger.showSnackBar(
-          const SnackBar(content: Text("Account created, please log in!")));
+      scaffoldMessenger.showSnackBar(const SnackBar(content: Text("Account created, please log in!")));
     } else {
       print(response.statusCode);
       Navigator.pushNamed(context, "/signup");
-      scaffoldMessenger
-          .showSnackBar(const SnackBar(content: Text("Please Try again")));
+      scaffoldMessenger.showSnackBar(const SnackBar(content: Text("Please Try again")));
     }
   }
 

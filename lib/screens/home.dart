@@ -16,8 +16,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
   _getDrawerItemWidget(int pos) {
-    print('pos');
-    print(pos);
     switch (pos) {
       case 0:
         return const Center(child: Text('home'));
@@ -36,14 +34,13 @@ class _HomeState extends State<Home> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     //int _currentIndex = 0;
-    print(widget.screen);
     if (widget.screen == 'Home') {
       widget.screen = '';
       _currentIndex = 0;
     } else if (widget.screen == 'Friends') {
+      widget.screen = '';
       _currentIndex = 2;
     }
-    print(_currentIndex);
     return Scaffold(
         appBar: AppBar(
           leading: InkWell(
@@ -88,10 +85,7 @@ class _HomeState extends State<Home> {
             unselectedLabelStyle: textTheme.caption,
             onTap: (value) {
               setState(() {
-                print('setState');
-                print(value);
                 _currentIndex = value;
-                print(_currentIndex);
               });
             },
             items: const [

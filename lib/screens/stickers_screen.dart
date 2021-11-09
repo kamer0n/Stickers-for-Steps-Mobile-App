@@ -20,9 +20,9 @@ class _StickerScreenState extends State<StickerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black54,
-      body: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child:
+      body: ListView(
+        //physics: const AlwaysScrollableScrollPhysics(),
+        children:
             /* WebView(
             javascriptMode: JavascriptMode.unrestricted,
             initialUrl: 'http://188.166.153.138',
@@ -32,24 +32,25 @@ class _StickerScreenState extends State<StickerScreen> {
               });
             },
           ), */
-            SingleChildScrollView(
-                child: FutureBuilder<List<Collection>>(
-          future: fetchSticker(http.Client()),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              print(snapshot.error);
-              return const Center(
-                child: Text('An error has occurred!'),
-              );
-            } else if (snapshot.hasData) {
-              return StickerList(collections: snapshot.data!);
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          },
-        )),
+            [
+          FutureBuilder<List<Collection>>(
+            future: fetchSticker(http.Client()),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                print(snapshot.error);
+                return const Center(
+                  child: Text('An error has occurred!'),
+                );
+              } else if (snapshot.hasData) {
+                return StickerList(collections: snapshot.data!);
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          )
+        ],
         /* (!isLoading)
               ? const Center(
                   child: CircularProgressIndicator(

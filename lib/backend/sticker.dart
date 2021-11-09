@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:async';
 
+import 'package:darkmodetoggle/screens/collection_page.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -104,18 +106,20 @@ class StickerList extends StatelessWidget {
       ), */
       itemCount: collections.length,
       itemBuilder: (context, index) {
-        return Column(children: [
-          Text(collections[index].name),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            scrollDirection: Axis.vertical,
-            itemCount: collections[index].stickers.length,
-            itemBuilder: (context, index2) {
-              return Image.network(collections[index].stickers[index2].url);
-            },
-          ),
-        ]);
+        return SizedBox(
+          child: ElevatedButton(
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent)),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => StickerGrid(collections[index])));
+              },
+              child: Card(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [Center(child: Text(collections[index].name))]))),
+          height: 100,
+          width: 300,
+        );
+        //return stickerGrid(collections[index], context);
       },
     );
   }
