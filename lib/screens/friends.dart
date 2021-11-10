@@ -31,16 +31,14 @@ class _FriendScreenState extends State<FriendScreen> {
             future: fetchFriends(http.Client()),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                print(snapshot.error);
                 return const Center(
                   child: Text('An error has occurred!'),
                 );
               } else if (snapshot.hasData) {
-                var list = FriendsList(Friends: snapshot.data!);
-                return Container(
-                    child: Column(
+                var list = FriendsList(friends: snapshot.data!);
+                return Column(
                   children: [list, Text('lol')],
-                ));
+                );
               } else {
                 return const Center(
                   child: CircularProgressIndicator(),

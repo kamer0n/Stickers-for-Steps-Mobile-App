@@ -1,15 +1,10 @@
 import 'package:darkmodetoggle/backend/collection.dart';
-import 'package:darkmodetoggle/backend/databasehandler.dart';
 import 'package:darkmodetoggle/backend/sticker_list.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import 'package:darkmodetoggle/backend/sticker.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class StickerScreen extends StatefulWidget {
+  const StickerScreen({Key? key}) : super(key: key);
+
   @override
   _StickerScreenState createState() => _StickerScreenState();
 }
@@ -33,7 +28,6 @@ class _StickerScreenState extends State<StickerScreen> {
             future: fetchCollections(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                print(snapshot.error);
                 return const Center(
                   child: Text('An error has occurred!'),
                 );

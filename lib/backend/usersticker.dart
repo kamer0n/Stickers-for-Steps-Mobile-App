@@ -10,12 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<List<UserSticker>> fetchUserSticker() async {
   DatabaseHandler db = DatabaseHandler();
-  db.initializeDB().whenComplete(() async {
-    if ((await db.retrieveUserStickers()).isEmpty) {
-      List<UserSticker> userstickers = await webFetch();
-      await db.insertUserStickers(userstickers);
-    }
-  });
+  List<UserSticker> userstickers = await webFetch();
+  await db.insertUserStickers(userstickers);
   return await db.retrieveUserStickers();
 }
 

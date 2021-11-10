@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:sqflite/sqlite_api.dart';
 
 Future<List<Collection>> fetchCollections() async {
   DatabaseHandler db = DatabaseHandler();
@@ -57,7 +56,7 @@ class Collection {
 
   @override
   String toString() {
-    return this.name;
+    return name;
   }
 
   List<Sticker> sticks(stickerlist) {

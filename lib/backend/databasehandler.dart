@@ -1,6 +1,3 @@
-import 'dart:typed_data';
-
-import 'package:darkmodetoggle/apis/api.dart';
 import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/backend/sticker.dart';
 import 'package:darkmodetoggle/backend/usersticker.dart';
@@ -11,7 +8,7 @@ class DatabaseHandler {
   Future<Database> initializeDB() async {
     String path = await getDatabasesPath();
     return openDatabase(
-      join(path, 'database.db'),
+      join(path, 'db.db'),
       onCreate: (database, version) async {
         await database.execute(
             "CREATE TABLE stickers(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, desc TEXT NOT NULL, rarity INTEGER NOT NULL, collection INTEGER NOT NULL, key BLOB NOT NULL)");
@@ -60,13 +57,11 @@ class DatabaseHandler {
 
   Future<List<Sticker>> retrieveStickers({int? id}) async {
     final Database db = await initializeDB();
-    List<Sticker> stickers;
     List<int> stickerids = [];
-    List<Sticker> toRemove = [];
     List<UserSticker> userstickersid = await retrieveUserStickers();
-    userstickersid.forEach((element) {
+    for (var element in userstickersid) {
       stickerids.add(element.id);
-    });
+    }
     List<Map<String, Object?>> queryResult;
     if (id != null) {
       queryResult = await db.query('stickers', where: 'collection=$id');

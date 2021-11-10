@@ -11,6 +11,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
+
   @override
   _SignUpState createState() => _SignUpState();
 }

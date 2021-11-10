@@ -40,14 +40,14 @@ class Friend {
 
   @override
   String toString() {
-    return this.name;
+    return name;
   }
 }
 
 class FriendsList extends StatelessWidget {
-  const FriendsList({Key? key, required this.Friends}) : super(key: key);
+  const FriendsList({Key? key, required this.friends}) : super(key: key);
 
-  final List<Friend> Friends;
+  final List<Friend> friends;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -57,30 +57,27 @@ class FriendsList extends StatelessWidget {
         /* gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 1,
       ), */
-        itemCount: Friends.length,
+        itemCount: friends.length,
         itemBuilder: (context, index) {
           return Center(
             child: Card(
                 child: InkWell(
                     splashColor: Colors.blue.withAlpha(30),
-                    onTap: () {
-                      print("ya boyyyy");
-                      print(Friends);
-                    },
+                    onTap: () {},
                     child: SizedBox(
                       child: Column(children: [
-                        Center(child: Text(Friends[index].name)),
+                        Center(child: Text(friends[index].name)),
                         ElevatedButton(
                             style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
                                 minimumSize: MaterialStateProperty.all<Size>(Size(10, 20))),
                             onPressed: () {
-                              deletefriend(Friends[index].id).then((value) {
+                              deletefriend(friends[index].id).then((value) {
                                 Navigator.pop(context);
                                 Navigator.push(
                                   context,
                                   PageRouteBuilder(
-                                    pageBuilder: (c, a1, a2) => Home('Friends'),
+                                    pageBuilder: (c, a1, a2) => Home('friends'),
                                     transitionsBuilder: (c, anim, a2, child) =>
                                         FadeTransition(opacity: anim, child: child),
                                     transitionDuration: Duration(milliseconds: 0),
@@ -109,7 +106,5 @@ deletefriend(id) async {
         "authorization": ("TOKEN " + (preferences.getString('token') ?? defaultToken))
       },
       encoding: Encoding.getByName("utf-8"));
-  if (response.statusCode != 200) {
-    print(response.body);
-  }
+  if (response.statusCode != 200) {}
 }

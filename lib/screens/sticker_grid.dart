@@ -1,8 +1,5 @@
-import 'dart:typed_data';
-
 import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/backend/sticker.dart';
-import 'package:darkmodetoggle/backend/usersticker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
@@ -51,7 +48,13 @@ class _StickerGridState extends State<StickerGrid> {
                     scrollDirection: Axis.vertical,
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
-                      return Image.memory(base64.decode(utf8.decode(snapshot.data![index].picture)), scale: 2);
+                      var picture = snapshot.data![index];
+                      if (picture.locked != true) {
+                        return Image.memory(base64.decode(utf8.decode(picture.picture)));
+                      } else {
+                        return Image.memory(base64.decode(utf8.decode(picture.picture)), color: Colors.black);
+                      }
+                      //return Image.memory(base64.decode(utf8.decode(snapshot.data![index].picture)), scale: 2);
                     },
                   ),
                 ]))

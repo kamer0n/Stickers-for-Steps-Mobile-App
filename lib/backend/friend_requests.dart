@@ -37,7 +37,7 @@ class FriendRequest {
 
   @override
   String toString() {
-    return this.name;
+    return name;
   }
 }
 
@@ -56,9 +56,7 @@ class FriendRequestList extends StatelessWidget {
       ), */
         itemCount: friendRequests.length,
         itemBuilder: (context, index) {
-          print(friendRequests[index]);
           if (friendRequests[index].rejected == 'null') {
-            print(friendRequests[index].rejected);
             return Center(
                 child: Card(
               color: Colors.black,

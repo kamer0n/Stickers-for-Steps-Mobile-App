@@ -1,3 +1,4 @@
+import 'package:darkmodetoggle/backend/usersticker.dart';
 import 'package:darkmodetoggle/screens/friend_requests.dart';
 import 'package:darkmodetoggle/screens/friends.dart';
 import 'package:darkmodetoggle/screens/stickers_screen.dart';
@@ -84,10 +85,11 @@ class _HomeState extends State<Home> {
             unselectedItemColor: colorScheme.onSurface.withOpacity(.60),
             selectedLabelStyle: textTheme.caption,
             unselectedLabelStyle: textTheme.caption,
-            onTap: (value) {
+            onTap: (value) async {
               setState(() {
                 _currentIndex = value;
               });
+              await fetchUserSticker();
             },
             items: const [
               BottomNavigationBarItem(label: ('Home'), icon: Icon(Icons.home)),

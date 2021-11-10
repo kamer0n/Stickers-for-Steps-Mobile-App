@@ -13,6 +13,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SignIn extends StatefulWidget {
+  const SignIn({Key? key}) : super(key: key);
+
   @override
   _SignInState createState() => _SignInState();
 }
@@ -244,12 +246,12 @@ class _SignInState extends State<SignIn> {
         String token = resposne['token'];
         savePref(1, 1, token, username);
         Navigator.pushReplacementNamed(context, "/home");
-        List<Collection> collections = await fetchCollections();
+        await fetchCollections();
         populateDB();
       } else {
         print(" ${resposne['message']}");
       }
-      scaffoldMessenger.showSnackBar(SnackBar(content: Text("${resposne} yoyo")));
+      scaffoldMessenger.showSnackBar(SnackBar(content: Text("$resposne yoyo")));
     } else {
       scaffoldMessenger.showSnackBar(const SnackBar(content: Text("Please try again!")));
     }
@@ -265,7 +267,7 @@ class _SignInState extends State<SignIn> {
   }
 
   Future<void> populateDB() async {
-    List<Collection> collections = await DatabaseHandler().retrieveCollections();
+    await DatabaseHandler().retrieveCollections();
     await fetchSticker();
     await fetchUserSticker();
   }

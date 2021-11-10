@@ -8,15 +8,13 @@ import 'package:http/http.dart' as http;
 
 import 'package:darkmodetoggle/apis/api.dart';
 
-TextEditingController _textFieldController = TextEditingController();
-
 Future<void> displayFriends(BuildContext context, {UniqueKey? key}) async {
   return showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
         title: const Text('Friend Requests'),
-        content: Container(
+        content: SizedBox(
           height: 300.0, // Change as per your requirement
           width: 300.0, // Change as per your requirement
           child: SingleChildScrollView(
@@ -26,8 +24,6 @@ Future<void> displayFriends(BuildContext context, {UniqueKey? key}) async {
               future: fetchFriendRequests(http.Client()),
               builder: (context, snapshot) {
                 if (snapshot.hasError) {
-                  print(snapshot.data);
-                  print(snapshot.error);
                   return const Center(
                     child: Text('An error has occurred!'),
                   );
@@ -49,7 +45,6 @@ Future<void> displayFriends(BuildContext context, {UniqueKey? key}) async {
 
 requestresponse(id, type) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  print(preferences.getString('token'));
   Uri uri;
   if (type == "accept") {
     uri = Uri.parse(friendaccept + id.toString() + '/');
@@ -64,7 +59,6 @@ requestresponse(id, type) async {
         "authorization": ("TOKEN " + (preferences.getString('token') ?? defaultToken))
       },
       encoding: Encoding.getByName("utf-8"));
-  print(response.body);
   if (response.statusCode == 200) {
     Map<String, dynamic> resposne = jsonDecode(response.body);
     if (resposne.containsKey('error')) {}

@@ -1,7 +1,5 @@
 import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/backend/databasehandler.dart';
-import 'package:darkmodetoggle/backend/sticker.dart';
-import 'package:darkmodetoggle/screens/friends.dart';
 import 'package:flutter/material.dart';
 
 import 'package:darkmodetoggle/screens/stickers_screen.dart';
@@ -18,6 +16,8 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -25,8 +25,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    // TODO: implement initState
-
     super.initState();
     _buildDB();
     getPref();

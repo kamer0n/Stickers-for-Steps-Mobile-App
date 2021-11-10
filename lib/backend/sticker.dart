@@ -3,10 +3,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:darkmodetoggle/backend/databasehandler.dart';
-import 'package:darkmodetoggle/screens/sticker_grid.dart';
-import 'package:expandable/expandable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:darkmodetoggle/apis/api.dart';
@@ -42,6 +39,7 @@ class Sticker {
   final String desc;
   final int collection;
   final int rarity;
+  bool? locked;
 
   Sticker({
     required this.id,
@@ -50,10 +48,11 @@ class Sticker {
     required this.desc,
     required this.collection,
     required this.rarity,
+    this.locked,
   });
 
   factory Sticker.fromJson(Map<String, dynamic> json) {
-    var pict;
+    Uint8List pict;
     try {
       pict = Uint8List.fromList(utf8.encode(json['key']));
     } catch (Exception) {
@@ -69,9 +68,8 @@ class Sticker {
     );
   }
 
-  void lockedSticker() {
-    this.picture = Uint8List.fromList(utf8.encode(
-        "iVBORw0KGgoAAAANSUhEUgAAAPoAAAD6CAQAAAAi5ZK2AAABcUlEQVR42u3RAQ0AAAgDIJ/e2FrDTahAeopnIl060pGOdKQjHelIRzrSkY50pCMd6UhHunSkIx3pSEc60pGOdKQjHelIRzrSkY506UhHOtKRjnSkIx3pSEc60pGOdKQjHenSkY50pCMd6UhHOtKRjnSkIx3pSEc60qUjHelIRzrSkY50pCMd6UhHOtKRjnSkS5cuHelIRzrSkY50pCMd6UhHOtKRjnSkI1060pGOdKQjHelIRzrSkY50pCMd6UhHunSkIx3pSEc60pGOdKQjHelIRzrSkY506UhHOtKRjnSkIx3pSEc60pGOdKQjHenSkY50pCMd6UhHOtKRjnSkIx3pSEc60qVLl450pCMd6UhHOtKRjnSkIx3pSEc60pEuHelIRzrSkY50pCMd6UhHOtKRjnSkI1060pGOdKQjHelIRzrSkY50pCMd6UhHunSkIx3pSEc60pGOdKQjHelIRzrSkY506UhHOtKRjnSkI50bFqkTfea5/KkYAAAAAElFTkSuQmCC"));
+  void lockedSticker() async {
+    locked = true;
   }
 
   @override

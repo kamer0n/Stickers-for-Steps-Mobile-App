@@ -1,6 +1,4 @@
 import 'package:darkmodetoggle/backend/collection.dart';
-import 'package:darkmodetoggle/backend/databasehandler.dart';
-import 'package:darkmodetoggle/backend/sticker.dart';
 import 'package:darkmodetoggle/screens/sticker_grid.dart';
 import 'package:flutter/material.dart';
 
