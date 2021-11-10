@@ -3,7 +3,9 @@ const String root = "http://188.166.153.138";
 
 const String registration = "$root/api/user/";
 const String loginurl = "$root/api-token-auth/";
-const String stickerurl = "$root/api/usersticks/";
+const String stickerurl = "$root/api/allstickers/";
+const String userstickerurl = "$root/api/usersticks/";
+const String collectionurl = "$root/collections/";
 const String friendsurl = "$root/api/friends/";
 const String addfriendurl = "$root/api/friend/add/";
 const String friendrequestul = "$root/api/friend/requests/";

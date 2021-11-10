@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:darkmodetoggle/backend/collection.dart';
+import 'package:darkmodetoggle/backend/databasehandler.dart';
+import 'package:darkmodetoggle/backend/sticker.dart';
+import 'package:darkmodetoggle/backend/usersticker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:darkmodetoggle/apis/api.dart';
@@ -227,7 +231,6 @@ class _SignInState extends State<SignIn> {
 
   login(username, password) async {
     Map data = {'username': username, 'password': password};
-    print(data.toString());
     final response = await http.post(Uri.parse(loginurl),
         headers: {"Accept": "application/json", "Content-Type": "application/x-www-form-urlencoded"},
         body: data,
@@ -235,15 +238,14 @@ class _SignInState extends State<SignIn> {
     setState(() {
       isLoading = false;
     });
-    print(response.body);
     if (response.statusCode == 200) {
       Map<String, dynamic> resposne = jsonDecode(response.body);
-      print(resposne);
       if (!resposne.containsKey('error')) {
         String token = resposne['token'];
-        print(" Token $token");
         savePref(1, 1, token, username);
         Navigator.pushReplacementNamed(context, "/home");
+        List<Collection> collections = await fetchCollections();
+        populateDB();
       } else {
         print(" ${resposne['message']}");
       }
@@ -260,5 +262,11 @@ class _SignInState extends State<SignIn> {
     preferences.setString("token", token);
     preferences.setString("username", username);
     preferences.setInt("value", value);
+  }
+
+  Future<void> populateDB() async {
+    List<Collection> collections = await DatabaseHandler().retrieveCollections();
+    await fetchSticker();
+    await fetchUserSticker();
   }
 }

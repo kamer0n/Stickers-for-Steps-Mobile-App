@@ -1,3 +1,6 @@
+import 'package:darkmodetoggle/backend/collection.dart';
+import 'package:darkmodetoggle/backend/databasehandler.dart';
+import 'package:darkmodetoggle/backend/sticker.dart';
 import 'package:darkmodetoggle/screens/friends.dart';
 import 'package:flutter/material.dart';
 
@@ -23,8 +26,15 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     // TODO: implement initState
+
     super.initState();
+    _buildDB();
     getPref();
+  }
+
+  _buildDB() async {
+    await DatabaseHandler().initializeDB();
+    await fetchCollections();
   }
 
   @override
