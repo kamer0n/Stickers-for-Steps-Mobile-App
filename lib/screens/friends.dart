@@ -37,7 +37,7 @@ class _FriendScreenState extends State<FriendScreen> {
               } else if (snapshot.hasData) {
                 var list = FriendsList(friends: snapshot.data!);
                 return Column(
-                  children: [list, Text('lol')],
+                  children: [list],
                 );
               } else {
                 return const Center(

@@ -112,7 +112,7 @@ class _SignInState extends State<SignIn> {
                               controller: _emailController,
                               decoration: const InputDecoration(
                                 enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white)),
-                                hintText: "Email",
+                                hintText: "Username",
                                 hintStyle: TextStyle(color: Colors.white70, fontSize: 15),
                               ),
                               onSaved: (val) {
@@ -249,9 +249,10 @@ class _SignInState extends State<SignIn> {
         await fetchCollections();
         populateDB();
       } else {
-        print(" ${resposne['message']}");
+        // print(" ${resposne['message']}");
       }
-      scaffoldMessenger.showSnackBar(SnackBar(content: Text("$resposne yoyo")));
+      //scaffoldMessenger.showSnackBar(SnackBar(content: Text("$resposne yoyo")));
+      scaffoldMessenger.showSnackBar(SnackBar(content: Text("Logged in successfully!")));
     } else {
       scaffoldMessenger.showSnackBar(const SnackBar(content: Text("Please try again!")));
     }

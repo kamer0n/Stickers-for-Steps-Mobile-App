@@ -34,7 +34,7 @@ class _StickerGridState extends State<StickerGrid> {
               );
             } else if (snapshot.hasData) {
               //print(snapshot.data);
-              return Column(children: [
+              return ListView(children: [
                 Card(
                     child: Column(children: [
                   GridView.builder(
