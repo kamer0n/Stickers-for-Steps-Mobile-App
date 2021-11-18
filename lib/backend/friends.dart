@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 
-import 'package:darkmodetoggle/screens/home.dart';
+import 'package:darkmodetoggle/screens/nav.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -77,7 +77,7 @@ class FriendsList extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   PageRouteBuilder(
-                                    pageBuilder: (c, a1, a2) => Home('Friends'),
+                                    pageBuilder: (c, a1, a2) => Nav('Friends'),
                                     transitionsBuilder: (c, anim, a2, child) =>
                                         FadeTransition(opacity: anim, child: child),
                                     transitionDuration: Duration(milliseconds: 0),

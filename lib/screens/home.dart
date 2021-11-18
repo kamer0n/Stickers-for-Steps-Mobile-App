@@ -1,101 +1,111 @@
-import 'package:darkmodetoggle/backend/usersticker.dart';
-import 'package:darkmodetoggle/screens/friend_requests.dart';
-import 'package:darkmodetoggle/screens/friends.dart';
-import 'package:darkmodetoggle/screens/stickers_screen.dart';
+import 'dart:convert';
+
+import 'package:darkmodetoggle/apis/health.dart';
+import 'package:darkmodetoggle/backend/sticker.dart';
+import 'package:darkmodetoggle/components/progress.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
-  String screen;
-  Home(this.screen);
   //int screen;
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  int _currentIndex = 0;
-  _getDrawerItemWidget(int pos) {
-    switch (pos) {
-      case 0:
-        return const Center(child: Text('home'));
-      case 1:
-        return StickerScreen();
-      case 2:
-        return FriendScreen();
+  int _steps = 1;
+  int _target = 1;
+  int _sticker = 0;
+  late Sticker _newsticker;
 
-      default:
-        return const Text("Error");
+  @override
+  void initState() {
+    super.initState();
+    /* fetchStepsAndTarget().then((value) {
+      setState(() {
+        _steps = value[0];
+        _target = value[1];
+        if (value.length > 2) {
+          _sticker = value[2];
+        }
+      });
+    }); */
+  }
+
+  Future<List<Sticker>> sticker(int id) async {
+    if (id != 0) {
+      Future<List<Sticker>> sticker = fetchSingleSticker(id: id);
+      return sticker;
+    } else {
+      return fetchSingleSticker(id: 1);
     }
+  }
+
+  Future<Map> TargetAndSteps() async {
+    Map values = {};
+    List<int> vals = await fetchStepsAndTarget();
+    values['steps'] = vals[0];
+    values['target'] = vals[1];
+    if (vals[2] == 0) {
+      values['sticker'] = 0;
+    } else {
+      values['sticker'] = await sticker(vals[2]);
+    }
+    return values;
   }
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
-    //int _currentIndex = 0;
-    if (widget.screen == 'Home') {
-      widget.screen = '';
-      _currentIndex = 0;
-    } else if (widget.screen == 'Friends') {
-      widget.screen = '';
-      _currentIndex = 2;
-    }
     return Scaffold(
-        appBar: AppBar(
-          leading: InkWell(
-            child: const Icon(Icons.compare_arrows),
-            onTap: () async {
-              SharedPreferences preferences = await SharedPreferences.getInstance();
-              preferences.clear();
-              Navigator.popUntil(context, (route) => false);
-              Navigator.pushNamed(context, "/signin");
-            },
-          ),
-          title: Text(
-            "Stickers for Steps",
-            style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 18, letterSpacing: 1)),
-          ),
-          backgroundColor: Colors.black87,
-          centerTitle: true,
-          actions: _currentIndex != 2
-              ? null
-              : <Widget>[
-                  Padding(
-                      padding: const EdgeInsets.only(right: 20.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          displayFriends(context, key: UniqueKey()).then((value) {
-                            setState(() {
-                              _currentIndex = 2;
-                            });
-                          });
-                        },
-                        child: const Icon(Icons.notifications),
-                      )),
-                ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            currentIndex: _currentIndex,
-            backgroundColor: colorScheme.surface,
-            selectedItemColor: colorScheme.onSurface,
-            unselectedItemColor: colorScheme.onSurface.withOpacity(.60),
-            selectedLabelStyle: textTheme.caption,
-            unselectedLabelStyle: textTheme.caption,
-            onTap: (value) async {
-              setState(() {
-                _currentIndex = value;
-              });
-              await fetchUserSticker();
-            },
-            items: const [
-              BottomNavigationBarItem(label: ('Home'), icon: Icon(Icons.home)),
-              BottomNavigationBarItem(label: ('Stickers'), icon: Icon(Icons.sticky_note_2)),
-              BottomNavigationBarItem(label: ('Friends'), icon: Icon(Icons.person)),
-            ]),
-        body: _getDrawerItemWidget(_currentIndex));
+      body: FutureBuilder(
+          future: TargetAndSteps(),
+          builder: (context, snapshot) {
+            Map _data = {};
+            if (snapshot.hasData) {
+              _data = snapshot.data! as Map;
+              if (_data['sticker'] != 0) {
+                _newsticker = _data['sticker'][0];
+              }
+              return ListView(shrinkWrap: true, children: [
+                SizedBox(
+                    height: 300,
+                    width: 350,
+                    child: Card(
+                        child: Column(children: [
+                      Text(
+                        "Today's Progress",
+                        textScaleFactor: 2,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                        StepsProgress(
+                          _data['steps'],
+                          _data['target'],
+                        ),
+                        Column(
+                          children: [
+                            Text(_data['steps'].toString()),
+                            Text(_data['target'].toString()),
+                          ],
+                        ),
+                      ])
+                    ]))),
+                newPack(_data['sticker']),
+              ]);
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          }),
+    );
+  }
+
+  Widget newPack(var sticker) {
+    print(sticker);
+    if (sticker != 0) {
+      return Card(child: Image.memory(base64.decode(utf8.decode(_newsticker.picture))));
+    } else {
+      return Card(child: Text("You haven't reached your target yet!"));
+    }
   }
 }

@@ -1,11 +1,12 @@
+import 'package:darkmodetoggle/apis/health.dart';
 import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/backend/databasehandler.dart';
+import 'package:darkmodetoggle/screens/nav.dart';
 import 'package:flutter/material.dart';
 
 import 'package:darkmodetoggle/screens/stickers_screen.dart';
 import 'package:darkmodetoggle/screens/signin.dart';
 import 'package:darkmodetoggle/screens/signup.dart';
-import 'package:darkmodetoggle/screens/home.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,7 +40,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Stack(
-        children: [(_loginStatus == 1) ? Home('Home') : SignIn()],
+        children: [(_loginStatus == 1) ? Nav('Home') : SignIn()],
       ),
       theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
@@ -47,8 +48,8 @@ class _MyAppState extends State<MyApp> {
         '/signin': (BuildContext context) => SignIn(),
         '/signup': (BuildContext context) => SignUp(),
         '/stickerscreen': (BuildContext context) => StickerScreen(),
-        '/friendsscreen': (BuildContext context) => Home('Friends'),
-        '/home': (BuildContext context) => Home('Home'),
+        '/friendsscreen': (BuildContext context) => Nav('Friends'),
+        '/home': (BuildContext context) => Nav('Home'),
       },
     );
   }

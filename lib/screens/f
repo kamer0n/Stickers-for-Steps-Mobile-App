@@ -1,0 +1,12 @@
+  void steps() {
+    Stream<StepCount> _stepCountStream = Pedometer.stepCountStream;
+    _stepCountStream.listen(onStepCount);
+  }
+
+  void onStepCount(StepCount event) {
+    /// Handle step count changed
+    int steps = event.steps;
+    DateTime timeStamp = event.timeStamp;
+    print(steps);
+    print(timeStamp);
+  }

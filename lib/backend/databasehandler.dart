@@ -55,6 +55,14 @@ class DatabaseHandler {
     return queryResult.map((e) => UserSticker.fromJson(e)).toList();
   }
 
+  Future<List<Sticker>> retrieveSticker({required int id}) async {
+    final Database db = await initializeDB();
+    List<Map<String, Object?>> queryResult;
+    queryResult = await db.query('stickers', where: 'id=$id');
+    List<Sticker> mapped = queryResult.map((e) => Sticker.fromJson(e)).toList();
+    return mapped;
+  }
+
   Future<List<Sticker>> retrieveStickers({int? id}) async {
     final Database db = await initializeDB();
     List<int> stickerids = [];
