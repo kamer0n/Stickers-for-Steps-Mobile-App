@@ -65,16 +65,19 @@ class _HomeState extends State<Home> {
               if (_data['sticker'] != 0) {
                 _newsticker = _data['sticker'][0];
               }
-              return ListView(shrinkWrap: true, children: [
+              return ListView(shrinkWrap: false, children: [
                 SizedBox(
                     height: 300,
                     width: 350,
                     child: Card(
-                        child: Column(children: [
+                        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
                       Text(
                         "Today's Progress",
                         textScaleFactor: 2,
                         style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 100,
                       ),
                       Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                         StepsProgress(
@@ -83,8 +86,14 @@ class _HomeState extends State<Home> {
                         ),
                         Column(
                           children: [
-                            Text(_data['steps'].toString()),
-                            Text(_data['target'].toString()),
+                            Text(
+                              "Current steps: " + _data['steps'].toString(),
+                              textScaleFactor: 1.14,
+                            ),
+                            Text(
+                              "Target steps: " + _data['target'].toString(),
+                              textScaleFactor: 1.14,
+                            ),
                           ],
                         ),
                       ])
@@ -105,7 +114,16 @@ class _HomeState extends State<Home> {
     if (sticker != 0) {
       return Card(child: Image.memory(base64.decode(utf8.decode(_newsticker.picture))));
     } else {
-      return Card(child: Text("You haven't reached your target yet!"));
+      return SizedBox(
+        child: Card(
+            child: Center(
+                child: Text(
+          "You haven't reached your target yet!",
+          textScaleFactor: 1.5,
+        ))),
+        height: 300,
+        width: 300,
+      );
     }
   }
 }

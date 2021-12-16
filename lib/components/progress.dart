@@ -43,15 +43,13 @@ class _StepsProgressState extends State<StepsProgress> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.fromLTRB(0, 100.0, 70, 0),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          CircularProgressIndicator(
-            value: getProgress(widget.steps, widget.target),
-            semanticsLabel: 'Linear progress indicator',
-            strokeWidth: 100,
-            backgroundColor: Colors.lightBlue[100],
-          ),
-        ]));
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      CircularProgressIndicator(
+        value: getProgress(widget.steps, widget.target),
+        semanticsLabel: 'Linear progress indicator',
+        strokeWidth: 100,
+        backgroundColor: Colors.lightBlue[100],
+      ),
+    ]);
   }
 }

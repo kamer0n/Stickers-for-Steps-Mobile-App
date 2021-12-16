@@ -20,7 +20,6 @@ class _StickerScreenState extends State<StickerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black54,
       body: ListView(
         //physics: const AlwaysScrollableScrollPhysics(),
         children: [

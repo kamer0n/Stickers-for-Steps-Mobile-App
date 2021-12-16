@@ -21,19 +21,30 @@ class _StickerListState extends State<StickerList> {
           return Column(children: [
             FutureBuilder<List<Collection>>(
               builder: (context, snapshot) {
-                return SizedBox(
-                  child: ElevatedButton(
-                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent)),
-                      onPressed: () {
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => StickerGrid(widget.collections[index])));
-                      },
-                      child: Card(
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [Center(child: Text(widget.collections[index].name))]))),
-                  height: 100,
-                  width: 300,
+                return Padding(
+                  padding: EdgeInsets.fromLTRB(0.0, 9.0, 0.0, 0.0),
+                  child: SizedBox(
+                    child: ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(66, 66, 66, 1.0))),
+                        onPressed: () {
+                          Navigator.push(
+                              context, MaterialPageRoute(builder: (context) => StickerGrid(widget.collections[index])));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(30.0),
+                          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                            Icon(Icons.sticky_note_2_outlined),
+                            Text(
+                              widget.collections[index].name,
+                              textScaleFactor: 1.5,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ]),
+                        )),
+                    height: 100,
+                    width: 300,
+                  ),
                 );
               },
             )

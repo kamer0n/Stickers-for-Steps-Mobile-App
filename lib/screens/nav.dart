@@ -2,6 +2,7 @@ import 'package:darkmodetoggle/backend/usersticker.dart';
 import 'package:darkmodetoggle/screens/friend_requests.dart';
 import 'package:darkmodetoggle/screens/friends.dart';
 import 'package:darkmodetoggle/screens/home.dart';
+import 'package:darkmodetoggle/screens/leaderboard.dart';
 import 'package:darkmodetoggle/screens/stickers_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,6 +25,8 @@ class _NavState extends State<Nav> {
       case 1:
         return StickerScreen();
       case 2:
+        return LeaderboardScreen();
+      case 3:
         return FriendScreen();
 
       default:
@@ -42,7 +45,7 @@ class _NavState extends State<Nav> {
       _currentIndex = 0;
     } else if (widget.screen == 'Friends') {
       widget.screen = '';
-      _currentIndex = 2;
+      _currentIndex = 3;
     }
     return Scaffold(
         appBar: _appBar(),
@@ -63,6 +66,7 @@ class _NavState extends State<Nav> {
             items: const [
               BottomNavigationBarItem(label: ('Home'), icon: Icon(Icons.home)),
               BottomNavigationBarItem(label: ('Stickers'), icon: Icon(Icons.sticky_note_2)),
+              BottomNavigationBarItem(label: ('Leaderboard'), icon: Icon(Icons.leaderboard)),
               BottomNavigationBarItem(label: ('Friends'), icon: Icon(Icons.person)),
             ]),
         body: _getDrawerItemWidget(_currentIndex));
@@ -85,7 +89,7 @@ class _NavState extends State<Nav> {
       ),
       backgroundColor: Colors.black87,
       centerTitle: true,
-      actions: _currentIndex != 2
+      actions: _currentIndex != 3
           ? null
           : <Widget>[
               Padding(
@@ -94,7 +98,7 @@ class _NavState extends State<Nav> {
                     onTap: () {
                       displayFriends(context, key: UniqueKey()).then((value) {
                         setState(() {
-                          _currentIndex = 2;
+                          _currentIndex = 3;
                         });
                       });
                     },

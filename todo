@@ -1,0 +1,48 @@
+# Stickers for Steps To-do
+
+## Notes
+
+- Added scaffmanager, nice scaffolding
+
+TODO : make leaderboard screen
+
+- [x] create API endpoint
+- [x] check sort users by stickers
+- [x] Retrieve list in app
+- [x] display list in app
+
+TODO : trading
+
+- [ ] view friend's stickers
+- [ ] synchronous trading
+- [ ] asynchronous trading
+- [ ] pick one depending on the purpose of the app
+
+TODO : useful error messages
+
+- [ ] add check django server errors and relay useful information to user
+- [ ] scaffold messenger
+
+TODO : fix new sticker display
+
+- [ ] potentially add it as a pop up with a delay
+- [ ] show all stickers received that day
+- [ ] some sort of animation
+
+TODO : wifi check
+
+- [ ] if user has no wifi tell them app won't work
+- [ ] allow to refresh if wifi has connected
+
+TODO : stretch profile photos
+
+- [ ] create selection of options and just make user pick one
+- [ ] allow changing picture
+
+TODO : change S3 server name
+
+- [ ] try and quantify benefits of using Amazon S3
+
+TODO : change app name from darkmodetoggle
+
+TODO : attempt to make weekly progress reports
