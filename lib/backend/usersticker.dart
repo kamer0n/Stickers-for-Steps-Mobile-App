@@ -17,7 +17,7 @@ Future<List<UserSticker>> fetchUserSticker() async {
 
 Future<List<UserSticker>> webFetch() async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  final response = await http.Client().get(Uri.parse(userstickerurl),
+  final response = await http.Client().post(Uri.parse(userstickerurl),
       headers: {"authorization": "TOKEN " + (preferences.getString('token') ?? defaultToken)});
   return compute(parseUserSticker, response.body);
 }
@@ -29,14 +29,15 @@ List<UserSticker> parseUserSticker(String responseBody) {
 
 class UserSticker {
   final int id;
+  int? quantity;
 
-  UserSticker({required this.id});
+  UserSticker({required this.id, this.quantity});
 
   factory UserSticker.fromJson(Map<String, dynamic> json) {
-    return UserSticker(id: json['id']);
+    return UserSticker(id: json['id'], quantity: json['quantity']);
   }
 
   Map<String, Object?> toMap() {
-    return {'id': id};
+    return {'id': id, 'quantity': quantity};
   }
 }

@@ -26,6 +26,7 @@ class DatabaseHandler {
     await db.execute("DROP TABLE IF EXISTS userstickers");
     await db.execute("CREATE TABLE userstickers(id INTEGER PRIMARY KEY AUTOINCREMENT, quantity INTEGER)");
     for (var usersticker in userstickers) {
+      //print(usersticker);
       result = await db.insert('userstickers', usersticker.toMap());
     }
     return result;
@@ -66,9 +67,11 @@ class DatabaseHandler {
   Future<List<Sticker>> retrieveStickers({int? id}) async {
     final Database db = await initializeDB();
     List<int> stickerids = [];
+    List<int> stickerquantities = [];
     List<UserSticker> userstickersid = await retrieveUserStickers();
     for (var element in userstickersid) {
       stickerids.add(element.id);
+      stickerquantities.add(element.quantity!);
     }
     List<Map<String, Object?>> queryResult;
     if (id != null) {
@@ -79,7 +82,7 @@ class DatabaseHandler {
     List<Sticker> mapped = queryResult.map((e) => Sticker.fromJson(e)).toList();
     for (Sticker sticker in mapped) {
       if (stickerids.contains(sticker.id)) {
-        continue;
+        sticker.quantity = stickerquantities[stickerids.indexOf(sticker.id)];
       } else {
         sticker.lockedSticker();
       }

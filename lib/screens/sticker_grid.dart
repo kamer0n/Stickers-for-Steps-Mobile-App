@@ -1,3 +1,4 @@
+import 'package:darkmodetoggle/backend/alignQuantity.dart';
 import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/backend/sticker.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,6 @@ class _StickerGridState extends State<StickerGrid> {
         appBar: AppBar(
           title: Text(
             widget.collection.name,
-            style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 18, letterSpacing: 1)),
           ),
           backgroundColor: Colors.black87,
           centerTitle: true,
@@ -50,9 +50,21 @@ class _StickerGridState extends State<StickerGrid> {
                     itemBuilder: (context, index) {
                       var picture = snapshot.data![index];
                       if (picture.locked != true) {
-                        return Image.memory(base64.decode(utf8.decode(picture.picture)));
+                        return Stack(children: [
+                          Align(
+                              child: Image.memory(
+                            base64.decode(utf8.decode(picture.picture)),
+                            alignment: Alignment.center,
+                          )),
+                          alignQuantity(picture)
+                        ]);
                       } else {
-                        return Image.memory(base64.decode(utf8.decode(picture.picture)), color: Colors.black);
+                        return Align(
+                            child: Image.memory(
+                          base64.decode(utf8.decode(picture.picture)),
+                          color: Colors.black,
+                          alignment: Alignment.center,
+                        ));
                       }
                       //return Image.memory(base64.decode(utf8.decode(snapshot.data![index].picture)), scale: 2);
                     },

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class StickerList extends StatefulWidget {
   List<Collection> collections;
+
   StickerList(this.collections);
   @override
   _StickerListState createState() => _StickerListState();

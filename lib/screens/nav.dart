@@ -85,7 +85,6 @@ class _NavState extends State<Nav> {
       ),
       title: Text(
         "Stickers for Steps",
-        style: GoogleFonts.roboto(textStyle: const TextStyle(fontSize: 18, letterSpacing: 1)),
       ),
       backgroundColor: Colors.black87,
       centerTitle: true,

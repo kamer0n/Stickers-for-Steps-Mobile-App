@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 
+import 'package:darkmodetoggle/screens/friend_screen.dart';
 import 'package:darkmodetoggle/screens/nav.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ import 'package:http/http.dart' as http;
 
 import 'package:darkmodetoggle/apis/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'usersticker.dart';
 
 Future<List<Friend>> fetchFriends(http.Client client) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -63,10 +66,16 @@ class FriendsList extends StatelessWidget {
             child: Card(
                 child: InkWell(
                     splashColor: Colors.blue.withAlpha(30),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => (FriendScreen(friends[index]))));
+                    },
                     child: SizedBox(
                       child: Column(children: [
-                        Center(child: Text(friends[index].name)),
+                        Center(
+                            child: Text(
+                          friends[index].name,
+                          textScaleFactor: 1.3,
+                        )),
                         ElevatedButton(
                             style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all<Color>(Colors.red),

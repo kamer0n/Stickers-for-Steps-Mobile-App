@@ -50,6 +50,7 @@ class _MyAppState extends State<MyApp> {
         '/stickerscreen': (BuildContext context) => StickerScreen(),
         '/friendsscreen': (BuildContext context) => Nav('Friends'),
         '/home': (BuildContext context) => Nav('Home'),
+        '/leaderboard': (BuildContext context) => Nav('Leaderboard'),
       },
     );
   }

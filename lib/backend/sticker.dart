@@ -45,6 +45,7 @@ class Sticker {
   final int collection;
   final int rarity;
   bool? locked;
+  int? quantity;
 
   Sticker({
     required this.id,
@@ -54,6 +55,7 @@ class Sticker {
     required this.collection,
     required this.rarity,
     this.locked,
+    this.quantity,
   });
 
   factory Sticker.fromJson(Map<String, dynamic> json) {

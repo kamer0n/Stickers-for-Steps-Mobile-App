@@ -13,7 +13,7 @@ TODO : make leaderboard screen
 
 TODO : trading
 
-- [ ] view friend's stickers
+- [x] view friend's stickers
 - [ ] synchronous trading
 - [ ] asynchronous trading
 - [ ] pick one depending on the purpose of the app
@@ -34,7 +34,7 @@ TODO : wifi check
 - [ ] if user has no wifi tell them app won't work
 - [ ] allow to refresh if wifi has connected
 
-TODO : stretch profile photos
+TODO : stretch goal: profile photos
 
 - [ ] create selection of options and just make user pick one
 - [ ] allow changing picture
@@ -45,4 +45,4 @@ TODO : change S3 server name
 
 TODO : change app name from darkmodetoggle
 
-TODO : attempt to make weekly progress reports
+TODO : attempt to make weekly progress reports - what did this mean
