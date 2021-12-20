@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'sticker.dart';
-
-Align alignQuantity(Sticker picture) {
+Align alignQuantity(String text, Alignment align, double fontsize) {
   return Align(
     child: Padding(
       padding: const EdgeInsets.all(8.0),
       child: Stack(
         children: <Widget>[
           Text(
-            picture.quantity.toString(),
+            text,
             style: TextStyle(
-              fontSize: 36,
+              fontSize: fontsize,
               foreground: Paint()
                 ..style = PaintingStyle.stroke
                 ..strokeWidth = 4
@@ -19,12 +17,12 @@ Align alignQuantity(Sticker picture) {
             ),
           ),
           Text(
-            picture.quantity.toString(),
-            style: TextStyle(color: Colors.white, fontSize: 36),
+            text,
+            style: TextStyle(color: Colors.white, fontSize: fontsize),
           ),
         ],
       ),
     ),
-    alignment: Alignment.bottomRight,
+    alignment: align,
   );
 }

@@ -110,7 +110,6 @@ class _HomeState extends State<Home> {
   }
 
   Widget newPack(var sticker) {
-    print(sticker);
     if (sticker != 0) {
       return Card(child: Image.memory(base64.decode(utf8.decode(_newsticker.picture))));
     } else {

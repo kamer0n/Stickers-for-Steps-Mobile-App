@@ -1,6 +1,4 @@
-import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/backend/leaderboard.dart';
-import 'package:darkmodetoggle/backend/sticker_list.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;

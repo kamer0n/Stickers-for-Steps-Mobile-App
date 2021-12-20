@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 
 import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/backend/databasehandler.dart';

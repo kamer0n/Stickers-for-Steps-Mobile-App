@@ -3,13 +3,11 @@ import 'dart:convert';
 import 'package:darkmodetoggle/apis/api.dart';
 import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/backend/sticker.dart';
-import 'package:darkmodetoggle/screens/sticker_grid.dart';
+import 'package:darkmodetoggle/backend/stickersAsGrid.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
-
-import 'alignQuantity.dart';
 
 class FriendStickerList extends StatefulWidget {
   List<Collection> collections;
@@ -113,43 +111,7 @@ Scaffold newMethod(int id, String name, String collectionName) {
           );
         } else if (snapshot.hasData) {
           //print(snapshot.data);
-          return ListView(children: [
-            Card(
-                child: Column(children: [
-              GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisSpacing: 0,
-                  mainAxisSpacing: 0,
-                  crossAxisCount: 3,
-                ),
-                shrinkWrap: true,
-                physics: AlwaysScrollableScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  var picture = snapshot.data![index];
-                  if (picture.locked != true) {
-                    return Stack(children: <Widget>[
-                      Align(
-                          child: Image.memory(
-                        base64.decode(utf8.decode(picture.picture)),
-                        alignment: Alignment.center,
-                      )),
-                      alignQuantity(picture),
-                    ]);
-                  } else {
-                    return Align(
-                        child: Image.memory(
-                      base64.decode(utf8.decode(picture.picture)),
-                      color: Colors.black,
-                      alignment: Alignment.center,
-                    ));
-                  }
-                  //return Image.memory(base64.decode(utf8.decode(snapshot.data![index].picture)), scale: 2);
-                },
-              ),
-            ]))
-          ]);
+          return stickersAsGrid(snapshot);
         } else {
           return const Center(
             child: CircularProgressIndicator(),

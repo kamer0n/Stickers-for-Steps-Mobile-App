@@ -61,10 +61,10 @@ Future<Map<String, dynamic>> fetchTarget(int steps) async {
 Future<List<int>> fetchStepsAndTarget() async {
   int sticker = 0;
   int steps = await fetchSteps();
-  Map<String, dynamic> steps_post_response = await fetchTarget(steps);
-  int target = int.parse(steps_post_response['target']);
-  if (steps_post_response.containsKey('sticker')) {
-    sticker = steps_post_response['sticker']['id'];
+  Map<String, dynamic> stepsPostResponse = await fetchTarget(steps);
+  int target = int.parse(stepsPostResponse['target']);
+  if (stepsPostResponse.containsKey('sticker')) {
+    sticker = stepsPostResponse['sticker']['id'];
   }
   return [steps, target, sticker];
 }

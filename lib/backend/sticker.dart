@@ -75,6 +75,20 @@ class Sticker {
     );
   }
 
+  String rarityString() {
+    if (rarity == 0) {
+      return "Common";
+    } else if (rarity == 1) {
+      return "Uncommon";
+    } else if (rarity == 2) {
+      return "Rare";
+    } else if (rarity == 3) {
+      return "Legendary";
+    } else {
+      return "Never before seen";
+    }
+  }
+
   void lockedSticker() async {
     locked = true;
   }

@@ -1,4 +1,3 @@
-import 'package:darkmodetoggle/apis/health.dart';
 import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/backend/databasehandler.dart';
 import 'package:darkmodetoggle/screens/nav.dart';

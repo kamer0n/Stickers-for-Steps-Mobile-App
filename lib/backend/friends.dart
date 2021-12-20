@@ -10,8 +10,6 @@ import 'package:http/http.dart' as http;
 import 'package:darkmodetoggle/apis/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'usersticker.dart';
-
 Future<List<Friend>> fetchFriends(http.Client client) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   final token = preferences.getString('token') ?? defaultToken;

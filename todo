@@ -4,6 +4,10 @@
 
 - Added scaffmanager, nice scaffolding
 
+TODO : sticker randomness
+
+- [x] this is done
+
 TODO : make leaderboard screen
 
 - [x] create API endpoint
@@ -11,8 +15,13 @@ TODO : make leaderboard screen
 - [x] Retrieve list in app
 - [x] display list in app
 
+TODO : sticker display info
+
+- [x] upon clicking sticker show info like title, collection, rarity
+
 TODO : trading
 
+- [ ] friend screen flavour text
 - [x] view friend's stickers
 - [ ] synchronous trading
 - [ ] asynchronous trading
@@ -28,6 +37,10 @@ TODO : fix new sticker display
 - [ ] potentially add it as a pop up with a delay
 - [ ] show all stickers received that day
 - [ ] some sort of animation
+
+TODO : add all stickers
+
+- [ ] add form to better upload stickers like rarity desc etc
 
 TODO : wifi check
 
