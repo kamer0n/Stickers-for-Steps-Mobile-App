@@ -46,7 +46,7 @@ class _FriendListState extends State<FriendStickerList> {
                         child: Padding(
                           padding: const EdgeInsets.all(30.0),
                           child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                            Icon(Icons.sticky_note_2_outlined),
+                            Image.memory(base64.decode(utf8.decode(widget.collections[index].icon))),
                             Text(
                               widget.collections[index].name,
                               textScaleFactor: 1.5,

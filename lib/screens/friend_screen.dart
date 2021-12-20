@@ -22,26 +22,43 @@ class _FriendScreenState extends State<FriendScreen> {
         backgroundColor: Colors.black87,
         centerTitle: true,
       ),
-      body: ListView(
-        //physics: const AlwaysScrollableScrollPhysics(),
-        children: [
+      body:
+          //physics: const AlwaysScrollableScrollPhysics(),
           FutureBuilder<List<Collection>>(
-            future: fetchCollections(),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return const Center(
-                  child: Text('An error has occurred!'),
-                );
-              } else if (snapshot.hasData) {
-                return FriendStickerList(snapshot.data!, widget.friend.name);
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
-          )
-        ],
+        future: fetchCollections(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('An error has occurred!'),
+            );
+          } else if (snapshot.hasData) {
+            return Column(
+              children: [
+                Card(
+                  shape: ContinuousRectangleBorder(),
+                  child: SizedBox(
+                      height: 200,
+                      width: MediaQuery.of(context).size.width,
+                      child: Text(
+                        widget.friend.name,
+                        style: TextStyle(fontSize: 30),
+                      )),
+                  color: Colors.grey[600],
+                ),
+                Flexible(
+                  child: SingleChildScrollView(
+                    child: FriendStickerList(snapshot.data!, widget.friend.name),
+                    physics: AlwaysScrollableScrollPhysics(),
+                  ),
+                )
+              ],
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }

@@ -18,11 +18,13 @@ TODO : make leaderboard screen
 TODO : sticker display info
 
 - [x] upon clicking sticker show info like title, collection, rarity
+- [x] collection icon - potentially use smaller scaled sticker
 
 TODO : trading
 
 - [ ] friend screen flavour text
 - [x] view friend's stickers
+- [ ] add friend info card
 - [ ] synchronous trading
 - [ ] asynchronous trading
 - [ ] pick one depending on the purpose of the app
@@ -40,7 +42,8 @@ TODO : fix new sticker display
 
 TODO : add all stickers
 
-- [ ] add form to better upload stickers like rarity desc etc
+- [x] add form to better upload stickers like rarity desc etc
+- [ ] add stickers into collections
 
 TODO : wifi check
 
@@ -59,3 +62,5 @@ TODO : change S3 server name
 TODO : change app name from darkmodetoggle
 
 TODO : attempt to make weekly progress reports - what did this mean
+
+TODO : secret stickers super extension

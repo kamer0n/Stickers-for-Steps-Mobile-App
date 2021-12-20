@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/screens/sticker_grid.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +37,7 @@ class _StickerListState extends State<StickerList> {
                         child: Padding(
                           padding: const EdgeInsets.all(30.0),
                           child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                            Icon(Icons.sticky_note_2_outlined),
+                            Image.memory(base64.decode(utf8.decode(widget.collections[index].icon))),
                             Text(
                               widget.collections[index].name,
                               textScaleFactor: 1.5,

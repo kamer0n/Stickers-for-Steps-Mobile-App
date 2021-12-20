@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:darkmodetoggle/apis/api.dart';
 import 'package:darkmodetoggle/backend/databasehandler.dart';
@@ -36,22 +37,31 @@ class Collection {
   late String name;
   late List<Sticker>? stickers;
   late int version;
+  late Uint8List icon;
 
   Collection({
     required this.id,
     required this.name,
     this.stickers,
     required this.version,
+    required this.icon,
   });
 
   Collection.fromJson(Map<String, dynamic> json) {
+    Uint8List pict;
+    try {
+      pict = Uint8List.fromList(utf8.encode(json['icon']));
+    } catch (Exception) {
+      pict = json['icon'];
+    }
     id = json['id'];
     name = json['name'];
     version = json['version'];
+    icon = pict;
   }
 
   Map<String, Object?> toMap() {
-    return {'id': id, 'name': name, 'version': version};
+    return {'id': id, 'name': name, 'version': version, 'icon': icon};
   }
 
   @override

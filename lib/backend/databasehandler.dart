@@ -13,7 +13,7 @@ class DatabaseHandler {
         await database.execute(
             "CREATE TABLE stickers(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, desc TEXT NOT NULL, rarity INTEGER NOT NULL, collection INTEGER NOT NULL, key BLOB NOT NULL)");
         await database.execute(
-            "CREATE TABLE collections(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, version INTEGER NOT NULL)");
+            "CREATE TABLE collections(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, version INTEGER NOT NULL, icon BLOB NOT NULL)");
         await database.execute("CREATE TABLE userstickers(id INTEGER PRIMARY KEY AUTOINCREMENT, quantity INTEGER)");
       },
       version: 1,
