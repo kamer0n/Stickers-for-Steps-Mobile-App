@@ -1,7 +1,9 @@
+import 'package:darkmodetoggle/backend/alignQuantity.dart';
 import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/backend/friend_sticker_list.dart';
 import 'package:darkmodetoggle/backend/friends.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class FriendScreen extends StatefulWidget {
   Friend friend;
@@ -39,9 +41,15 @@ class _FriendScreenState extends State<FriendScreen> {
                   child: SizedBox(
                       height: 200,
                       width: MediaQuery.of(context).size.width,
-                      child: Text(
-                        widget.friend.name,
-                        style: TextStyle(fontSize: 30),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(22, 0, 0, 0),
+                          ),
+                          Expanded(child: SvgPicture.network(widget.friend.avatar)),
+                          Expanded(child: alignQuantity(widget.friend.name, Alignment.centerLeft, 30))
+                        ],
                       )),
                   color: Colors.grey[600],
                 ),

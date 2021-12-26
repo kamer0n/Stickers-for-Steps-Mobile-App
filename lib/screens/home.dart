@@ -5,6 +5,8 @@ import 'package:darkmodetoggle/backend/sticker.dart';
 import 'package:darkmodetoggle/components/progress.dart';
 import 'package:flutter/material.dart';
 
+import 'nav.dart';
+
 class Home extends StatefulWidget {
   //int screen;
   @override
@@ -111,7 +113,31 @@ class _HomeState extends State<Home> {
 
   Widget newPack(var sticker) {
     if (sticker != 0) {
-      return Card(child: Image.memory(base64.decode(utf8.decode(_newsticker.picture))));
+      return Card(
+          child: SizedBox(
+        width: 350,
+        height: 300,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            //  Image.memory(base64.decode(utf8.decode(_newsticker.picture))),
+            ElevatedButton(
+                onPressed: () {
+                  showSticker(context, _newsticker);
+                  Navigator.of(context).pop();
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (c, a1, a2) => Nav('Home'),
+                      transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+                      transitionDuration: Duration(milliseconds: 0),
+                    ),
+                  );
+                },
+                child: Text('Open new sticker pack!'))
+          ],
+        ),
+      ));
     } else {
       return SizedBox(
         child: Card(
@@ -125,4 +151,36 @@ class _HomeState extends State<Home> {
       );
     }
   }
+
+  Future<void> showSticker(BuildContext context, Sticker sticker) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return stickerDialog(sticker);
+        });
+  }
+}
+
+AlertDialog stickerDialog(picture) {
+  return AlertDialog(
+    shape: RoundedRectangleBorder(
+        side: BorderSide(color: Colors.white70, width: 3.0), borderRadius: BorderRadius.circular(4.0)),
+    title: Text(
+      picture.title,
+      textAlign: TextAlign.center,
+    ),
+    content: SizedBox(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.memory(
+            base64.decode(utf8.decode(picture.picture)),
+            alignment: Alignment.center,
+          ),
+          Text(picture.desc, style: TextStyle(fontStyle: FontStyle.italic, color: Colors.grey[500])),
+          Text(picture.rarityString()),
+        ],
+      ),
+    ),
+  );
 }

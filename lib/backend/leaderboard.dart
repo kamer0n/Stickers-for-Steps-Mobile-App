@@ -79,7 +79,6 @@ class LeaderboardView extends StatelessWidget {
                 color: bg,
                 child: InkWell(
                     splashColor: Colors.blue.withAlpha(30),
-                    onTap: () {},
                     child: SizedBox(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -88,7 +87,7 @@ class LeaderboardView extends StatelessWidget {
                             (index + 1).toString(),
                             textScaleFactor: 3.0,
                           ),
-                          Column(children: [
+                          Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                             Text(
                               leaderboard[index].name,
                               textScaleFactor: 1.4,

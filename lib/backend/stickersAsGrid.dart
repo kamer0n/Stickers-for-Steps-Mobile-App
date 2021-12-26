@@ -30,27 +30,7 @@ ListView stickersAsGrid(AsyncSnapshot<List<dynamic>> snapshot) {
                   showDialog(
                       context: context,
                       builder: (context) {
-                        return AlertDialog(
-                          shape: RoundedRectangleBorder(
-                              side: BorderSide(color: Colors.white70, width: 3.0),
-                              borderRadius: BorderRadius.circular(4.0)),
-                          title: Text(
-                            picture.title,
-                            textAlign: TextAlign.center,
-                          ),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Image.memory(
-                                base64.decode(utf8.decode(picture.picture)),
-                                alignment: Alignment.center,
-                              ),
-                              Text(picture.desc,
-                                  style: TextStyle(fontStyle: FontStyle.italic, color: Colors.grey[500])),
-                              Text(picture.rarityString()),
-                            ],
-                          ),
-                        );
+                        return stickerDialog(picture);
                       });
                 },
                 child: Stack(children: <Widget>[
@@ -77,4 +57,26 @@ ListView stickersAsGrid(AsyncSnapshot<List<dynamic>> snapshot) {
       ),
     ])
   ]);
+}
+
+AlertDialog stickerDialog(picture) {
+  return AlertDialog(
+    shape: RoundedRectangleBorder(
+        side: BorderSide(color: Colors.white70, width: 3.0), borderRadius: BorderRadius.circular(4.0)),
+    title: Text(
+      picture.title,
+      textAlign: TextAlign.center,
+    ),
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Image.memory(
+          base64.decode(utf8.decode(picture.picture)),
+          alignment: Alignment.center,
+        ),
+        Text(picture.desc, style: TextStyle(fontStyle: FontStyle.italic, color: Colors.grey[500])),
+        Text(picture.rarityString()),
+      ],
+    ),
+  );
 }

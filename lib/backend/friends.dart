@@ -10,6 +10,8 @@ import 'package:http/http.dart' as http;
 import 'package:darkmodetoggle/apis/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:flutter_svg/flutter_svg.dart';
+
 Future<List<Friend>> fetchFriends(http.Client client) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   final token = preferences.getString('token') ?? defaultToken;
@@ -27,15 +29,22 @@ List<Friend> parseFriend(String responseBody) {
 class Friend {
   final String name;
   final String id;
+  final String avatar;
+  final String fluff;
+
   Friend({
     required this.name,
     required this.id,
+    required this.avatar,
+    required this.fluff,
   });
 
   factory Friend.fromJson(Map<String, dynamic> json) {
     return Friend(
       name: json['user'],
       id: json['id'].toString(),
+      avatar: json['avatar'],
+      fluff: json['fluff'],
     );
   }
 
@@ -68,31 +77,44 @@ class FriendsList extends StatelessWidget {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => (FriendScreen(friends[index]))));
                     },
                     child: SizedBox(
-                      child: Column(children: [
-                        Center(
-                            child: Text(
-                          friends[index].name,
-                          textScaleFactor: 1.3,
-                        )),
-                        ElevatedButton(
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-                                minimumSize: MaterialStateProperty.all<Size>(Size(10, 20))),
-                            onPressed: () {
-                              deletefriend(friends[index].id).then((value) {
-                                Navigator.pop(context);
-                                Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder: (c, a1, a2) => Nav('Friends'),
-                                    transitionsBuilder: (c, anim, a2, child) =>
-                                        FadeTransition(opacity: anim, child: child),
-                                    transitionDuration: Duration(milliseconds: 0),
-                                  ),
-                                );
-                              });
-                            },
-                            child: Text('Delete')),
+                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                        SvgPicture.network(
+                          friends[index].avatar,
+                          height: 70,
+                          width: 70,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              friends[index].name,
+                              textScaleFactor: 1.3,
+                            ),
+                            Text(
+                              friends[index].fluff,
+                              textScaleFactor: 0.6,
+                            ),
+                            ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                                    minimumSize: MaterialStateProperty.all<Size>(Size(10, 20))),
+                                onPressed: () {
+                                  deletefriend(friends[index].id).then((value) {
+                                    Navigator.pop(context);
+                                    Navigator.push(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (c, a1, a2) => Nav('Friends'),
+                                        transitionsBuilder: (c, anim, a2, child) =>
+                                            FadeTransition(opacity: anim, child: child),
+                                        transitionDuration: Duration(milliseconds: 0),
+                                      ),
+                                    );
+                                  });
+                                },
+                                child: Text('Delete')),
+                          ],
+                        ),
                       ]),
                       height: 100,
                       width: 300,

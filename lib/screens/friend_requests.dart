@@ -15,8 +15,8 @@ Future<void> displayFriends(BuildContext context, {UniqueKey? key}) async {
       return AlertDialog(
         title: const Text('Friend Requests'),
         content: SizedBox(
-          height: 300.0, // Change as per your requirement
-          width: 300.0, // Change as per your requirement
+          height: 300.0,
+          width: 300.0,
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
             child: SingleChildScrollView(

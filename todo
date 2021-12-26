@@ -22,7 +22,7 @@ TODO : sticker display info
 
 TODO : trading
 
-- [ ] friend screen flavour text
+- [x] friend screen flavour text
 - [x] view friend's stickers
 - [ ] add friend info card
 - [ ] synchronous trading
@@ -36,7 +36,7 @@ TODO : useful error messages
 
 TODO : fix new sticker display
 
-- [ ] potentially add it as a pop up with a delay
+- [x] potentially add it as a pop up with a delay
 - [ ] show all stickers received that day
 - [ ] some sort of animation
 
@@ -52,8 +52,7 @@ TODO : wifi check
 
 TODO : stretch goal: profile photos
 
-- [ ] create selection of options and just make user pick one
-- [ ] allow changing picture
+- [x] create selection of options and just make user pick one
 
 TODO : change S3 server name
 
