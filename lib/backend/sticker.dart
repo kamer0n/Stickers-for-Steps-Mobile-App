@@ -62,7 +62,7 @@ class Sticker {
     Uint8List pict;
     try {
       pict = Uint8List.fromList(utf8.encode(json['key']));
-    } catch (Exception) {
+    } catch (e) {
       pict = json['key'];
     }
     return Sticker(

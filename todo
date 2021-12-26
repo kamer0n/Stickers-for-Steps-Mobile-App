@@ -20,14 +20,21 @@ TODO : sticker display info
 - [x] upon clicking sticker show info like title, collection, rarity
 - [x] collection icon - potentially use smaller scaled sticker
 
-TODO : trading
+TODO : friend screen fleshing out
 
 - [x] friend screen flavour text
 - [x] view friend's stickers
-- [ ] add friend info card
-- [ ] synchronous trading
+- [x] add friend info card
+- [x] pick one depending on the purpose of the app
+
+TODO : trading
+
 - [ ] asynchronous trading
-- [ ] pick one depending on the purpose of the app
+- [ ] server end points
+- [ ] receive trades
+- [ ] send trades
+- [ ] accept trades
+- [ ] error handling
 
 TODO : useful error messages
 

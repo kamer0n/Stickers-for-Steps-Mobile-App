@@ -8,15 +8,17 @@ import 'package:flutter/material.dart';
 import 'nav.dart';
 
 class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
   //int screen;
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  int _steps = 1;
-  int _target = 1;
-  int _sticker = 0;
+  //int _steps = 1;
+  //int _target = 1;
+  //int _sticker = 0;
   late Sticker _newsticker;
 
   @override
@@ -42,7 +44,7 @@ class _HomeState extends State<Home> {
     }
   }
 
-  Future<Map> TargetAndSteps() async {
+  Future<Map> targetAndSteps() async {
     Map values = {};
     List<int> vals = await fetchStepsAndTarget();
     values['steps'] = vals[0];
@@ -59,7 +61,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-          future: TargetAndSteps(),
+          future: targetAndSteps(),
           builder: (context, snapshot) {
             Map _data = {};
             if (snapshot.hasData) {

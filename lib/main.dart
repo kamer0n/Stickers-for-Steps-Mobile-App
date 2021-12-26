@@ -54,13 +54,11 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  var _token = "";
   var _loginStatus = 0;
   getPref() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       _loginStatus = preferences.getInt('value') ?? 0;
-      _token = preferences.getString('token') ?? "";
     });
   }
 }

@@ -1,14 +1,16 @@
-import 'package:darkmodetoggle/backend/alignQuantity.dart';
+import 'package:darkmodetoggle/backend/align_quantity.dart';
 import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/backend/friend_sticker_list.dart';
 import 'package:darkmodetoggle/backend/friends.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+// ignore: must_be_immutable
 class FriendScreen extends StatefulWidget {
   Friend friend;
-  FriendScreen(this.friend);
+  FriendScreen(this.friend, {Key? key}) : super(key: key);
 
+  @override
   _FriendScreenState createState() => _FriendScreenState();
 }
 

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class StepsProgress extends StatefulWidget {
   //StepsProgress({Key? key, steps, target}) : super(key: key);
   int steps = 1;
   int target = 1;
-  StepsProgress(this.steps, this.target);
+  StepsProgress(this.steps, this.target, {Key? key}) : super(key: key);
 
   @override
   State<StepsProgress> createState() => _StepsProgressState();
@@ -36,7 +37,7 @@ class _StepsProgressState extends State<StepsProgress> with TickerProviderStateM
       } else {
         return steps / target;
       }
-    } catch (UnsupportedError) {
+    } catch (e) {
       return 0.1;
     }
   }

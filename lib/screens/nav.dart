@@ -7,9 +7,10 @@ import 'package:darkmodetoggle/screens/stickers_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// ignore: must_be_immutable
 class Nav extends StatefulWidget {
   String screen;
-  Nav(this.screen);
+  Nav(this.screen, {Key? key}) : super(key: key);
   //int screen;
   @override
   _NavState createState() => _NavState();

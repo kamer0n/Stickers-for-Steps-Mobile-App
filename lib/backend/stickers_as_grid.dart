@@ -1,7 +1,6 @@
 import 'dart:convert';
-import 'dart:ui';
 
-import 'package:darkmodetoggle/backend/alignQuantity.dart';
+import 'package:darkmodetoggle/backend/align_quantity.dart';
 import 'package:flutter/material.dart';
 
 ListView stickersAsGrid(AsyncSnapshot<List<dynamic>> snapshot) {

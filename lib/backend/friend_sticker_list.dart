@@ -3,17 +3,18 @@ import 'dart:convert';
 import 'package:darkmodetoggle/apis/api.dart';
 import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/backend/sticker.dart';
-import 'package:darkmodetoggle/backend/stickersAsGrid.dart';
+import 'package:darkmodetoggle/backend/stickers_as_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
 
+// ignore: must_be_immutable
 class FriendStickerList extends StatefulWidget {
   List<Collection> collections;
   String name;
 
-  FriendStickerList(this.collections, this.name);
+  FriendStickerList(this.collections, this.name, {Key? key}) : super(key: key);
   @override
   _FriendListState createState() => _FriendListState();
 }

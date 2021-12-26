@@ -51,7 +51,7 @@ class Collection {
     Uint8List pict;
     try {
       pict = Uint8List.fromList(utf8.encode(json['icon']));
-    } catch (Exception) {
+    } catch (e) {
       pict = json['icon'];
     }
     id = json['id'];

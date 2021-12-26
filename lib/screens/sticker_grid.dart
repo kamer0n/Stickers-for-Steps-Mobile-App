@@ -1,11 +1,12 @@
 import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/backend/sticker.dart';
-import 'package:darkmodetoggle/backend/stickersAsGrid.dart';
+import 'package:darkmodetoggle/backend/stickers_as_grid.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class StickerGrid extends StatefulWidget {
   Collection collection;
-  StickerGrid(this.collection);
+  StickerGrid(this.collection, {Key? key}) : super(key: key);
   @override
   _StickerGridState createState() => _StickerGridState();
 }
