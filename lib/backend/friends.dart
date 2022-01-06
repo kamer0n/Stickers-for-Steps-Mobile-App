@@ -97,7 +97,7 @@ class FriendsList extends StatelessWidget {
                             ElevatedButton(
                                 style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-                                    minimumSize: MaterialStateProperty.all<Size>(Size(10, 20))),
+                                    minimumSize: MaterialStateProperty.all<Size>(const Size(10, 20))),
                                 onPressed: () {
                                   deletefriend(friends[index].id).then((value) {
                                     Navigator.pop(context);
@@ -107,12 +107,12 @@ class FriendsList extends StatelessWidget {
                                         pageBuilder: (c, a1, a2) => Nav('Friends'),
                                         transitionsBuilder: (c, anim, a2, child) =>
                                             FadeTransition(opacity: anim, child: child),
-                                        transitionDuration: Duration(milliseconds: 0),
+                                        transitionDuration: const Duration(milliseconds: 0),
                                       ),
                                     );
                                   });
                                 },
-                                child: Text('Delete')),
+                                child: const Text('Delete')),
                           ],
                         ),
                       ]),

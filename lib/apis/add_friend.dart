@@ -11,20 +11,20 @@ Future<void> addFriendDialog(BuildContext context, {UniqueKey? key}) async {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text('Enter username'),
+        title: const Text('Enter username'),
         content: TextField(
           controller: _textFieldController,
-          decoration: InputDecoration(hintText: "Username"),
+          decoration: const InputDecoration(hintText: "Username"),
         ),
         actions: <Widget>[
           TextButton(
-            child: Text('CANCEL'),
+            child: const Text('CANCEL'),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
           TextButton(
-            child: Text('OK'),
+            child: const Text('OK'),
             onPressed: () async {
               addFriendPost(_textFieldController.text);
               Navigator.pop(context);

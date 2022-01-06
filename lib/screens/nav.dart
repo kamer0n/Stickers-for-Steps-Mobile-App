@@ -22,15 +22,15 @@ class _NavState extends State<Nav> {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
-        return Home();
+        return const Home();
       case 1:
-        return StickerScreen();
+        return const StickerScreen();
       case 2:
         return ChatLobby();
       case 3:
-        return LeaderboardScreen();
+        return const LeaderboardScreen();
       case 4:
-        return FriendScreen();
+        return const FriendScreen();
 
       default:
         return const Text("Error");
@@ -87,7 +87,7 @@ class _NavState extends State<Nav> {
           Navigator.pushNamed(context, "/signin");
         },
       ),
-      title: Text(
+      title: const Text(
         "Stickers for Steps",
       ),
       backgroundColor: Colors.black87,

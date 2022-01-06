@@ -11,7 +11,7 @@ Future<int> fetchSteps() async {
 
   DateTime now = DateTime.now();
   DateTime start = DateTime(now.year, now.month, now.day);
-  DateTime end = start.add(Duration(days: 1));
+  DateTime end = start.add(const Duration(days: 1));
 
   HealthFactory health = HealthFactory();
 

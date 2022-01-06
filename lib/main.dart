@@ -10,7 +10,7 @@ import 'package:darkmodetoggle/screens/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: MyApp(),
   ));
 }
@@ -39,14 +39,14 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Stack(
-        children: [(_loginStatus == 1) ? Nav('Home') : SignIn()],
+        children: [(_loginStatus == 1) ? Nav('Home') : const SignIn()],
       ),
       theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        '/signin': (BuildContext context) => SignIn(),
-        '/signup': (BuildContext context) => SignUp(),
-        '/stickerscreen': (BuildContext context) => StickerScreen(),
+        '/signin': (BuildContext context) => const SignIn(),
+        '/signup': (BuildContext context) => const SignUp(),
+        '/stickerscreen': (BuildContext context) => const StickerScreen(),
         '/friendsscreen': (BuildContext context) => Nav('Friends'),
         '/home': (BuildContext context) => Nav('Home'),
         '/leaderboard': (BuildContext context) => Nav('Leaderboard'),

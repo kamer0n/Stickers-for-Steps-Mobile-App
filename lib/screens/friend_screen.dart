@@ -39,14 +39,14 @@ class _FriendScreenState extends State<FriendScreen> {
             return Column(
               children: [
                 Card(
-                  shape: ContinuousRectangleBorder(),
+                  shape: const ContinuousRectangleBorder(),
                   child: SizedBox(
                       height: 200,
                       width: MediaQuery.of(context).size.width,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Padding(
+                          const Padding(
                             padding: EdgeInsets.fromLTRB(22, 0, 0, 0),
                           ),
                           Expanded(child: SvgPicture.network(widget.friend.avatar)),
@@ -58,7 +58,7 @@ class _FriendScreenState extends State<FriendScreen> {
                 Flexible(
                   child: SingleChildScrollView(
                     child: FriendStickerList(snapshot.data!, widget.friend.name),
-                    physics: AlwaysScrollableScrollPhysics(),
+                    physics: const AlwaysScrollableScrollPhysics(),
                   ),
                 )
               ],

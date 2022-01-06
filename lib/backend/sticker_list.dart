@@ -26,11 +26,11 @@ class _StickerListState extends State<StickerList> {
             FutureBuilder<List<Collection>>(
               builder: (context, snapshot) {
                 return Padding(
-                  padding: EdgeInsets.fromLTRB(0.0, 9.0, 0.0, 0.0),
+                  padding: const EdgeInsets.fromLTRB(0.0, 9.0, 0.0, 0.0),
                   child: SizedBox(
                     child: ElevatedButton(
                         style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(Color.fromRGBO(66, 66, 66, 1.0))),
+                            backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(66, 66, 66, 1.0))),
                         onPressed: () {
                           Navigator.push(
                               context, MaterialPageRoute(builder: (context) => StickerGrid(widget.collections[index])));
@@ -42,7 +42,7 @@ class _StickerListState extends State<StickerList> {
                             Text(
                               widget.collections[index].name,
                               textScaleFactor: 1.5,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ]),
                         )),

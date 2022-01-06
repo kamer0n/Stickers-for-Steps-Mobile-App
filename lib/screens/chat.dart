@@ -1,37 +1,10 @@
+import 'dart:convert';
+
+import 'package:darkmodetoggle/apis/api.dart';
 import 'package:flutter/material.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
-
-void main() async {
-  /// Create a new instance of [StreamChatClient] passing the apikey obtained from your
-  /// project dashboard.
-  final client = StreamChatClient(
-    'b67pax5b2wdq',
-    logLevel: Level.INFO,
-  );
-
-  /// Set the current user. In a production scenario, this should be done using
-  /// a backend to generate a user token using our server SDK.
-  /// Please see the following for more information:
-  /// https://getstream.io/chat/docs/flutter-dart/tokens_and_authentication/?language=dart
-  await client.connectUser(
-    User(id: 'admin'),
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYWRtaW4ifQ.6DtVPJmHsGNp67VpJAz0OptRq-eMn_R4Scobf-quK_Y',
-  );
-
-  /// Creates a channel using the type `messaging` and `flutterdevs`.
-  /// Channels are containers for holding messages between different members. To
-  /// learn more about channels and some of our predefined types, checkout our
-  /// our channel docs: https://getstream.io/chat/docs/flutter-dart/creating_channels/?language=dart
-  final channel = client.channel('lobby', id: 'Lobby');
-
-  /// `.watch()` is used to create and listen to the channel for updates. If the
-  /// channel already exists, it will simply listen for new events.
-  await channel.watch();
-
-  runApp(
-    ChatLobby(),
-  );
-}
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class ChatLobby extends StatelessWidget {
   /// To initialize this example, an instance of [client] and [channel] is required.
@@ -41,29 +14,78 @@ class ChatLobby extends StatelessWidget {
 
   /// Instance of [StreamChatClient] we created earlier. This contains information about
   /// our application and connection state.
-  late final StreamChatClient client = StreamChatClient(
-    'b67pax5b2wdq',
-    logLevel: Level.INFO,
-  );
-
-  /// The channel we'd like to observe and participate.
-  late final Channel channel = client.channel('lobby', id: 'Lobby');
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      builder: (context, widget) {
-        return StreamChat(
-          client: client,
-          child: widget,
-        );
+    return FutureBuilder(
+      future: getChannel(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          List<dynamic> data = snapshot.data as List;
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            builder: (context, widget) {
+              return StreamChat(
+                streamChatThemeData: StreamChatThemeData(
+                  colorTheme: ColorTheme.dark(),
+                  otherMessageTheme: const MessageThemeData(),
+                ),
+                client: data[0],
+                child: widget,
+              );
+            },
+            home: StreamChannel(
+              channel: data[1],
+              child: const ChannelPage(),
+            ),
+          );
+        } else {
+          return const Text("loading");
+        }
       },
-      home: StreamChannel(
-        channel: channel,
-        child: const ChannelPage(),
-      ),
     );
   }
+}
+
+Future<List<dynamic>> getChannel() async {
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  String? username = preferences.getString("username");
+  String? chatToken = preferences.getString("chatToken");
+  if (chatToken == null) {
+    final response = await http.post(Uri.parse(chatTokenUrl),
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
+          "authorization": ("TOKEN " + (preferences.getString('token') ?? defaultToken))
+        },
+        encoding: Encoding.getByName("utf-8"));
+    if (response.statusCode == 200) {
+      Map<String, dynamic> resposne = jsonDecode(response.body);
+      preferences.setString("chatToken", resposne["chatToken"]);
+      chatToken = resposne["chatToken"];
+    }
+  }
+  List<dynamic> list = [];
+  late final StreamChatClient client = StreamChatClient(
+    '5ceytf5njkme',
+    logLevel: Level.INFO,
+  );
+  print('here');
+  print(username);
+  print(chatToken);
+  await client.connectUser(
+    User(
+        id: username ?? 'default',
+        name: username,
+        image: 'http://188.166.153.138:3000/api/avataaars/' + username! + '.png'),
+    chatToken!,
+  );
+  print('pong');
+  Channel channel = client.channel('lobby', id: 'Lobby');
+  await channel.watch();
+  list.add(client);
+  list.add(channel);
+  return list;
 }
 
 /// Displays the list of messages inside the channel
@@ -74,16 +96,32 @@ class ChannelPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const ChannelHeader(),
-      body: Column(
-        children: const <Widget>[
-          Expanded(
-            child: MessageListView(),
-          ),
-          MessageInput(),
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        Expanded(
+            child: MessageListView(
+          showFloatingDateDivider: false,
+          messageBuilder: (context, details, messages, defaultMessage) {
+            return defaultMessage.copyWith(
+              showFlagButton: false,
+              showEditMessage: false,
+              showCopyMessage: true,
+              showDeleteMessage: details.isMyMessage,
+              showReplyMessage: false,
+              showThreadReplyMessage: false,
+              showReactions: false,
+              showUserAvatar: DisplayWidget.show,
+              onMessageTap: (message) {
+                print('pog');
+              },
+              showSendingIndicator: false,
+            );
+          },
+        )),
+        const MessageInput(
+          disableAttachments: true,
+        ),
+      ],
     );
   }
 }

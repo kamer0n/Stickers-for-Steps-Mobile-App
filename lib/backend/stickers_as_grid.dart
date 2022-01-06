@@ -13,7 +13,7 @@ ListView stickersAsGrid(AsyncSnapshot<List<dynamic>> snapshot) {
           crossAxisCount: 3,
         ),
         shrinkWrap: true,
-        physics: PageScrollPhysics(),
+        physics: const PageScrollPhysics(),
         scrollDirection: Axis.vertical,
         itemCount: snapshot.data!.length,
         itemBuilder: (context, index) {
@@ -61,7 +61,7 @@ ListView stickersAsGrid(AsyncSnapshot<List<dynamic>> snapshot) {
 AlertDialog stickerDialog(picture) {
   return AlertDialog(
     shape: RoundedRectangleBorder(
-        side: BorderSide(color: Colors.white70, width: 3.0), borderRadius: BorderRadius.circular(4.0)),
+        side: const BorderSide(color: Colors.white70, width: 3.0), borderRadius: BorderRadius.circular(4.0)),
     title: Text(
       picture.title,
       textAlign: TextAlign.center,

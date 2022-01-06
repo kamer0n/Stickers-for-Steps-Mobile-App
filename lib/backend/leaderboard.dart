@@ -63,13 +63,13 @@ class LeaderboardView extends StatelessWidget {
       ), */
         itemCount: leaderboard.length,
         itemBuilder: (context, index) {
-          Color bg = Color.fromRGBO(66, 66, 66, 1.0);
+          Color bg = const Color.fromRGBO(66, 66, 66, 1.0);
           if (index == 0) {
-            bg = Color.fromRGBO(255, 215, 0, 100);
+            bg = const Color.fromRGBO(255, 215, 0, 100);
           } else if (index == 1) {
-            bg = Color.fromRGBO(192, 192, 192, 100);
+            bg = const Color.fromRGBO(192, 192, 192, 100);
           } else if (index == 2) {
-            bg = Color.fromRGBO(205, 127, 50, 100);
+            bg = const Color.fromRGBO(205, 127, 50, 100);
           } //else if (leaderboard[index].friends == 'self') {
           //bg = Colors.blue;
           //}
@@ -91,7 +91,7 @@ class LeaderboardView extends StatelessWidget {
                             Text(
                               leaderboard[index].name,
                               textScaleFactor: 1.4,
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Text(
                               "Stickers collected: " + leaderboard[index].count.toString(),
@@ -102,19 +102,19 @@ class LeaderboardView extends StatelessWidget {
                                 style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
                                 ),
-                                child: Icon(Icons.add),
+                                child: const Icon(Icons.add),
                                 onPressed: () {
                                   addFriendPost(leaderboard[index].name);
                                   popup(context, 'Friend request sent!');
                                 },
                               ),
                             if ((leaderboard[index].friends == 'true'))
-                              Text(
+                              const Text(
                                 "Already friends!",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             if ((leaderboard[index].friends == 'self'))
-                              Text(
+                              const Text(
                                 "You",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),

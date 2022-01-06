@@ -75,12 +75,12 @@ class _HomeState extends State<Home> {
                     width: 350,
                     child: Card(
                         child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                      Text(
+                      const Text(
                         "Today's Progress",
                         textScaleFactor: 2,
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 100,
                       ),
                       Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
@@ -132,16 +132,16 @@ class _HomeState extends State<Home> {
                     PageRouteBuilder(
                       pageBuilder: (c, a1, a2) => Nav('Home'),
                       transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
-                      transitionDuration: Duration(milliseconds: 0),
+                      transitionDuration: const Duration(milliseconds: 0),
                     ),
                   );
                 },
-                child: Text('Open new sticker pack!'))
+                child: const Text('Open new sticker pack!'))
           ],
         ),
       ));
     } else {
-      return SizedBox(
+      return const SizedBox(
         child: Card(
             child: Center(
                 child: Text(
@@ -166,7 +166,7 @@ class _HomeState extends State<Home> {
 AlertDialog stickerDialog(picture) {
   return AlertDialog(
     shape: RoundedRectangleBorder(
-        side: BorderSide(color: Colors.white70, width: 3.0), borderRadius: BorderRadius.circular(4.0)),
+        side: const BorderSide(color: Colors.white70, width: 3.0), borderRadius: BorderRadius.circular(4.0)),
     title: Text(
       picture.title,
       textAlign: TextAlign.center,

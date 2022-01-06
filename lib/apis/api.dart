@@ -15,3 +15,4 @@ const String frienddecline = "$root/api/friend/reject/";
 const String frienddelete = "$root/api/friend/delete/";
 const String stepaccess = "$root/api/sendsteps/";
 const String leaderboardurl = "$root/api/leaderboard/";
+const String chatTokenUrl = "$root/api/chattoken/";

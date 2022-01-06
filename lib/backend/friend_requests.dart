@@ -73,13 +73,13 @@ class FriendRequestList extends StatelessWidget {
                           height: 25,
                           width: 100,
                         ),
-                        padding: EdgeInsets.only(top: 15.0)),
+                        padding: const EdgeInsets.only(top: 15.0)),
                     Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                       ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                            minimumSize: MaterialStateProperty.all<Size>(Size(10, 20))),
-                        child: Icon(Icons.check),
+                            minimumSize: MaterialStateProperty.all<Size>(const Size(10, 20))),
+                        child: const Icon(Icons.check),
                         onPressed: () {
                           requestresponse(friendRequests[index].id, 'accept');
                           Navigator.pop(context);
@@ -89,8 +89,8 @@ class FriendRequestList extends StatelessWidget {
                       ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-                            minimumSize: MaterialStateProperty.all<Size>(Size(10, 20))),
-                        child: Icon(Icons.close),
+                            minimumSize: MaterialStateProperty.all<Size>(const Size(10, 20))),
+                        child: const Icon(Icons.close),
                         onPressed: () {
                           requestresponse(friendRequests[index].id, 'decline');
                           Navigator.pop(context);
@@ -105,7 +105,7 @@ class FriendRequestList extends StatelessWidget {
               ),
             ));
           } else {
-            return Text('oops');
+            return const Text('oops');
           }
         });
   }
