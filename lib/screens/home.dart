@@ -5,7 +5,7 @@ import 'package:darkmodetoggle/backend/sticker.dart';
 import 'package:darkmodetoggle/components/progress.dart';
 import 'package:flutter/material.dart';
 
-import 'nav.dart';
+import 'package:darkmodetoggle/screens/nav.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);

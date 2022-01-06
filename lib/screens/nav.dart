@@ -1,4 +1,5 @@
 import 'package:darkmodetoggle/backend/usersticker.dart';
+import 'package:darkmodetoggle/screens/chat.dart';
 import 'package:darkmodetoggle/screens/friend_requests.dart';
 import 'package:darkmodetoggle/screens/friends.dart';
 import 'package:darkmodetoggle/screens/home.dart';
@@ -25,8 +26,10 @@ class _NavState extends State<Nav> {
       case 1:
         return StickerScreen();
       case 2:
-        return LeaderboardScreen();
+        return ChatLobby();
       case 3:
+        return LeaderboardScreen();
+      case 4:
         return FriendScreen();
 
       default:
@@ -45,7 +48,7 @@ class _NavState extends State<Nav> {
       _currentIndex = 0;
     } else if (widget.screen == 'Friends') {
       widget.screen = '';
-      _currentIndex = 3;
+      _currentIndex = 4;
     }
     return Scaffold(
         appBar: _appBar(),
@@ -66,6 +69,7 @@ class _NavState extends State<Nav> {
             items: const [
               BottomNavigationBarItem(label: ('Home'), icon: Icon(Icons.home)),
               BottomNavigationBarItem(label: ('Stickers'), icon: Icon(Icons.sticky_note_2)),
+              BottomNavigationBarItem(label: ('Trade'), icon: Icon(Icons.transgender)),
               BottomNavigationBarItem(label: ('Leaderboard'), icon: Icon(Icons.leaderboard)),
               BottomNavigationBarItem(label: ('Friends'), icon: Icon(Icons.person)),
             ]),
@@ -88,7 +92,7 @@ class _NavState extends State<Nav> {
       ),
       backgroundColor: Colors.black87,
       centerTitle: true,
-      actions: _currentIndex != 3
+      actions: _currentIndex != 4
           ? null
           : <Widget>[
               Padding(
@@ -97,7 +101,7 @@ class _NavState extends State<Nav> {
                     onTap: () {
                       displayFriends(context, key: UniqueKey()).then((value) {
                         setState(() {
-                          _currentIndex = 3;
+                          _currentIndex = 4;
                         });
                       });
                     },
