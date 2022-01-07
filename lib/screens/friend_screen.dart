@@ -3,7 +3,6 @@ import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/backend/friend_sticker_list.dart';
 import 'package:darkmodetoggle/backend/friends.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 // ignore: must_be_immutable
 class FriendScreen extends StatefulWidget {
@@ -49,7 +48,7 @@ class _FriendScreenState extends State<FriendScreen> {
                           const Padding(
                             padding: EdgeInsets.fromLTRB(22, 0, 0, 0),
                           ),
-                          Expanded(child: SvgPicture.network(widget.friend.avatar)),
+                          Expanded(child: Image.network(widget.friend.avatar)),
                           Expanded(child: alignQuantity(widget.friend.name, Alignment.centerLeft, 30))
                         ],
                       )),

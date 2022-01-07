@@ -10,8 +10,6 @@ import 'package:http/http.dart' as http;
 import 'package:darkmodetoggle/apis/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:flutter_svg/flutter_svg.dart';
-
 Future<List<Friend>> fetchFriends(http.Client client) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   final token = preferences.getString('token') ?? defaultToken;
@@ -69,6 +67,7 @@ class FriendsList extends StatelessWidget {
       ), */
         itemCount: friends.length,
         itemBuilder: (context, index) {
+          print(friends[index].avatar);
           return Center(
             child: Card(
                 child: InkWell(
@@ -78,7 +77,7 @@ class FriendsList extends StatelessWidget {
                     },
                     child: SizedBox(
                       child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                        SvgPicture.network(
+                        Image.network(
                           friends[index].avatar,
                           height: 70,
                           width: 70,

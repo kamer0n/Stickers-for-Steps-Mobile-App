@@ -26,7 +26,7 @@ class _NavState extends State<Nav> {
       case 1:
         return const StickerScreen();
       case 2:
-        return ChatLobby();
+        return ChatScreen();
       case 3:
         return const LeaderboardScreen();
       case 4:
