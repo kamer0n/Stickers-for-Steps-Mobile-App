@@ -49,10 +49,6 @@ class _HomeState extends State<Home> {
 
   Future<Map> targetAndSteps() async {
     Map values = {};
-    print('here');
-    var pog = await fetchTrades(http.Client());
-    print(pog[0].senderStickers?[0].id);
-    print('there');
     List<int> vals = await fetchStepsAndTarget();
     values['steps'] = vals[0];
     values['target'] = vals[1];

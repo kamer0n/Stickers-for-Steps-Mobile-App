@@ -7,8 +7,10 @@ import 'package:path/path.dart';
 class DatabaseHandler {
   Future<Database> initializeDB() async {
     String path = await getDatabasesPath();
+    print('-- path --');
+    String newPath = join(path, 'db.db');
     return openDatabase(
-      join(path, 'db.db'),
+      newPath,
       onCreate: (database, version) async {
         await database.execute(
             "CREATE TABLE stickers(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, desc TEXT NOT NULL, rarity INTEGER NOT NULL, collection INTEGER NOT NULL, key BLOB NOT NULL)");
@@ -56,10 +58,16 @@ class DatabaseHandler {
     return queryResult.map((e) => UserSticker.fromJson(e)).toList();
   }
 
-  Future<List<Sticker>> retrieveSticker({required int id}) async {
-    final Database db = await initializeDB();
-    List<Map<String, Object?>> queryResult;
-    queryResult = await db.query('stickers', where: 'id=$id');
+  Future<List<Sticker>> retrieveSticker({int? id}) async {
+    Database db = await initializeDB();
+    List<Map<String, Object?>> queryResult = await db.query('stickers', where: 'id=$id');
+    List<Sticker> mapped = queryResult.map((e) => Sticker.fromJson(e)).toList();
+    return mapped;
+  }
+
+  Future<List<Sticker>> retrieveTradeSticker({int? id}) async {
+    Database db = await initializeDB();
+    List<Map<String, Object?>> queryResult = await db.query('stickers', where: 'id=$id');
     List<Sticker> mapped = queryResult.map((e) => Sticker.fromJson(e)).toList();
     return mapped;
   }

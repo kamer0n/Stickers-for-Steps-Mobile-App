@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:darkmodetoggle/backend/align_quantity.dart';
 import 'package:flutter/material.dart';
 
-ListView stickersAsGrid(AsyncSnapshot<List<dynamic>> snapshot) {
+ListView stickersAsGrid(var snapshot) {
   return ListView(children: [
     Column(children: [
       GridView.builder(

@@ -1,10 +1,10 @@
 import 'package:darkmodetoggle/backend/usersticker.dart';
-import 'package:darkmodetoggle/screens/chat.dart';
 import 'package:darkmodetoggle/screens/friend_requests.dart';
 import 'package:darkmodetoggle/screens/friends.dart';
 import 'package:darkmodetoggle/screens/home.dart';
 import 'package:darkmodetoggle/screens/leaderboard.dart';
 import 'package:darkmodetoggle/screens/stickers_screen.dart';
+import 'package:darkmodetoggle/screens/trades_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -26,7 +26,7 @@ class _NavState extends State<Nav> {
       case 1:
         return const StickerScreen();
       case 2:
-        return const ChatScreen();
+        return const TradeNav();
       case 3:
         return const LeaderboardScreen();
       case 4:

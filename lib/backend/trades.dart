@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:darkmodetoggle/apis/api.dart';
 import 'package:darkmodetoggle/backend/sticker.dart';
-import 'package:darkmodetoggle/backend/usersticker.dart';
+import 'package:darkmodetoggle/backend/databasehandler.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -43,13 +43,13 @@ class Trade {
       receiverId: json['receiver'],
       timeSent: DateTime.parse(json['time_sent']),
       tradeStatus: json['trade_status'],
-      senderStickers: parseUserStickerTrade(json['sender_stickers']),
-      receiverStickers: parseUserStickerTrade(json['receiver_stickers']),
+      senderStickers: json['sender_stickers'],
+      receiverStickers: json['receiver_stickers'],
     );
   }
 
   @override
   String toString() {
-    return senderId.toString();
+    return "Trade from ${senderId.toString()} to ${receiverId.toString()}";
   }
 }

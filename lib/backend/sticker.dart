@@ -25,6 +25,11 @@ Future<List<Sticker>> fetchSingleSticker({required int id}) async {
   return await db.retrieveSticker(id: id);
 }
 
+Future<List<Sticker>> fetchTradeStickers(List<dynamic> stickers) async {
+  DatabaseHandler db = DatabaseHandler();
+  return await db.retrieveTradeSticker(id: 1);
+}
+
 Future<List<Sticker>> webFetch() async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   final response = await http.Client().get(Uri.parse(stickerurl),
