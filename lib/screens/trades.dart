@@ -1,3 +1,4 @@
+import 'package:darkmodetoggle/backend/sticker.dart';
 import 'package:darkmodetoggle/backend/trades.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -12,8 +13,8 @@ class _TradeScreenState extends State<TradeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: FutureBuilder<List<Trade>>(
-      future: fetchTrades(http.Client()),
+        body: FutureBuilder<List<dynamic>>(
+      future: getData(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           print(snapshot.error);
@@ -22,13 +23,41 @@ class _TradeScreenState extends State<TradeScreen> {
           );
         } else if (snapshot.hasData) {
           print(snapshot.data);
-          print(snapshot.data![0].receiverStickers);
-          //print(fetchSingleSticker(id: snapshot.data![0].senderStickers![0].id));
-          return Text('lol');
+          List<Trade> trades = snapshot.data! as List<Trade>;
+          print(trades[0].senderStickers);
+          print(trades[0].receiverStickers);
+          return Text(trades[0].receiverStickers.toString());
         } else {
           return const Center(child: CircularProgressIndicator());
         }
       },
     ));
   }
+}
+
+Future<List<dynamic>> getData() async {
+  List<dynamic> data = [];
+  List<Trade> trades = await fetchTrades(http.Client());
+  for (Trade trade in trades) {
+    if (trade.senderStickers != null) {
+      List<Sticker> stickers = [];
+      for (Map<dynamic, dynamic> sticker in trade.senderStickers ?? []) {
+        Sticker stick = (await fetchSingleSticker(id: sticker['id']))[0];
+        stick.quantity = sticker['quantity'];
+        stickers.add(stick);
+      }
+      trade.senderStickers = stickers;
+    }
+    if (trade.receiverStickers != null) {
+      List<Sticker> stickers = [];
+      for (Map<dynamic, dynamic> sticker in trade.receiverStickers ?? []) {
+        Sticker stick = (await fetchSingleSticker(id: sticker['id']))[0];
+        stick.quantity = sticker['quantity'];
+        stickers.add(stick);
+      }
+      trade.receiverStickers = stickers;
+    }
+  }
+  data.add(trades);
+  return data[0];
 }

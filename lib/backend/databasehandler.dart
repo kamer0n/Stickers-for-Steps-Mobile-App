@@ -7,7 +7,6 @@ import 'package:path/path.dart';
 class DatabaseHandler {
   Future<Database> initializeDB() async {
     String path = await getDatabasesPath();
-    print('-- path --');
     String newPath = join(path, 'db.db');
     return openDatabase(
       newPath,
@@ -59,13 +58,6 @@ class DatabaseHandler {
   }
 
   Future<List<Sticker>> retrieveSticker({int? id}) async {
-    Database db = await initializeDB();
-    List<Map<String, Object?>> queryResult = await db.query('stickers', where: 'id=$id');
-    List<Sticker> mapped = queryResult.map((e) => Sticker.fromJson(e)).toList();
-    return mapped;
-  }
-
-  Future<List<Sticker>> retrieveTradeSticker({int? id}) async {
     Database db = await initializeDB();
     List<Map<String, Object?>> queryResult = await db.query('stickers', where: 'id=$id');
     List<Sticker> mapped = queryResult.map((e) => Sticker.fromJson(e)).toList();

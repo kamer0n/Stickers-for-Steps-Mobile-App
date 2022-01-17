@@ -25,8 +25,8 @@ class Trade {
   final int receiverId;
   final DateTime? timeSent;
   final int tradeStatus;
-  final List<dynamic>? senderStickers;
-  final List<dynamic>? receiverStickers;
+  List<dynamic>? senderStickers;
+  List<dynamic>? receiverStickers;
 
   Trade({
     required this.senderId,

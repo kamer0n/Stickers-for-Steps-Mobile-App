@@ -26,8 +26,14 @@ Future<List<Sticker>> fetchSingleSticker({required int id}) async {
 }
 
 Future<List<Sticker>> fetchTradeStickers(List<dynamic> stickers) async {
+  List<Sticker> stickers_list = [];
   DatabaseHandler db = DatabaseHandler();
-  return await db.retrieveTradeSticker(id: 1);
+  for (var sticker in stickers) {
+    Sticker stick = (await db.retrieveSticker(id: sticker['id']))[0];
+    stick.quantity = sticker['quantity'];
+    stickers_list.add(stick);
+  }
+  return stickers_list;
 }
 
 Future<List<Sticker>> webFetch() async {
