@@ -102,7 +102,7 @@ class LeaderboardView extends StatelessWidget {
                                 style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
                                 ),
-                                child: const Icon(Icons.add),
+                                child: const Icon(Icons.person_add),
                                 onPressed: () {
                                   addFriendPost(leaderboard[index].name);
                                   popup(context, 'Friend request sent!');

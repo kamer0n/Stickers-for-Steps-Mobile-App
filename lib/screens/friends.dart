@@ -55,8 +55,11 @@ class _FriendScreenState extends State<FriendScreen> {
           onPressed: () {
             addFriendDialog(context, key: UniqueKey());
           },
-          tooltip: 'Increment',
-          child: const Icon(Icons.add),
+          tooltip: 'Add Friend',
+          child: const Icon(
+            Icons.person_add,
+            color: Colors.white,
+          ),
         ));
   }
 }

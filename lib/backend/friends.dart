@@ -14,8 +14,6 @@ Future<List<Friend>> fetchFriends(http.Client client) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   final token = preferences.getString('token') ?? defaultToken;
   final response = await client.get(Uri.parse(friendsurl), headers: {"authorization": "TOKEN " + (token)});
-  //final response = await client.get(Uri.parse(friendsurl), headers: {"authorization": "TOKEN " + (defaultToken)});
-  // Use the compute function to run parsePhotos in a separate isolate.
   return compute(parseFriend, response.body);
 }
 

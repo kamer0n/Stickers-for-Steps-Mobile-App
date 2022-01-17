@@ -9,6 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class ChatScreen extends StatefulWidget {
+  const ChatScreen({Key? key}) : super(key: key);
+
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -27,7 +29,7 @@ class _ChatScreenState extends State<ChatScreen> {
             child: const ChannelPage(),
           );
         } else {
-          return const Text("loading");
+          return const Center(child: CircularProgressIndicator());
         }
       },
     );
@@ -67,7 +69,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -90,7 +91,7 @@ class ChannelPage extends StatelessWidget {
       children: <Widget>[
         Expanded(
             child: MessageListView(
-          showFloatingDateDivider: false,
+          showFloatingDateDivider: true,
           messageBuilder: (context, details, messages, defaultMessage) {
             return defaultMessage.copyWith(
               showFlagButton: false,
@@ -115,7 +116,7 @@ class ChannelPage extends StatelessWidget {
               customActions: [
                 MessageAction(
                   leading: const Icon(
-                    Icons.add,
+                    Icons.account_circle,
                     color: Colors.white,
                   ),
                   title: const Text(
@@ -128,6 +129,23 @@ class ChannelPage extends StatelessWidget {
                     friends.add(Friend(
                         id: message.user!.id, avatar: message.user!.image ?? '', name: message.user!.name, fluff: ''));
 
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => (FriendScreen(friends[0]))));
+                  },
+                ),
+                MessageAction(
+                  leading: const Icon(
+                    Icons.person_add,
+                    color: Colors.white,
+                  ),
+                  title: const Text(
+                    'Add Friend',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onTap: (message) {
+                    print(message.user?.id);
+                    List<Friend> friends = [];
+                    friends.add(Friend(
+                        id: message.user!.id, avatar: message.user!.image ?? '', name: message.user!.name, fluff: ''));
                     Navigator.push(context, MaterialPageRoute(builder: (context) => (FriendScreen(friends[0]))));
                   },
                 ),

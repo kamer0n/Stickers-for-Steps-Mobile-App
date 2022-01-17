@@ -26,7 +26,7 @@ class _NavState extends State<Nav> {
       case 1:
         return const StickerScreen();
       case 2:
-        return ChatScreen();
+        return const ChatScreen();
       case 3:
         return const LeaderboardScreen();
       case 4:
@@ -69,7 +69,7 @@ class _NavState extends State<Nav> {
             items: const [
               BottomNavigationBarItem(label: ('Home'), icon: Icon(Icons.home)),
               BottomNavigationBarItem(label: ('Stickers'), icon: Icon(Icons.sticky_note_2)),
-              BottomNavigationBarItem(label: ('Trade'), icon: Icon(Icons.transgender)),
+              BottomNavigationBarItem(label: ('Trade'), icon: Icon(Icons.swap_horizontal_circle)),
               BottomNavigationBarItem(label: ('Leaderboard'), icon: Icon(Icons.leaderboard)),
               BottomNavigationBarItem(label: ('Friends'), icon: Icon(Icons.person)),
             ]),
@@ -79,7 +79,7 @@ class _NavState extends State<Nav> {
   AppBar _appBar() {
     return AppBar(
       leading: InkWell(
-        child: const Icon(Icons.compare_arrows),
+        child: const Icon(Icons.logout),
         onTap: () async {
           SharedPreferences preferences = await SharedPreferences.getInstance();
           preferences.clear();

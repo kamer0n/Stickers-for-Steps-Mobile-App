@@ -53,7 +53,27 @@ class _MyAppState extends State<MyApp> {
         return StreamChat(
           streamChatThemeData: StreamChatThemeData(
             colorTheme: ColorTheme.dark(),
-            otherMessageTheme: const MessageThemeData(),
+            messageListViewTheme: MessageListViewThemeData(backgroundColor: Colors.grey[900]),
+            otherMessageTheme: MessageThemeData(messageBackgroundColor: Colors.grey[800]),
+            messageInputTheme: MessageInputThemeData(
+                inputBackgroundColor: Colors.grey[900],
+                activeBorderGradient: const LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    Colors.white,
+                    Colors.white,
+                  ],
+                ),
+                idleBorderGradient: const LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    Colors.white,
+                    Colors.white,
+                  ],
+                ),
+                sendButtonIdleColor: Colors.grey[700]),
           ),
           client: client,
           child: child,

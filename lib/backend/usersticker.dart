@@ -27,6 +27,10 @@ List<UserSticker> parseUserSticker(String responseBody) {
   return parsed.map<UserSticker>((json) => UserSticker.fromJson(json)).toList();
 }
 
+List<UserSticker> parseUserStickerTrade(var responseBody) {
+  return responseBody.map<UserSticker>((json) => UserSticker.fromJson(json)).toList();
+}
+
 class UserSticker {
   final int id;
   int? quantity;
