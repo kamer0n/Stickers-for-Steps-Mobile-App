@@ -22,6 +22,7 @@ List<Trade> parseTrades(String responseBody) {
 }
 
 class Trade {
+  final int tradeId;
   final int senderId;
   final int receiverId;
   final String senderName;
@@ -33,6 +34,7 @@ class Trade {
   bool sender;
 
   Trade({
+    required this.tradeId,
     required this.senderId,
     required this.receiverId,
     required this.senderName,
@@ -46,6 +48,7 @@ class Trade {
 
   factory Trade.fromJson(Map<String, dynamic> json, {required bool sender_}) {
     return Trade(
+      tradeId: json['id'],
       senderId: json['sender'],
       receiverId: json['receiver'],
       senderName: json['sender_name'],

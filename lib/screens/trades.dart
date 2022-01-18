@@ -33,7 +33,7 @@ class _TradeScreenState extends State<TradeScreen> {
                 if (trades[index].tradeStatus == 1) {
                   return tradeCard(context, trades[index]);
                 } else if (trades[index].tradeStatus == 2) {
-                  return tradeCard(context, trades[index]);
+                  return tradeCard(context, trades[index], color: (Colors.lightGreen[700])!);
                 } else {
                   return tradeCard(context, trades[index], color: (Colors.red[300])!);
                 }
@@ -68,7 +68,7 @@ class _TradeScreenState extends State<TradeScreen> {
 Widget displayTradeGrid(Trade trade, String sOrR, {bool full = false}) {
   int end = 2;
   TextStyle tS = const TextStyle(fontSize: 12);
-  List<Color> colors = [Colors.blue, Colors.red];
+  List<Color> colors = [Colors.red, Colors.blue];
   List<Widget> info = [
     Text(
       "You\nsend   ",

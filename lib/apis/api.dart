@@ -1,6 +1,6 @@
 const String defaultToken = "99f0855824c3cc4b97e90bfe63027ec88a7439dd";
-const String root = "http://188.166.153.138";
-//const String root = "http://127.0.0.1:8000";
+//const String root = "http://188.166.153.138";
+const String root = "http://127.0.0.1:8000";
 
 const String registration = "$root/api/user/";
 const String loginurl = "$root/api-token-auth/";
@@ -17,3 +17,4 @@ const String stepaccess = "$root/api/sendsteps/";
 const String leaderboardurl = "$root/api/leaderboard/";
 const String chatTokenUrl = "$root/api/chattoken/";
 const String tradeURL = "$root/api/tradeview/";
+const String tradeResponseURL = "$root/api/traderesponseview/";

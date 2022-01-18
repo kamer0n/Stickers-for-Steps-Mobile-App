@@ -46,6 +46,9 @@ class _NavState extends State<Nav> {
     if (widget.screen == 'Home') {
       widget.screen = '';
       _currentIndex = 0;
+    } else if (widget.screen == 'Trade') {
+      widget.screen = '';
+      _currentIndex = 2;
     } else if (widget.screen == 'Friends') {
       widget.screen = '';
       _currentIndex = 4;
