@@ -26,14 +26,14 @@ Future<List<Sticker>> fetchSingleSticker({required int id}) async {
 }
 
 Future<List<Sticker>> fetchTradeStickers(List<dynamic> stickers) async {
-  List<Sticker> stickers_list = [];
+  List<Sticker> stickersList = [];
   DatabaseHandler db = DatabaseHandler();
   for (var sticker in stickers) {
     Sticker stick = (await db.retrieveSticker(id: sticker['id']))[0];
     stick.quantity = sticker['quantity'];
-    stickers_list.add(stick);
+    stickersList.add(stick);
   }
-  return stickers_list;
+  return stickersList;
 }
 
 Future<List<Sticker>> webFetch() async {
@@ -50,7 +50,7 @@ List<Sticker> parseSticker(String responseBody) {
 
 class Sticker {
   final int id;
-  Uint8List picture;
+  Uint8List? picture;
   final String title;
   final String desc;
   final int collection;
@@ -60,7 +60,7 @@ class Sticker {
 
   Sticker({
     required this.id,
-    required this.picture,
+    this.picture,
     required this.title,
     required this.desc,
     required this.collection,

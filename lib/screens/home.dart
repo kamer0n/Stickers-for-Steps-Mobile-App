@@ -2,13 +2,10 @@ import 'dart:convert';
 
 import 'package:darkmodetoggle/apis/health.dart';
 import 'package:darkmodetoggle/backend/sticker.dart';
-import 'package:darkmodetoggle/backend/trades.dart';
 import 'package:darkmodetoggle/components/progress.dart';
 import 'package:flutter/material.dart';
 
 import 'package:darkmodetoggle/screens/nav.dart';
-
-import 'package:http/http.dart' as http;
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);

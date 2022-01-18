@@ -17,6 +17,20 @@ Future<List<Friend>> fetchFriends(http.Client client) async {
   return compute(parseFriend, response.body);
 }
 
+Future<List<Friend>> fetchSingleFriend(http.Client client, int id) async {
+  SharedPreferences preferences = await SharedPreferences.getInstance();
+  final token = preferences.getString('token') ?? defaultToken;
+  Uri uri = Uri.parse(friendsurl + id.toString() + '/');
+  final response = await client.post(uri,
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "authorization": ("TOKEN " + (token))
+      },
+      encoding: Encoding.getByName("utf-8"));
+  return compute(parseFriend, response.body);
+}
+
 List<Friend> parseFriend(String responseBody) {
   final parsed = jsonDecode(responseBody);
   return parsed.map<Friend>((json) => Friend.fromJson(json)).toList();

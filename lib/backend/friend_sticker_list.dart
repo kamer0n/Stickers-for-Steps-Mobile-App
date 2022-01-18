@@ -112,7 +112,7 @@ Scaffold newMethod(int id, String name, String collectionName) {
           );
         } else if (snapshot.hasData) {
           //print(snapshot.data);
-          return stickersAsGrid(snapshot);
+          return ListView(children: [stickersAsGrid(snapshot.data)]);
         } else {
           return const Center(
             child: CircularProgressIndicator(),

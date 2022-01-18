@@ -1,24 +1,32 @@
 import 'dart:convert';
 
 import 'package:darkmodetoggle/backend/align_quantity.dart';
+import 'package:darkmodetoggle/backend/sticker.dart';
 import 'package:flutter/material.dart';
 
-ListView stickersAsGrid(var snapshot) {
-  return ListView(children: [
-    Column(children: [
-      GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisSpacing: 0,
-          mainAxisSpacing: 0,
-          crossAxisCount: 3,
-        ),
-        shrinkWrap: true,
-        physics: const PageScrollPhysics(),
-        scrollDirection: Axis.vertical,
-        itemCount: snapshot.data!.length,
-        itemBuilder: (context, index) {
-          var picture = snapshot.data![index];
-          if (picture.locked != true) {
+Widget stickersAsGrid(var snapshot, {bool trade = false}) {
+  double quantitySize = 36;
+  double titleSize = 9;
+  if (trade) {
+    snapshot.add(Sticker(id: 1, collection: 1, title: '', desc: '', rarity: 1));
+    quantitySize = 23;
+    titleSize = 9;
+  }
+  return Column(children: [
+    GridView.builder(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisSpacing: 0,
+        mainAxisSpacing: 0,
+        crossAxisCount: 3,
+      ),
+      shrinkWrap: true,
+      physics: const PageScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      itemCount: snapshot.length,
+      itemBuilder: (context, index) {
+        var picture = snapshot[index];
+        if (picture.locked != true) {
+          if ((index < 2) || (trade == false)) {
             return Card(
               color: Colors.grey[900],
               shape: RoundedRectangleBorder(
@@ -38,23 +46,32 @@ ListView stickersAsGrid(var snapshot) {
                     base64.decode(utf8.decode(picture.picture)),
                     alignment: Alignment.center,
                   )),
-                  alignQuantity(picture.quantity.toString(), Alignment.topRight, 36),
-                  alignQuantity(picture.title, Alignment.bottomCenter, 9)
+                  alignQuantity(picture.quantity.toString(), Alignment.topRight, quantitySize),
+                  alignQuantity(picture.title, Alignment.bottomCenter, titleSize)
                 ]),
               ),
             );
+          } else if (index == 2) {
+            return Card(
+              color: Colors.grey[900],
+              shape: RoundedRectangleBorder(
+                  side: BorderSide(color: Colors.grey[800]!, width: 3.0), borderRadius: BorderRadius.circular(4.0)),
+              child: alignQuantity('...', Alignment.bottomCenter, 36),
+            );
           } else {
-            return Align(
-                child: Image.memory(
-              base64.decode(utf8.decode(picture.picture)),
-              color: Colors.black,
-              alignment: Alignment.center,
-            ));
+            return const SizedBox(width: 0.0, height: 0.0);
           }
-          //return Image.memory(base64.decode(utf8.decode(snapshot.data![index].picture)), scale: 2);
-        },
-      ),
-    ])
+        } else {
+          return Align(
+              child: Image.memory(
+            base64.decode(utf8.decode(picture.picture)),
+            color: Colors.black,
+            alignment: Alignment.center,
+          ));
+        }
+        //return Image.memory(base64.decode(utf8.decode(snapshot.data![index].picture)), scale: 2);
+      },
+    ),
   ]);
 }
 

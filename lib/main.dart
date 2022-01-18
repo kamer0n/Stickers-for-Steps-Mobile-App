@@ -112,7 +112,6 @@ class _MyAppState extends State<MyApp> {
       print(_loginStatus);
       if (_loginStatus == 1) {
         getClient();
-        print('hog');
       }
     });
   }

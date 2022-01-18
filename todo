@@ -36,9 +36,9 @@ TODO : trading
 
 - [ ] asynchronous trading
 - [ ] server end points
-- [ ] receive trades
+- [x] receive trades
 - [ ] send trades
-- [ ] accept trades
+- [x] accept trades
 - [ ] error handling
 
 TODO : useful error messages
