@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:darkmodetoggle/screens/friend_screen.dart';
 import 'package:darkmodetoggle/screens/nav.dart';
+import 'package:darkmodetoggle/screens/trade_select_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -65,8 +66,9 @@ class Friend {
 }
 
 class FriendsList extends StatelessWidget {
-  const FriendsList({Key? key, required this.friends}) : super(key: key);
+  const FriendsList({Key? key, required this.friends, required this.type}) : super(key: key);
 
+  final String type;
   final List<Friend> friends;
   @override
   Widget build(BuildContext context) {
@@ -80,58 +82,71 @@ class FriendsList extends StatelessWidget {
         itemCount: friends.length,
         itemBuilder: (context, index) {
           print(friends[index].avatar);
-          return Center(
-            child: Card(
-                child: InkWell(
-                    splashColor: Colors.blue.withAlpha(30),
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => (FriendScreen(friends[index]))));
-                    },
-                    child: SizedBox(
-                      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                        Image.network(
-                          friends[index].avatar,
-                          height: 70,
-                          width: 70,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              friends[index].name,
-                              textScaleFactor: 1.3,
-                            ),
-                            Text(
-                              friends[index].fluff,
-                              textScaleFactor: 0.6,
-                            ),
-                            ElevatedButton(
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-                                    minimumSize: MaterialStateProperty.all<Size>(const Size(10, 20))),
-                                onPressed: () {
-                                  deletefriend(friends[index].id).then((value) {
-                                    Navigator.pop(context);
-                                    Navigator.push(
-                                      context,
-                                      PageRouteBuilder(
-                                        pageBuilder: (c, a1, a2) => Nav('Friends'),
-                                        transitionsBuilder: (c, anim, a2, child) =>
-                                            FadeTransition(opacity: anim, child: child),
-                                        transitionDuration: const Duration(milliseconds: 0),
-                                      ),
-                                    );
-                                  });
-                                },
-                                child: const Text('Delete')),
-                          ],
-                        ),
-                      ]),
-                      height: 100,
-                      width: 300,
-                    ))),
-          );
+          return Center(child: friendType(context, index, type));
         });
+  }
+
+  InkWell friendType(BuildContext context, int index, String type) {
+    Color bg = Colors.grey;
+    return InkWell(
+        splashColor: Colors.blue.withAlpha(30),
+        onTap: () {
+          if (type == 'friends') {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => (FriendScreen(friends[index], false))));
+          }
+        },
+        child: Card(
+          color: bg,
+          child: SizedBox(
+            child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Image.network(
+                friends[index].avatar,
+                height: 70,
+                width: 70,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    friends[index].name,
+                    textScaleFactor: 1.3,
+                  ),
+                  (type == 'friends')
+                      ? Text(
+                          friends[index].fluff,
+                          textScaleFactor: 0.6,
+                        )
+                      : Container(),
+                  ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                          minimumSize: MaterialStateProperty.all<Size>(const Size(10, 20))),
+                      onPressed: () {
+                        if (type == 'friends') {
+                          deletefriend(friends[index].id).then((value) {
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (c, a1, a2) => Nav('Friends'),
+                                transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+                                transitionDuration: const Duration(milliseconds: 0),
+                              ),
+                            );
+                          });
+                        } else if (type == 'trade') {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => TradeSelectScreen(friend: friends[index])));
+                        }
+                      },
+                      child: (type == 'friends') ? const Text('Delete') : const Text('Send trade')),
+                ],
+              ),
+            ]),
+            height: 100,
+            width: 300,
+          ),
+        ));
   }
 }
 

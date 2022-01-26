@@ -16,34 +16,40 @@ Future<List<Trade>> fetchTrades(http.Client client) async {
 List<Trade> parseTrades(String responseBody) {
   List<Trade> trades = [];
   final parsed = jsonDecode(responseBody);
-  trades.add((parsed['sent'].map<Trade>((json) => Trade.fromJson(json, sender_: true)).toList())[0]);
-  trades.add((parsed['received'].map<Trade>((json) => Trade.fromJson(json, sender_: false)).toList())[0]);
+  if (parsed['sent'].length != 0) {
+    trades.add((parsed['sent'].map<Trade>((json) => Trade.fromJson(json, sender_: true)).toList())[0]);
+  }
+  if (parsed['received'].length != 0) {
+    trades.add((parsed['received'].map<Trade>((json) => Trade.fromJson(json, sender_: false)).toList())[0]);
+  }
   return trades;
 }
 
+Future<void> sendTrade(http.Client client, Trade trade) async {}
+
 class Trade {
-  final int tradeId;
+  final int? tradeId;
   final int senderId;
   final int receiverId;
-  final String senderName;
-  final String receiverName;
+  final String? senderName;
+  final String? receiverName;
   final DateTime? timeSent;
-  final int tradeStatus;
+  final int? tradeStatus;
   List<dynamic>? senderStickers;
   List<dynamic>? receiverStickers;
-  bool sender;
+  bool? sender;
 
   Trade({
-    required this.tradeId,
+    this.tradeId,
     required this.senderId,
     required this.receiverId,
-    required this.senderName,
-    required this.receiverName,
+    this.senderName,
+    this.receiverName,
     this.timeSent,
-    required this.tradeStatus,
+    this.tradeStatus,
     this.senderStickers,
     this.receiverStickers,
-    required this.sender,
+    this.sender,
   });
 
   factory Trade.fromJson(Map<String, dynamic> json, {required bool sender_}) {

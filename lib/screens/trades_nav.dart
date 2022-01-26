@@ -27,9 +27,9 @@ class _TradeNavState extends State<TradeNav> {
     return Scaffold(
       body: _getDrawerItemWidget(_currentIndex),
       bottomNavigationBar: SizedBox(
-        height: 51,
+        height: 46,
         child: BottomNavigationBar(
-          iconSize: 20.0,
+          iconSize: 15.0,
           currentIndex: _currentIndex,
           backgroundColor: colorScheme.surface,
           selectedItemColor: colorScheme.onSurface,
@@ -37,7 +37,7 @@ class _TradeNavState extends State<TradeNav> {
           showSelectedLabels: false,
           showUnselectedLabels: false,
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.ac_unit), label: 'Trade'),
+            BottomNavigationBarItem(icon: Icon(Icons.compare_arrows), label: 'Trade'),
             BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Chat'),
           ],
           onTap: (value) async {

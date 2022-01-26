@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:darkmodetoggle/backend/align_quantity.dart';
 import 'package:darkmodetoggle/backend/sticker.dart';
@@ -8,7 +9,13 @@ Widget stickersAsGrid(var snapshot, {bool trade = false}) {
   double quantitySize = 36;
   double titleSize = 9;
   if (trade) {
-    snapshot.add(Sticker(id: 1, collection: 1, title: '', desc: '', rarity: 1));
+    snapshot.add(Sticker(
+        id: 1,
+        collection: 1,
+        title: '',
+        desc: '',
+        rarity: 1,
+        picture: Uint8List.fromList(utf8.encode("R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="))));
     quantitySize = 23;
     titleSize = 9;
   }

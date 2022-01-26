@@ -4,28 +4,24 @@ import 'package:darkmodetoggle/apis/api.dart';
 import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/backend/sticker.dart';
 import 'package:darkmodetoggle/backend/stickers_as_grid.dart';
-import 'package:darkmodetoggle/components/trade_sticker_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
 
 // ignore: must_be_immutable
-class FriendStickerList extends StatefulWidget {
+class StickerSelectScreen extends StatefulWidget {
   List<Collection> collections;
   String name;
-  bool? trade;
 
-  FriendStickerList(this.collections, this.name, {Key? key, this.trade}) : super(key: key);
+  StickerSelectScreen(this.collections, this.name, {Key? key}) : super(key: key);
   @override
-  _FriendListState createState() => _FriendListState();
+  _StickerSelectScreenState createState() => _StickerSelectScreenState();
 }
 
-class _FriendListState extends State<FriendStickerList> {
-  List<Sticker> selected = <Sticker>[];
+class _StickerSelectScreenState extends State<StickerSelectScreen> {
   @override
   Widget build(BuildContext context) {
-    print('trade: ${widget.trade}');
     return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
@@ -41,19 +37,12 @@ class _FriendListState extends State<FriendStickerList> {
                     child: ElevatedButton(
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(66, 66, 66, 1.0))),
-                        onPressed: () async {
-                          final List result = await Navigator.push(
+                        onPressed: () {
+                          Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => newMethod(context, widget.collections[index].id, widget.name,
-                                      widget.collections[index].name, widget.trade!, selected)));
-                          print(result);
-                          print(result.runtimeType);
-                          for (var element in result) {
-                            if (!selected.contains(element)) {
-                              selected.add(element);
-                            }
-                          }
+                                  builder: (context) => newMethod(
+                                      widget.collections[index].id, widget.name, widget.collections[index].name)));
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(30.0),
@@ -106,50 +95,30 @@ Future<List> friendStickers({required int collectionId, required String friendNa
   return stickers;
 }
 
-Scaffold newMethod(
-    BuildContext? context, int id, String name, String collectionName, bool trade, List<dynamic> selected) {
-  AppBar? bar = friendAppBar(collectionName);
-  if (trade) {
-    bar = null;
-  }
-  print("newMethod scaffold $selected");
+Scaffold newMethod(int id, String name, String collectionName) {
   return Scaffold(
-    appBar: bar,
-    body: Container(
-      color: Colors.grey[700],
-      child: FutureBuilder<List>(
-        future: friendStickers(collectionId: id, friendName: name),
-        builder: (context, snapshot) {
-          //print(snapshot);
-          if (snapshot.hasError) {
-            return const Center(
-              child: Text('An error has occurred!'),
-            );
-          } else if (snapshot.hasData) {
-            //print(snapshot.data);
-            if (trade) {
-              return TradeStickerGrid(1, snapshot.data, true, selected, collectionName);
-            } else {
-              return ListView(children: [stickersAsGrid(snapshot.data)]);
-            }
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
+    appBar: AppBar(
+      title: Text(collectionName),
+      backgroundColor: Colors.black87,
+      centerTitle: true,
+    ),
+    body: FutureBuilder<List>(
+      future: friendStickers(collectionId: id, friendName: name),
+      builder: (context, snapshot) {
+        //print(snapshot);
+        if (snapshot.hasError) {
+          return const Center(
+            child: Text('An error has occurred!'),
+          );
+        } else if (snapshot.hasData) {
+          //print(snapshot.data);
+          return ListView(children: [stickersAsGrid(snapshot.data)]);
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     ),
   );
 }
-
-AppBar friendAppBar(String collectionName) {
-  return AppBar(
-    title: Text(collectionName),
-    backgroundColor: Colors.black87,
-    centerTitle: true,
-  );
-}
-
-//void tradeAppBar(BuildContext context, String collectionName) {
-//}

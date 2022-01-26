@@ -32,7 +32,7 @@ class _FriendScreenState extends State<FriendScreen> {
                 child: Text('An error has occurred!'),
               );
             } else if (snapshot.hasData) {
-              var list = FriendsList(friends: snapshot.data!);
+              var list = FriendsList(friends: snapshot.data!, type: 'friends');
               return ListView(
                 children: [
                   Padding(

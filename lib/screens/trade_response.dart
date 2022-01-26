@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:darkmodetoggle/apis/add_friend.dart';
 import 'package:darkmodetoggle/apis/api.dart';
 import 'package:darkmodetoggle/backend/align_quantity.dart';
 import 'package:darkmodetoggle/backend/scaffmanager.dart';
@@ -12,8 +11,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class TradeResponseScreen extends StatefulWidget {
-  Trade trade;
-  TradeResponseScreen(this.trade, {Key? key}) : super(key: key);
+  final Trade trade;
+  const TradeResponseScreen(this.trade, {Key? key}) : super(key: key);
   @override
   _TradeResponseScreenState createState() => _TradeResponseScreenState();
 }
@@ -32,8 +31,8 @@ class _TradeResponseScreenState extends State<TradeResponseScreen> {
       body: ListView(
         physics: const ClampingScrollPhysics(),
         children: [
-          stickerCard(widget.trade.senderStickers!, 'sender', widget.trade.sender),
-          stickerCard(widget.trade.receiverStickers!, 'receiver', widget.trade.sender),
+          stickerCard(widget.trade.senderStickers!, 'sender', widget.trade.sender!),
+          stickerCard(widget.trade.receiverStickers!, 'receiver', widget.trade.sender!),
           statusDependence(context, widget.trade)
         ],
       ),
@@ -129,7 +128,6 @@ Widget stickerCard(List trades, String type, bool sender) {
     bg = Colors.blue;
     info = info.reversed.toList();
   }
-
   return Card(
       child: Column(
         children: [

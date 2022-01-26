@@ -1,4 +1,5 @@
 import 'package:darkmodetoggle/backend/align_quantity.dart';
+import 'package:darkmodetoggle/backend/send_trade_friend.dart';
 import 'package:darkmodetoggle/backend/sticker.dart';
 import 'package:darkmodetoggle/backend/stickers_as_grid.dart';
 import 'package:darkmodetoggle/backend/trades.dart';
@@ -17,32 +18,43 @@ class _TradeScreenState extends State<TradeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: FutureBuilder<List<dynamic>>(
-      future: getData(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          print(snapshot.error);
-          print('snapshot error in tradescreen');
-          return const Center(
-            child: Text('An error has occurred!'),
-          );
-        } else if (snapshot.hasData) {
-          List<Trade> trades = snapshot.data! as List<Trade>;
-          return ListView.builder(
-              itemCount: trades.length,
-              itemBuilder: (context, index) {
-                if (trades[index].tradeStatus == 1) {
-                  return tradeCard(context, trades[index]);
-                } else if (trades[index].tradeStatus == 2) {
-                  return tradeCard(context, trades[index], color: (Colors.lightGreen[700])!);
-                } else {
-                  return tradeCard(context, trades[index], color: (Colors.red[300])!);
-                }
-              });
-        } else {
-          return const Center(child: CircularProgressIndicator());
-        }
-      },
-    ));
+          future: getData(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              print(snapshot.error);
+              print('snapshot error in tradescreen');
+              return const Center(
+                child: Text('An error has occurred!'),
+              );
+            } else if (snapshot.hasData) {
+              List<Trade> trades = snapshot.data! as List<Trade>;
+              return ListView.builder(
+                  itemCount: trades.length,
+                  itemBuilder: (context, index) {
+                    if (trades[index].tradeStatus == 1) {
+                      return tradeCard(context, trades[index]);
+                    } else if (trades[index].tradeStatus == 2) {
+                      return tradeCard(context, trades[index], color: (Colors.lightGreen[700])!);
+                    } else {
+                      return tradeCard(context, trades[index], color: (Colors.red[300])!);
+                    }
+                  });
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          splashColor: Colors.blue,
+          onPressed: () {
+            displayTradeFriends(context);
+          },
+          tooltip: 'Send Trade',
+          child: const Icon(
+            Icons.send,
+            color: Colors.white,
+          ),
+        ));
   }
 
   Card tradeCard(BuildContext context, Trade trade, {Color color = Colors.black12}) {

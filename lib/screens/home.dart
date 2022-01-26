@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:darkmodetoggle/apis/health.dart';
 import 'package:darkmodetoggle/backend/sticker.dart';
@@ -6,6 +7,7 @@ import 'package:darkmodetoggle/components/progress.dart';
 import 'package:flutter/material.dart';
 
 import 'package:darkmodetoggle/screens/nav.dart';
+import 'package:scratcher/scratcher.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -163,25 +165,46 @@ class _HomeState extends State<Home> {
   }
 }
 
-AlertDialog stickerDialog(picture) {
+Widget stickerDialog(picture) {
+  final scratchKey = GlobalKey<ScratcherState>();
+
   return AlertDialog(
     shape: RoundedRectangleBorder(
         side: const BorderSide(color: Colors.white70, width: 3.0), borderRadius: BorderRadius.circular(4.0)),
-    title: Text(
-      picture.title,
+    title: const Text(
+      "Scratch to reveal your sticker!",
       textAlign: TextAlign.center,
     ),
-    content: SizedBox(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Image.memory(
-            base64.decode(utf8.decode(picture.picture)),
-            alignment: Alignment.center,
+    content: Scratcher(
+      key: scratchKey,
+      accuracy: ScratchAccuracy.high,
+      threshold: 30,
+      color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
+      onThreshold: () => (scratchKey.currentState?.reveal()),
+      child: Container(
+        decoration: BoxDecoration(color: Colors.white10, borderRadius: BorderRadius.circular(4.0)),
+        child: SizedBox(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    picture.title,
+                    textAlign: TextAlign.center,
+                  ),
+                  Image.memory(
+                    base64.decode(utf8.decode(picture.picture)),
+                    alignment: Alignment.center,
+                  ),
+                  Text(picture.desc, style: TextStyle(fontStyle: FontStyle.italic, color: Colors.grey[500])),
+                  Text(picture.rarityString()),
+                ],
+              ),
+            ],
           ),
-          Text(picture.desc, style: TextStyle(fontStyle: FontStyle.italic, color: Colors.grey[500])),
-          Text(picture.rarityString()),
-        ],
+        ),
       ),
     ),
   );
