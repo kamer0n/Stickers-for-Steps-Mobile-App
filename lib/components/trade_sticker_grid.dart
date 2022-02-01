@@ -22,7 +22,6 @@ class _TradeStickerGridState extends State<TradeStickerGrid> {
   List<int> strange = [];
   @override
   Widget build(BuildContext context) {
-    print("TradeStickerGrid selected ${widget.selected}");
     Color cardCol = Colors.grey[900]!;
     return Scaffold(
       backgroundColor: Colors.grey[800],
@@ -65,8 +64,6 @@ class _TradeStickerGridState extends State<TradeStickerGrid> {
                     }
                     return GestureDetector(
                       onTap: () {
-                        print(widget.selected.contains(picture));
-                        print(picture.quantity);
                         if (picture.quantity > 1) {
                           if (widget.selected.contains(picture) || strange.contains(picture.id)) {
                             widget.selected.removeWhere((item) => picture.id == item.id);
@@ -76,7 +73,6 @@ class _TradeStickerGridState extends State<TradeStickerGrid> {
                           }
                         }
                         _setState(() {});
-                        print(widget.selected);
                       },
                       child: Card(
                         color: colorPick(picture),

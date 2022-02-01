@@ -121,15 +121,12 @@ class ChannelPage extends StatelessWidget {
               showReactions: false,
               showUserAvatar: DisplayWidget.show,
               onUserAvatarTap: (user) {
-                print(user.id);
                 List<Friend> friends = [];
                 friends.add(Friend(id: user.id, avatar: user.image ?? '', name: user.name, fluff: ''));
 
                 Navigator.push(context, MaterialPageRoute(builder: (context) => (FriendScreen(friends[0], false))));
               },
-              onMessageTap: (message) {
-                print('pog');
-              },
+              onMessageTap: (message) {},
               //onMessageActions: (p0, p1) {},
               customActions: [
                 MessageAction(
@@ -142,7 +139,6 @@ class ChannelPage extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: (message) {
-                    print(message.user?.id);
                     List<Friend> friends = [];
                     friends.add(Friend(
                         id: message.user!.id, avatar: message.user!.image ?? '', name: message.user!.name, fluff: ''));
@@ -160,7 +156,6 @@ class ChannelPage extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: (message) {
-                    print(message.user?.id);
                     List<Friend> friends = [];
                     friends.add(Friend(
                         id: message.user!.id, avatar: message.user!.image ?? '', name: message.user!.name, fluff: ''));

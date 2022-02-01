@@ -243,10 +243,8 @@ class _SignUpState extends State<SignUp> {
     setState(() {
       isLoading = true;
     });
-    print("Calling");
 
     Map<String, String> data = {'email': email, 'password': password, 'username': name};
-    print(data);
     final response = await http.post(Uri.parse(registration),
         headers: {
           "Accept": "application/json",
@@ -255,24 +253,18 @@ class _SignUpState extends State<SignUp> {
         },
         body: jsonEncode(data),
         encoding: Encoding.getByName("utf-8"));
-    print(response.body);
     if (response.statusCode == 201) {
       setState(() {
         isLoading = false;
       });
       Map<String, dynamic> resposne = jsonDecode(response.body);
-      print(response.body);
       if (!resposne.containsKey('error')) {
         Map<String, dynamic> user = resposne;
-        print(" User name ${user['data']}");
         savePref(1, user['username'], user['email']);
         Navigator.pushReplacementNamed(context, "/signin");
-      } else {
-        print(" ${resposne['message']}");
-      }
+      } else {}
       scaffoldMessenger.showSnackBar(const SnackBar(content: Text("Account created, please log in!")));
     } else {
-      print(response.statusCode);
       Navigator.pushNamed(context, "/signup");
       scaffoldMessenger.showSnackBar(const SnackBar(content: Text("Please Try again")));
     }

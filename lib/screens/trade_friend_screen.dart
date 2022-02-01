@@ -18,8 +18,6 @@ class TradeFriendScreen extends StatefulWidget {
 class _TradeFriendScreenState extends State<TradeFriendScreen> {
   @override
   Widget build(BuildContext context) {
-    print("selected currently ${widget.selected}");
-    print("trade in tradefriendscreen ${widget.trade}");
     return FutureBuilder<List<Collection>>(
       future: fetchCollections(),
       builder: (context, snapshot) {

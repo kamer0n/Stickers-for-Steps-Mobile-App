@@ -7,9 +7,7 @@ import 'package:darkmodetoggle/backend/scaffmanager.dart';
 import 'package:darkmodetoggle/backend/sticker.dart';
 import 'package:darkmodetoggle/backend/stickers_as_grid.dart';
 import 'package:darkmodetoggle/backend/trades.dart';
-import 'package:darkmodetoggle/screens/nav.dart';
 import 'package:darkmodetoggle/screens/trade_friend_screen.dart';
-import 'package:darkmodetoggle/screens/trade_response.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -70,8 +68,6 @@ class _TradeSelectScreenState extends State<TradeSelectScreen> {
                         tradeStickerCard(context, newTrade.receiverStickers!, widget.friend, true),
                         ElevatedButton(
                             onPressed: () {
-                              print("Sender stickers: ${newTrade.senderStickers}");
-                              print("Receiver stickers: ${newTrade.receiverStickers}");
                               _onLoading();
                               postTrade(senders, receivers, widget.friend.id).then((value) {
                                 if (value == 0) {
@@ -152,7 +148,6 @@ class _TradeSelectScreenState extends State<TradeSelectScreen> {
                         true,
                         trades as List<Sticker>,
                       ))));
-          print("result in trade response: $result");
           if (sender) {
             receivers = [];
             for (var item in result) {
@@ -226,12 +221,9 @@ Future<int> postTrade(List<Sticker> senderStickers, List<Sticker> receiverSticke
     map['quantity'] = sticker.quantity!;
     recvSticks.add(map);
   }
-  print(sendSticks);
-  print(recvSticks);
-  Map<String, List<Map<String, int>>> senderMap = {"sender_stickers": sendSticks};
-  Map<String, List<Map<String, int>>> receiverMap = {"receiver_stickers": recvSticks};
-  print(senderMap);
-  print(receiverMap);
+  //Map<String, List<Map<String, int>>> senderMap = {"sender_stickers": sendSticks};
+  //Map<String, List<Map<String, int>>> receiverMap = {"receiver_stickers": recvSticks};
+
   final response = await http.Client().post(
     Uri.parse(tradeURL),
     body: jsonEncode(<String, dynamic>{

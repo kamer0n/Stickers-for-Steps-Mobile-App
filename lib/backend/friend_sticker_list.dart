@@ -46,7 +46,6 @@ class _FriendListState extends State<FriendStickerList> {
                               MaterialPageRoute(
                                   builder: (context) => newMethod(context, widget.collections[index].id, widget.name,
                                       widget.collections[index].name, widget.trade!, selected)));
-                          print(result);
                           for (var element in result) {
                             if (!selected.contains(element)) {
                               selected.add(element);
@@ -110,7 +109,6 @@ Scaffold newMethod(
   if (trade) {
     bar = null;
   }
-  print("newMethod scaffold $selected");
   return Scaffold(
     appBar: bar,
     body: Container(

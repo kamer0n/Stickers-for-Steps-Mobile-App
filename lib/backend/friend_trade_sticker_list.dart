@@ -27,7 +27,6 @@ class _FriendTradeListState extends State<FriendTradeStickerList> {
   Widget build(BuildContext context) {
     List<Sticker> localSelected = <Sticker>[];
     localSelected.addAll(widget.selected);
-    print('trade: ${widget.trade}');
     return Scaffold(
       appBar: AppBar(
           title: const Text("Collections"),
@@ -58,8 +57,6 @@ class _FriendTradeListState extends State<FriendTradeStickerList> {
                                 MaterialPageRoute(
                                     builder: (context) => newMethod(context, widget.collections[index].id, widget.name,
                                         widget.collections[index].name, widget.trade!, localSelected)));
-                            print(result);
-                            print(result.runtimeType);
                             for (var element in result) {
                               if (!localSelected.contains(element)) {
                                 localSelected.add(element);
@@ -125,7 +122,6 @@ Scaffold newMethod(
   if (trade) {
     bar = null;
   }
-  print("newMethod scaffold $selected");
   return Scaffold(
     appBar: bar,
     body: Container(

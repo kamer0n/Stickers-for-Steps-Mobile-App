@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:darkmodetoggle/apis/api.dart';
 import 'package:darkmodetoggle/backend/align_quantity.dart';
@@ -90,7 +89,6 @@ class _TradeResponseScreenState extends State<TradeResponseScreen> {
           ElevatedButton(
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
               onPressed: () async {
-                //_onLoading();
                 Friend friend = (await fetchSingleFriend(http.Client(), trade.senderId))[0];
                 final result = await Navigator.push(
                     context,
@@ -105,8 +103,6 @@ class _TradeResponseScreenState extends State<TradeResponseScreen> {
                                   receiverStickers: trade.senderStickers,
                                   receiverName: trade.senderName),
                             )));
-                print('ondaroos');
-                print("result $result pogunt");
                 if (result == 'sent') {
                   tradeResponse(context, trade, "counter");
                 }
@@ -195,7 +191,6 @@ Widget stickerCard(List trades, String type, bool sender) {
 
 Future<void> tradeResponse(BuildContext context, Trade trade, String type) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  print("traderesponse was called");
   String url = (tradeResponseURL);
   String message = "Error";
   int status = 0;
@@ -226,7 +221,6 @@ Future<void> tradeResponse(BuildContext context, Trade trade, String type) async
         "status": status.toString(),
       });
   if (response.statusCode == 200) {
-    print(response.body);
     Map<String, dynamic> resp = jsonDecode(response.body);
     popup(context, resp['message']!, seconds: 4);
   }

@@ -19,7 +19,6 @@ class _FriendScreenState extends State<FriendScreen> {
   List<Sticker> selected = [];
   @override
   Widget build(BuildContext context) {
-    print("trade in friendscreen ${widget.trade}");
     return Scaffold(
       appBar: AppBar(
           title: Text(

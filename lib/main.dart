@@ -109,7 +109,6 @@ class _MyAppState extends State<MyApp> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       _loginStatus = preferences.getInt('value') ?? 0;
-      print(_loginStatus);
       if (_loginStatus == 1) {
         getClient();
       }
