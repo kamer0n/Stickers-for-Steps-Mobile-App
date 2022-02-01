@@ -98,12 +98,12 @@ class _TradeResponseScreenState extends State<TradeResponseScreen> {
                         builder: (context) => TradeSelectScreen(
                               friend: friend,
                               trade: Trade(
-                                  senderId: trade.senderId,
-                                  receiverId: trade.receiverId,
+                                  senderId: trade.receiverId,
+                                  receiverId: trade.senderId,
                                   sender: !trade.sender,
                                   senderStickers: trade.receiverStickers,
                                   receiverStickers: trade.senderStickers,
-                                  receiverName: trade.receiverName),
+                                  receiverName: trade.senderName),
                             )));
                 print('ondaroos');
                 print("result $result pogunt");

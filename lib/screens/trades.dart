@@ -42,12 +42,16 @@ class _TradeScreenState extends State<TradeScreen> {
 
               if (isSender) {
                 trades.addAll(_trades
-                    .where((i) => i.sender && (i.tradeStatus != 3 && i.tradeStatus != 4 && i.tradeStatus != 6))
+                    .where((i) =>
+                        i.sender &&
+                        (i.tradeStatus != 3 && i.tradeStatus != 4 && i.tradeStatus != 5 && i.tradeStatus != 6))
                     .toList());
               }
               if (isReceiver) {
                 trades.addAll(_trades
-                    .where((i) => i.sender == false && (i.tradeStatus != 3 && i.tradeStatus != 4 && i.tradeStatus != 6))
+                    .where((i) =>
+                        i.sender == false &&
+                        (i.tradeStatus != 3 && i.tradeStatus != 4 && i.tradeStatus != 5 && i.tradeStatus != 6))
                     .toList());
               }
               if (isAccepted) {
