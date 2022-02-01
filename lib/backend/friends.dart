@@ -20,15 +20,15 @@ Future<List<Friend>> fetchFriends(http.Client client) async {
 
 Future<List<Friend>> fetchSingleFriend(http.Client client, int id) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  final token = preferences.getString('token') ?? defaultToken;
-  Uri uri = Uri.parse(friendsurl + id.toString() + '/');
-  final response = await client.post(uri,
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/x-www-form-urlencoded",
-        "authorization": ("TOKEN " + (token))
-      },
-      encoding: Encoding.getByName("utf-8"));
+  Uri uri = Uri.parse(profileurl);
+  final response = await client.post(
+    uri,
+    body: jsonEncode(<String, dynamic>{"id": id.toString()}),
+    headers: {
+      "authorization": "TOKEN " + (preferences.getString('token') ?? defaultToken),
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  );
   return compute(parseFriend, response.body);
 }
 
@@ -81,7 +81,6 @@ class FriendsList extends StatelessWidget {
       ), */
         itemCount: friends.length,
         itemBuilder: (context, index) {
-          print(friends[index].avatar);
           return Center(child: friendType(context, index, type));
         });
   }

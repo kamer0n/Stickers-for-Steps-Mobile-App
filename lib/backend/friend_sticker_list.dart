@@ -25,7 +25,6 @@ class _FriendListState extends State<FriendStickerList> {
   List<Sticker> selected = <Sticker>[];
   @override
   Widget build(BuildContext context) {
-    print('trade: ${widget.trade}');
     return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
@@ -48,7 +47,6 @@ class _FriendListState extends State<FriendStickerList> {
                                   builder: (context) => newMethod(context, widget.collections[index].id, widget.name,
                                       widget.collections[index].name, widget.trade!, selected)));
                           print(result);
-                          print(result.runtimeType);
                           for (var element in result) {
                             if (!selected.contains(element)) {
                               selected.add(element);

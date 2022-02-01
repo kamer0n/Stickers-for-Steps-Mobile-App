@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:darkmodetoggle/apis/api.dart';
 import 'package:darkmodetoggle/backend/align_quantity.dart';
+import 'package:darkmodetoggle/backend/friends.dart';
 import 'package:darkmodetoggle/backend/scaffmanager.dart';
 import 'package:darkmodetoggle/backend/stickers_as_grid.dart';
 import 'package:darkmodetoggle/backend/trades.dart';
 import 'package:darkmodetoggle/screens/nav.dart';
+import 'package:darkmodetoggle/screens/trade_select_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -31,16 +34,16 @@ class _TradeResponseScreenState extends State<TradeResponseScreen> {
       body: ListView(
         physics: const ClampingScrollPhysics(),
         children: [
-          stickerCard(widget.trade.senderStickers!, 'sender', widget.trade.sender!),
-          stickerCard(widget.trade.receiverStickers!, 'receiver', widget.trade.sender!),
-          statusDependence(context, widget.trade)
+          stickerCard(widget.trade.senderStickers!, 'sender', widget.trade.sender),
+          stickerCard(widget.trade.receiverStickers!, 'receiver', widget.trade.sender),
+          statusDependence(context, widget.trade),
         ],
       ),
     );
   }
 
   Widget statusDependence(BuildContext context, Trade trade) {
-    if (trade.tradeStatus == 1) {
+    if ((trade.tradeStatus == 1) && (trade.sender == false)) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -67,6 +70,7 @@ class _TradeResponseScreenState extends State<TradeResponseScreen> {
           ElevatedButton(
               style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.red)),
               onPressed: () {
+                _onLoading();
                 tradeResponse(context, trade, "decline").then((value) {
                   Navigator.pop(context);
                   Navigator.push(
@@ -79,14 +83,65 @@ class _TradeResponseScreenState extends State<TradeResponseScreen> {
                   );
                 });
               },
-              child: const Icon(Icons.close))
+              child: const Icon(Icons.close)),
+          const SizedBox(
+            width: 10,
+          ),
+          ElevatedButton(
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
+              onPressed: () async {
+                //_onLoading();
+                Friend friend = (await fetchSingleFriend(http.Client(), trade.senderId))[0];
+                final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TradeSelectScreen(
+                              friend: friend,
+                              trade: Trade(
+                                  senderId: trade.senderId,
+                                  receiverId: trade.receiverId,
+                                  sender: !trade.sender,
+                                  senderStickers: trade.receiverStickers,
+                                  receiverStickers: trade.senderStickers,
+                                  receiverName: trade.receiverName),
+                            )));
+                print('ondaroos');
+                print("result $result pogunt");
+                if (result == 'sent') {
+                  tradeResponse(context, trade, "counter");
+                }
+              },
+              child: const Icon(Icons.refresh)),
+        ],
+      );
+    } else if ((trade.tradeStatus == 1) && (trade.sender == true)) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(trade.statusString()),
+          ElevatedButton(
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.red)),
+              onPressed: () {
+                _onLoading();
+                tradeResponse(context, trade, "cancel").then((value) {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (c, a1, a2) => Nav('Trade'),
+                      transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+                      transitionDuration: const Duration(milliseconds: 0),
+                    ),
+                  );
+                });
+              },
+              child: const Text("Cancel"))
         ],
       );
     } else {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [Text(trade.statusString())],
-      );
+      return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text(trade.statusString()),
+      ]);
     }
   }
 
@@ -140,6 +195,7 @@ Widget stickerCard(List trades, String type, bool sender) {
 
 Future<void> tradeResponse(BuildContext context, Trade trade, String type) async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
+  print("traderesponse was called");
   String url = (tradeResponseURL);
   String message = "Error";
   int status = 0;
@@ -152,6 +208,8 @@ Future<void> tradeResponse(BuildContext context, Trade trade, String type) async
   } else if (type == 'counter') {
     status = 4;
     message = "Trade countered successfully";
+  } else if (type == 'cancel') {
+    status = 6;
   } else {
     status = 0;
     message = "Error";

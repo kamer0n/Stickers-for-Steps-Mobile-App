@@ -34,12 +34,12 @@ TODO : make chat room for trading potentially
 
 TODO : trading
 
-- [ ] asynchronous trading
-- [ ] server end points
+- [x] asynchronous trading
+- [x] server end points
 - [x] receive trades
-- [ ] send trades
+- [x] send trades
 - [x] accept trades
-- [ ] error handling
+- [x] error handling
 
 TODO : useful error messages
 
@@ -50,7 +50,7 @@ TODO : fix new sticker display
 
 - [x] potentially add it as a pop up with a delay
 - [ ] show all stickers received that day
-- [ ] some sort of animation
+- [x] some sort of animation
 
 TODO : add all stickers
 

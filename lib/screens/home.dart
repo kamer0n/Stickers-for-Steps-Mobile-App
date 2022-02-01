@@ -180,7 +180,7 @@ Widget stickerDialog(picture) {
       accuracy: ScratchAccuracy.high,
       threshold: 30,
       color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
-      onThreshold: () => (scratchKey.currentState?.reveal()),
+      onThreshold: () => (scratchKey.currentState?.reveal(duration: const Duration(milliseconds: 1000))),
       child: Container(
         decoration: BoxDecoration(color: Colors.white10, borderRadius: BorderRadius.circular(4.0)),
         child: SizedBox(
@@ -197,6 +197,8 @@ Widget stickerDialog(picture) {
                   Image.memory(
                     base64.decode(utf8.decode(picture.picture)),
                     alignment: Alignment.center,
+                    width: 128,
+                    height: 128,
                   ),
                   Text(picture.desc, style: TextStyle(fontStyle: FontStyle.italic, color: Colors.grey[500])),
                   Text(picture.rarityString()),

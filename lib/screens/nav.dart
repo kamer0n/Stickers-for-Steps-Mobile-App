@@ -54,7 +54,7 @@ class _NavState extends State<Nav> {
       _currentIndex = 4;
     }
     return Scaffold(
-        appBar: _appBar(),
+        appBar: _currentIndex == 2 ? null : _appBar(),
         bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             currentIndex: _currentIndex,

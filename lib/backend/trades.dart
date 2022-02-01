@@ -17,10 +17,10 @@ List<Trade> parseTrades(String responseBody) {
   List<Trade> trades = [];
   final parsed = jsonDecode(responseBody);
   if (parsed['sent'].length != 0) {
-    trades.add((parsed['sent'].map<Trade>((json) => Trade.fromJson(json, sender_: true)).toList())[0]);
+    trades.addAll((parsed['sent'].map<Trade>((json) => Trade.fromJson(json, sender_: true)).toList()));
   }
   if (parsed['received'].length != 0) {
-    trades.add((parsed['received'].map<Trade>((json) => Trade.fromJson(json, sender_: false)).toList())[0]);
+    trades.addAll((parsed['received'].map<Trade>((json) => Trade.fromJson(json, sender_: false)).toList()));
   }
   return trades;
 }
@@ -37,7 +37,7 @@ class Trade {
   final int? tradeStatus;
   List<dynamic>? senderStickers;
   List<dynamic>? receiverStickers;
-  bool? sender;
+  bool sender;
 
   Trade({
     this.tradeId,
@@ -49,7 +49,7 @@ class Trade {
     this.tradeStatus,
     this.senderStickers,
     this.receiverStickers,
-    this.sender,
+    required this.sender,
   });
 
   factory Trade.fromJson(Map<String, dynamic> json, {required bool sender_}) {
@@ -76,6 +76,8 @@ class Trade {
       return "This trade has been declined";
     } else if (tradeStatus == 4) {
       return "This trade has been counteroffered";
+    } else if (tradeStatus == 6) {
+      return "This trade has been cancelled";
     } else {
       return "This trade is now invalid";
     }

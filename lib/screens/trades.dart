@@ -6,6 +6,7 @@ import 'package:darkmodetoggle/backend/trades.dart';
 import 'package:darkmodetoggle/screens/trade_response.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TradeScreen extends StatefulWidget {
   const TradeScreen({Key? key}) : super(key: key);
@@ -14,9 +15,18 @@ class TradeScreen extends StatefulWidget {
 }
 
 class _TradeScreenState extends State<TradeScreen> {
+  bool isSender = true;
+  bool isReceiver = true;
+  bool isAccepted = false;
+  bool isDeclined = false;
+  bool isCountered = false;
+  bool isInvalid = false;
+  bool isCancelled = false;
+  List<Trade> trades = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: _appBar(),
         body: FutureBuilder<List<dynamic>>(
           future: getData(),
           builder: (context, snapshot) {
@@ -27,7 +37,43 @@ class _TradeScreenState extends State<TradeScreen> {
                 child: Text('An error has occurred!'),
               );
             } else if (snapshot.hasData) {
-              List<Trade> trades = snapshot.data! as List<Trade>;
+              List<Trade> _trades = snapshot.data! as List<Trade>;
+              trades = [];
+
+              if (isSender) {
+                trades.addAll(_trades
+                    .where((i) => i.sender && (i.tradeStatus != 3 && i.tradeStatus != 4 && i.tradeStatus != 6))
+                    .toList());
+              }
+              if (isReceiver) {
+                trades.addAll(_trades
+                    .where((i) => i.sender == false && (i.tradeStatus != 3 && i.tradeStatus != 4 && i.tradeStatus != 6))
+                    .toList());
+              }
+              if (isAccepted) {
+                trades.addAll(_trades.where((i) => i.tradeStatus == 2).toList());
+              }
+              if (isDeclined) {
+                trades.addAll(_trades.where((i) => i.tradeStatus == 3).toList());
+              }
+              if (isCountered) {
+                trades.addAll(_trades.where((i) => i.tradeStatus == 4).toList());
+              }
+              if (isInvalid) {
+                trades.addAll(_trades.where((i) => i.tradeStatus! < 1 && i.tradeStatus! > 4).toList());
+              }
+              if (isCancelled) {
+                trades.addAll(_trades.where((i) => i.tradeStatus == 6).toList());
+              }
+              if (!isSender &&
+                  !isReceiver &&
+                  !isAccepted &&
+                  !isDeclined &&
+                  !isCountered &&
+                  !isInvalid &&
+                  !isCancelled) {
+                trades = _trades;
+              }
               return ListView.builder(
                   itemCount: trades.length,
                   itemBuilder: (context, index) {
@@ -75,10 +121,147 @@ class _TradeScreenState extends State<TradeScreen> {
       ),
     );
   }
+
+  AppBar _appBar() {
+    return AppBar(
+      leading: InkWell(
+        child: const Icon(Icons.logout),
+        onTap: () async {
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          preferences.clear();
+          Navigator.popUntil(context, (route) => false);
+          Navigator.pushNamed(context, "/signin");
+        },
+      ),
+      title: const Text(
+        "Stickers for Steps",
+      ),
+      backgroundColor: Colors.black87,
+      centerTitle: true,
+      actions: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(right: 20.0),
+          child: PopupMenuButton(
+            padding: const EdgeInsets.all(2.0),
+            child: const Icon(Icons.filter_alt_outlined),
+            offset: Offset.fromDirection(1.5, 50),
+            itemBuilder: (context) {
+              return popUpItems();
+            },
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  List<PopupMenuItem<String>> popUpItems() {
+    return [
+      PopupMenuItem(
+        value: 'sent',
+        child: StatefulBuilder(builder: (_context, _setState) {
+          return CheckboxListTile(
+            activeColor: Colors.blue,
+            value: isSender,
+            onChanged: (value) => _setState(() {
+              isSender = value!;
+              setState(() {});
+            }),
+            title: const Text('Sent'),
+          );
+        }),
+      ),
+      PopupMenuItem(
+        value: 'received',
+        child: StatefulBuilder(builder: (_context, _setState) {
+          return CheckboxListTile(
+            activeColor: Colors.blue,
+            value: isReceiver,
+            onChanged: (value) => _setState(() {
+              isReceiver = value!;
+              setState(() {});
+            }),
+            title: const Text('Received'),
+          );
+        }),
+      ),
+      PopupMenuItem(
+        value: 'accepted',
+        child: StatefulBuilder(builder: (_context, _setState) {
+          return CheckboxListTile(
+            activeColor: Colors.blue,
+            value: isAccepted,
+            onChanged: (value) => _setState(() {
+              isAccepted = value!;
+              setState(() {});
+            }),
+            title: const Text('Accepted'),
+          );
+        }),
+      ),
+      PopupMenuItem(
+        value: 'declined',
+        child: StatefulBuilder(builder: (_context, _setState) {
+          return CheckboxListTile(
+            activeColor: Colors.blue,
+            value: isDeclined,
+            onChanged: (value) => _setState(() {
+              isDeclined = value!;
+              setState(() {});
+            }),
+            title: const Text('Declined'),
+          );
+        }),
+      ),
+      PopupMenuItem(
+        value: 'countered',
+        child: StatefulBuilder(builder: (_context, _setState) {
+          return CheckboxListTile(
+            activeColor: Colors.blue,
+            value: isCountered,
+            onChanged: (value) => _setState(() {
+              isCountered = value!;
+              setState(() {});
+            }),
+            title: const Text('Countered'),
+          );
+        }),
+      ),
+      PopupMenuItem(
+        value: 'invalid',
+        child: StatefulBuilder(builder: (_context, _setState) {
+          return CheckboxListTile(
+            activeColor: Colors.blue,
+            value: isInvalid,
+            onChanged: (value) => _setState(() {
+              isInvalid = value!;
+              setState(() {});
+            }),
+            title: const Text('Invalid'),
+          );
+        }),
+      ),
+      PopupMenuItem(
+        value: 'cancelled',
+        child: StatefulBuilder(builder: (_context, _setState) {
+          return CheckboxListTile(
+            activeColor: Colors.blue,
+            value: isCancelled,
+            onChanged: (value) => _setState(() {
+              isCancelled = value!;
+              setState(() {});
+            }),
+            title: const Text('Cancelled'),
+          );
+        }),
+      ),
+    ];
+  }
 }
 
 Widget displayTradeGrid(Trade trade, String sOrR, {bool full = false}) {
-  int end = 2;
+  int sendEnd = 2;
+  int recvEnd = 2;
   TextStyle tS = const TextStyle(fontSize: 12);
   List<Color> colors = [Colors.red, Colors.blue];
   List<Widget> info = [
@@ -98,12 +281,24 @@ Widget displayTradeGrid(Trade trade, String sOrR, {bool full = false}) {
     info = info.reversed.toList();
     colors = colors.reversed.toList();
   }
-  if (full && sOrR == 's') {
-    end = trade.senderStickers!.length;
-  } else if (full && sOrR == 'r') {
-    end = trade.receiverStickers!.length;
-  } else {
-    end = 2;
+  if (sOrR == 's') {
+    try {
+      sendEnd = trade.senderStickers!.length;
+      if (sendEnd > 2) {
+        sendEnd = 2;
+      }
+    } catch (e) {
+      sendEnd = 1;
+    }
+  } else if (sOrR == 'r') {
+    try {
+      recvEnd = trade.receiverStickers!.length;
+      if (recvEnd > 2) {
+        recvEnd = 2;
+      }
+    } catch (e) {
+      recvEnd = 1;
+    }
   }
   if (sOrR == 's') {
     return Row(
@@ -113,7 +308,8 @@ Widget displayTradeGrid(Trade trade, String sOrR, {bool full = false}) {
         SizedBox(
             height: 110,
             width: 300,
-            child: Card(color: colors[0], child: stickersAsGrid(trade.senderStickers?.sublist(0, end), trade: true))),
+            child:
+                Card(color: colors[0], child: stickersAsGrid(trade.senderStickers?.sublist(0, sendEnd), trade: true))),
       ],
     );
   } else {
@@ -124,7 +320,8 @@ Widget displayTradeGrid(Trade trade, String sOrR, {bool full = false}) {
         SizedBox(
             height: 110,
             width: 300,
-            child: Card(color: colors[1], child: stickersAsGrid(trade.receiverStickers?.sublist(0, end), trade: true))),
+            child: Card(
+                color: colors[1], child: stickersAsGrid(trade.receiverStickers?.sublist(0, recvEnd), trade: true))),
       ],
     );
   }

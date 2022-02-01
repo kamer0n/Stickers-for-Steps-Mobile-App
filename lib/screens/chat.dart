@@ -19,19 +19,37 @@ class _ChatScreenState extends State<ChatScreen> {
   late Channel channel;
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: getChannel(context),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          //List<dynamic> data = snapshot.data as List;
-          return StreamChannel(
-            channel: channel,
-            child: const ChannelPage(),
-          );
-        } else {
-          return const Center(child: CircularProgressIndicator());
-        }
-      },
+    return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          child: const Icon(Icons.logout),
+          onTap: () async {
+            SharedPreferences preferences = await SharedPreferences.getInstance();
+            preferences.clear();
+            Navigator.popUntil(context, (route) => false);
+            Navigator.pushNamed(context, "/signin");
+          },
+        ),
+        title: const Text(
+          "Stickers for Steps",
+        ),
+        backgroundColor: Colors.black87,
+        centerTitle: true,
+      ),
+      body: FutureBuilder(
+        future: getChannel(context),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            //List<dynamic> data = snapshot.data as List;
+            return StreamChannel(
+              channel: channel,
+              child: const ChannelPage(),
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
     );
   }
 

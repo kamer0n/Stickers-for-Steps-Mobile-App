@@ -15,6 +15,7 @@ Widget stickersAsGrid(var snapshot, {bool trade = false}) {
         title: '',
         desc: '',
         rarity: 1,
+        quantity: 0,
         picture: Uint8List.fromList(utf8.encode("R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="))));
     quantitySize = 23;
     titleSize = 9;
@@ -34,30 +35,33 @@ Widget stickersAsGrid(var snapshot, {bool trade = false}) {
         var picture = snapshot[index];
         if (picture.locked != true) {
           if ((index < 2) || (trade == false)) {
-            return Card(
-              color: Colors.grey[900],
-              shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.grey[800]!, width: 3.0), borderRadius: BorderRadius.circular(4.0)),
-              child: InkWell(
-                splashColor: Colors.blue.withAlpha(30),
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return stickerDialog(picture);
-                      });
-                },
-                child: Stack(children: <Widget>[
-                  Align(
-                      child: Image.memory(
-                    base64.decode(utf8.decode(picture.picture)),
-                    alignment: Alignment.center,
-                  )),
-                  alignQuantity(picture.quantity.toString(), Alignment.topRight, quantitySize),
-                  alignQuantity(picture.title, Alignment.bottomCenter, titleSize)
-                ]),
-              ),
-            );
+            return picture.quantity != 0
+                ? Card(
+                    color: Colors.grey[900],
+                    shape: RoundedRectangleBorder(
+                        side: BorderSide(color: Colors.grey[800]!, width: 3.0),
+                        borderRadius: BorderRadius.circular(4.0)),
+                    child: InkWell(
+                      splashColor: Colors.blue.withAlpha(30),
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return stickerDialog(picture);
+                            });
+                      },
+                      child: Stack(children: <Widget>[
+                        Align(
+                            child: Image.memory(
+                          base64.decode(utf8.decode(picture.picture)),
+                          alignment: Alignment.center,
+                        )),
+                        alignQuantity(picture.quantity.toString(), Alignment.topRight, quantitySize),
+                        alignQuantity(picture.title, Alignment.bottomCenter, titleSize)
+                      ]),
+                    ),
+                  )
+                : Container();
           } else if (index == 2) {
             return Card(
               color: Colors.grey[900],

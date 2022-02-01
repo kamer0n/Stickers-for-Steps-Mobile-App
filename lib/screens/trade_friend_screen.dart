@@ -16,13 +16,11 @@ class TradeFriendScreen extends StatefulWidget {
 }
 
 class _TradeFriendScreenState extends State<TradeFriendScreen> {
-  //List<Sticker> selected = [];
   @override
   Widget build(BuildContext context) {
+    print("selected currently ${widget.selected}");
     print("trade in tradefriendscreen ${widget.trade}");
-    return
-        //physics: const AlwaysScrollableScrollPhysics(),
-        FutureBuilder<List<Collection>>(
+    return FutureBuilder<List<Collection>>(
       future: fetchCollections(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {

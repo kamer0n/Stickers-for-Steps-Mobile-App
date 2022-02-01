@@ -15,7 +15,7 @@ class FriendTradeStickerList extends StatefulWidget {
   List<Collection> collections;
   String name;
   bool? trade;
-  List<Sticker> selected;
+  List<Sticker> selected = [];
 
   FriendTradeStickerList(this.collections, this.name, this.selected, {Key? key, this.trade}) : super(key: key);
   @override
@@ -26,6 +26,7 @@ class _FriendTradeListState extends State<FriendTradeStickerList> {
   @override
   Widget build(BuildContext context) {
     List<Sticker> localSelected = <Sticker>[];
+    localSelected.addAll(widget.selected);
     print('trade: ${widget.trade}');
     return Scaffold(
       appBar: AppBar(

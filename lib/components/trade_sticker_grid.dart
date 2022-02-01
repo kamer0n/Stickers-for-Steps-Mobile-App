@@ -38,68 +38,73 @@ class _TradeStickerGridState extends State<TradeStickerGrid> {
       body: ListView(
         children: [
           Column(children: [
-            GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisSpacing: 0,
-                mainAxisSpacing: 0,
-                crossAxisCount: 3,
-              ),
-              shrinkWrap: true,
-              physics: const PageScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              itemCount: widget.snapshot.length,
-              itemBuilder: (context, index) {
-                var picture = widget.snapshot[index];
-                if (picture.locked != true) {
-                  for (Sticker item in widget.selected) {
-                    if (item.id == picture.id) {
-                      cardCol = Colors.green;
-                      if (!strange.contains(item.id)) {
-                        strange.add(item.id);
-                      }
-                    } else {
-                      cardCol = Colors.grey[900]!;
-                      //strange.remove(item.id);
-                    }
-                  }
-                  return GestureDetector(
-                    onTap: () {
-                      print(widget.selected.contains(picture));
-                      if (widget.selected.contains(picture) || strange.contains(picture.id)) {
-                        widget.selected.removeWhere((item) => picture.id == item.id);
-                        strange.remove(picture.id);
+            StatefulBuilder(
+              builder: (_context, _setState) => GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisSpacing: 0,
+                  mainAxisSpacing: 0,
+                  crossAxisCount: 3,
+                ),
+                shrinkWrap: true,
+                physics: const PageScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                itemCount: widget.snapshot.length,
+                itemBuilder: (context, index) {
+                  var picture = widget.snapshot[index];
+                  if (picture.locked != true) {
+                    for (Sticker item in widget.selected) {
+                      if (item.id == picture.id) {
+                        cardCol = Colors.green;
+                        if (!strange.contains(item.id)) {
+                          strange.add(item.id);
+                        }
                       } else {
-                        widget.selected.add(picture);
+                        cardCol = Colors.grey[900]!;
+                        //strange.remove(item.id);
                       }
-                      setState(() {});
-                      print(widget.selected);
-                    },
-                    child: Card(
-                      color: colorPick(picture),
-                      shape: RoundedRectangleBorder(
-                          side: BorderSide(color: Colors.grey[800]!, width: 3.0),
-                          borderRadius: BorderRadius.circular(4.0)),
-                      child: Stack(children: <Widget>[
-                        Align(
-                            child: Image.memory(
-                          base64.decode(utf8.decode(picture.picture)),
-                          alignment: Alignment.center,
-                        )),
-                        alignQuantity(picture.quantity.toString(), Alignment.topRight, quantitySize),
-                        alignQuantity(picture.title, Alignment.bottomCenter, titleSize),
-                      ]),
-                    ),
-                  );
-                } else {
-                  return Align(
-                      child: Image.memory(
-                    base64.decode(utf8.decode(picture.picture)),
-                    color: Colors.black,
-                    alignment: Alignment.center,
-                  ));
-                }
-                //return Image.memory(base64.decode(utf8.decode(snapshot.data![index].picture)), scale: 2);
-              },
+                    }
+                    return GestureDetector(
+                      onTap: () {
+                        print(widget.selected.contains(picture));
+                        print(picture.quantity);
+                        if (picture.quantity > 1) {
+                          if (widget.selected.contains(picture) || strange.contains(picture.id)) {
+                            widget.selected.removeWhere((item) => picture.id == item.id);
+                            strange.remove(picture.id);
+                          } else {
+                            widget.selected.add(picture);
+                          }
+                        }
+                        _setState(() {});
+                        print(widget.selected);
+                      },
+                      child: Card(
+                        color: colorPick(picture),
+                        shape: RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.grey[800]!, width: 3.0),
+                            borderRadius: BorderRadius.circular(4.0)),
+                        child: Stack(children: <Widget>[
+                          Align(
+                              child: Image.memory(
+                            base64.decode(utf8.decode(picture.picture)),
+                            alignment: Alignment.center,
+                          )),
+                          alignQuantity(picture.quantity.toString(), Alignment.topRight, quantitySize),
+                          alignQuantity(picture.title, Alignment.bottomCenter, titleSize),
+                        ]),
+                      ),
+                    );
+                  } else {
+                    return Align(
+                        child: Image.memory(
+                      base64.decode(utf8.decode(picture.picture)),
+                      color: Colors.black,
+                      alignment: Alignment.center,
+                    ));
+                  }
+                  //return Image.memory(base64.decode(utf8.decode(snapshot.data![index].picture)), scale: 2);
+                },
+              ),
             ),
           ])
         ],
@@ -112,6 +117,8 @@ class _TradeStickerGridState extends State<TradeStickerGrid> {
     if (strange.contains(item.id)) {
       cardCol = Colors.green;
       //strange.add(item.id);
+    } else if (item.quantity! <= 1) {
+      cardCol = Colors.grey[500]!;
     } else {
       cardCol = Colors.grey[900]!;
       //strange.remove(item.id);
