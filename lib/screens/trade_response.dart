@@ -107,7 +107,7 @@ class _TradeResponseScreenState extends State<TradeResponseScreen> {
                   tradeResponse(context, trade, "counter");
                 }
               },
-              child: const Icon(Icons.refresh)),
+              child: const Icon(Icons.edit)),
         ],
       );
     } else if ((trade.tradeStatus == 1) && (trade.sender == true)) {

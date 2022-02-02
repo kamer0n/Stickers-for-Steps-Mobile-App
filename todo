@@ -34,6 +34,8 @@ TODO : make chat room for trading potentially
 
 TODO : trading
 
+tracking widget
+
 - [x] asynchronous trading
 - [x] server end points
 - [x] receive trades
@@ -75,3 +77,8 @@ TODO : change app name from darkmodetoggle
 TODO : attempt to make weekly progress reports - what did this mean
 
 TODO : secret stickers super extension
+
+TODO : dissertation prep
+
+- [ ] state transition diagram
+- [ ] planning evaluation

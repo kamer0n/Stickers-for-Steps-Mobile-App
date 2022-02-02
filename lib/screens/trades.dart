@@ -3,6 +3,7 @@ import 'package:darkmodetoggle/backend/send_trade_friend.dart';
 import 'package:darkmodetoggle/backend/sticker.dart';
 import 'package:darkmodetoggle/backend/stickers_as_grid.dart';
 import 'package:darkmodetoggle/backend/trades.dart';
+import 'package:darkmodetoggle/screens/nav.dart';
 import 'package:darkmodetoggle/screens/trade_response.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -27,72 +28,86 @@ class _TradeScreenState extends State<TradeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: _appBar(),
-        body: FutureBuilder<List<dynamic>>(
-          future: getData(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) {
-              print(snapshot.error);
-              print('snapshot error in tradescreen');
-              return const Center(
-                child: Text('An error has occurred!'),
-              );
-            } else if (snapshot.hasData) {
-              List<Trade> _trades = snapshot.data! as List<Trade>;
-              trades = [];
-
-              if (isSender) {
-                trades.addAll(_trades
-                    .where((i) =>
-                        i.sender &&
-                        (i.tradeStatus != 3 && i.tradeStatus != 4 && i.tradeStatus != 5 && i.tradeStatus != 6))
-                    .toList());
-              }
-              if (isReceiver) {
-                trades.addAll(_trades
-                    .where((i) =>
-                        i.sender == false &&
-                        (i.tradeStatus != 3 && i.tradeStatus != 4 && i.tradeStatus != 5 && i.tradeStatus != 6))
-                    .toList());
-              }
-              if (isAccepted) {
-                trades.addAll(_trades.where((i) => i.tradeStatus == 2).toList());
-              }
-              if (isDeclined) {
-                trades.addAll(_trades.where((i) => i.tradeStatus == 3).toList());
-              }
-              if (isCountered) {
-                trades.addAll(_trades.where((i) => i.tradeStatus == 4).toList());
-              }
-              if (isInvalid) {
-                trades.addAll(_trades.where((i) => i.tradeStatus! < 1 && i.tradeStatus! > 4).toList());
-              }
-              if (isCancelled) {
-                trades.addAll(_trades.where((i) => i.tradeStatus == 6).toList());
-              }
-              if (!isSender &&
-                  !isReceiver &&
-                  !isAccepted &&
-                  !isDeclined &&
-                  !isCountered &&
-                  !isInvalid &&
-                  !isCancelled) {
-                trades = _trades;
-              }
-              return ListView.builder(
-                  itemCount: trades.length,
-                  itemBuilder: (context, index) {
-                    if (trades[index].tradeStatus == 1) {
-                      return tradeCard(context, trades[index]);
-                    } else if (trades[index].tradeStatus == 2) {
-                      return tradeCard(context, trades[index], color: (Colors.lightGreen[700])!);
-                    } else {
-                      return tradeCard(context, trades[index], color: (Colors.red[300])!);
-                    }
-                  });
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
+        body: RefreshIndicator(
+          onRefresh: () {
+            Navigator.pop(context);
+            return Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (c, a1, a2) => Nav('Trade'),
+                transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+                transitionDuration: const Duration(milliseconds: 0),
+              ),
+            );
+            //throw e;
           },
+          child: FutureBuilder<List<dynamic>>(
+            future: getData(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                print(snapshot.error);
+                print('snapshot error in tradescreen');
+                return const Center(
+                  child: Text('An error has occurred!'),
+                );
+              } else if (snapshot.hasData) {
+                List<Trade> _trades = snapshot.data! as List<Trade>;
+                trades = [];
+
+                if (isSender) {
+                  trades.addAll(_trades
+                      .where((i) =>
+                          i.sender &&
+                          (i.tradeStatus != 3 && i.tradeStatus != 4 && i.tradeStatus != 5 && i.tradeStatus != 6))
+                      .toList());
+                }
+                if (isReceiver) {
+                  trades.addAll(_trades
+                      .where((i) =>
+                          i.sender == false &&
+                          (i.tradeStatus != 3 && i.tradeStatus != 4 && i.tradeStatus != 5 && i.tradeStatus != 6))
+                      .toList());
+                }
+                if (isAccepted) {
+                  trades.addAll(_trades.where((i) => i.tradeStatus == 2).toList());
+                }
+                if (isDeclined) {
+                  trades.addAll(_trades.where((i) => i.tradeStatus == 3).toList());
+                }
+                if (isCountered) {
+                  trades.addAll(_trades.where((i) => i.tradeStatus == 4).toList());
+                }
+                if (isInvalid) {
+                  trades.addAll(_trades.where((i) => i.tradeStatus! < 1 && i.tradeStatus! > 4).toList());
+                }
+                if (isCancelled) {
+                  trades.addAll(_trades.where((i) => i.tradeStatus == 6).toList());
+                }
+                if (!isSender &&
+                    !isReceiver &&
+                    !isAccepted &&
+                    !isDeclined &&
+                    !isCountered &&
+                    !isInvalid &&
+                    !isCancelled) {
+                  trades = _trades;
+                }
+                return ListView.builder(
+                    itemCount: trades.length,
+                    itemBuilder: (context, index) {
+                      if (trades[index].tradeStatus == 1) {
+                        return tradeCard(context, trades[index]);
+                      } else if (trades[index].tradeStatus == 2) {
+                        return tradeCard(context, trades[index], color: (Colors.lightGreen[700])!);
+                      } else {
+                        return tradeCard(context, trades[index], color: (Colors.red[300])!);
+                      }
+                    });
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           splashColor: Colors.blue,

@@ -62,56 +62,70 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder(
-          future: targetAndSteps(),
-          builder: (context, snapshot) {
-            Map _data = {};
-            if (snapshot.hasData) {
-              _data = snapshot.data! as Map;
-              if (_data['sticker'] != 0) {
-                _newsticker = _data['sticker'][0];
+      body: RefreshIndicator(
+        onRefresh: () {
+          Navigator.pop(context);
+          return Navigator.push(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (c, a1, a2) => Nav('Home'),
+              transitionsBuilder: (c, anim, a2, child) => FadeTransition(opacity: anim, child: child),
+              transitionDuration: const Duration(milliseconds: 0),
+            ),
+          );
+          //throw e;
+        },
+        child: FutureBuilder(
+            future: targetAndSteps(),
+            builder: (context, snapshot) {
+              Map _data = {};
+              if (snapshot.hasData) {
+                _data = snapshot.data! as Map;
+                if (_data['sticker'] != 0) {
+                  _newsticker = _data['sticker'][0];
+                }
+                return ListView(shrinkWrap: false, children: [
+                  SizedBox(
+                      height: 300,
+                      width: 350,
+                      child: Card(
+                          child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+                        const Text(
+                          "Today's Progress",
+                          textScaleFactor: 2,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          height: 100,
+                        ),
+                        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                          StepsProgress(
+                            _data['steps'],
+                            _data['target'],
+                          ),
+                          Column(
+                            children: [
+                              Text(
+                                "Current steps: " + _data['steps'].toString(),
+                                textScaleFactor: 1.14,
+                              ),
+                              Text(
+                                "Target steps: " + _data['target'].toString(),
+                                textScaleFactor: 1.14,
+                              ),
+                            ],
+                          ),
+                        ])
+                      ]))),
+                  newPack(_data['sticker']),
+                ]);
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
               }
-              return ListView(shrinkWrap: false, children: [
-                SizedBox(
-                    height: 300,
-                    width: 350,
-                    child: Card(
-                        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                      const Text(
-                        "Today's Progress",
-                        textScaleFactor: 2,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(
-                        height: 100,
-                      ),
-                      Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                        StepsProgress(
-                          _data['steps'],
-                          _data['target'],
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              "Current steps: " + _data['steps'].toString(),
-                              textScaleFactor: 1.14,
-                            ),
-                            Text(
-                              "Target steps: " + _data['target'].toString(),
-                              textScaleFactor: 1.14,
-                            ),
-                          ],
-                        ),
-                      ])
-                    ]))),
-                newPack(_data['sticker']),
-              ]);
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          }),
+            }),
+      ),
     );
   }
 
