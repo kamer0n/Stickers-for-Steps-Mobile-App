@@ -50,19 +50,6 @@ class _SignInState extends State<SignIn> {
                           textStyle: const TextStyle(fontSize: 27, color: Colors.white, letterSpacing: 1)),
                     ),
                     const SizedBox(
-                      height: 5,
-                    ),
-                    SizedBox(
-                      width: 180,
-                      child: Text(
-                        "------------",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.roboto(
-                          textStyle: const TextStyle(color: Colors.white54, letterSpacing: 0.6, fontSize: 11),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
                       height: 40,
                     ),
                     Text(

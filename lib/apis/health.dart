@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:health/health.dart';
 
 import 'dart:convert';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:darkmodetoggle/apis/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,13 +24,22 @@ Future<int> fetchSteps() async {
   ];
 
   bool accessWasGranted = await health.requestAuthorization(types);
-
   int steps = 0;
+
+  if (Platform.isAndroid) {
+    final permissionStatus = Permission.activityRecognition.request();
+    if (await permissionStatus.isDenied || await permissionStatus.isPermanentlyDenied) {}
+  }
 
   if (accessWasGranted) {
     try {
       // fetch new data
       List<HealthDataPoint> healthData = await health.getHealthDataFromTypes(start, end, types);
+      health.getHealthDataFromTypes(start, end, types).then((value) {
+        print(value);
+        print('yeet');
+      });
+      print("healthData $healthData");
 
       // save all the new data points
       _healthDataList.addAll(healthData);
