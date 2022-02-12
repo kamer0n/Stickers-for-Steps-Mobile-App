@@ -35,11 +35,7 @@ Future<int> fetchSteps() async {
     try {
       // fetch new data
       List<HealthDataPoint> healthData = await health.getHealthDataFromTypes(start, end, types);
-      health.getHealthDataFromTypes(start, end, types).then((value) {
-        print(value);
-        print('yeet');
-      });
-      print("healthData $healthData");
+      health.getHealthDataFromTypes(start, end, types).then((value) {});
 
       // save all the new data points
       _healthDataList.addAll(healthData);

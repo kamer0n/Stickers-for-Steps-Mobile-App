@@ -4,13 +4,13 @@ import 'package:darkmodetoggle/apis/api.dart';
 import 'package:darkmodetoggle/backend/friends.dart';
 import 'package:darkmodetoggle/screens/friend_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:matomo/matomo.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-class ChatScreen extends StatefulWidget {
+class ChatScreen extends TraceableStatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
-
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -19,6 +19,7 @@ class _ChatScreenState extends State<ChatScreen> {
   late Channel channel;
   @override
   Widget build(BuildContext context) {
+    MatomoTracker.trackScreen(context, 'visited chat');
     return Scaffold(
       appBar: AppBar(
         leading: InkWell(

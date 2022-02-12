@@ -2,9 +2,10 @@ import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/backend/sticker.dart';
 import 'package:darkmodetoggle/backend/stickers_as_grid.dart';
 import 'package:flutter/material.dart';
+import 'package:matomo/matomo.dart';
 
 // ignore: must_be_immutable
-class StickerGrid extends StatefulWidget {
+class StickerGrid extends TraceableStatefulWidget {
   Collection collection;
   StickerGrid(this.collection, {Key? key}) : super(key: key);
   @override

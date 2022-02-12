@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/screens/sticker_grid.dart';
 import 'package:flutter/material.dart';
+import 'package:matomo/matomo.dart';
 
 // ignore: must_be_immutable
-class StickerList extends StatefulWidget {
+class StickerList extends TraceableStatefulWidget {
   List<Collection> collections;
 
   StickerList(this.collections, {Key? key}) : super(key: key);

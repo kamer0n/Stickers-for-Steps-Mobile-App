@@ -52,6 +52,7 @@ dependencies:
   stream_chat_flutter: ^3.3.2
   scratcher: ^2.1.0
   permission_handler: ^8.3.0
+  matomo: ^1.1.0
 
 dev_dependencies:
   flutter_test:

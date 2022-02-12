@@ -8,10 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:darkmodetoggle/apis/api.dart';
 import 'package:http/http.dart' as http;
+import 'package:matomo/matomo.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SignIn extends StatefulWidget {
+class SignIn extends TraceableStatefulWidget {
   const SignIn({Key? key}) : super(key: key);
 
   @override

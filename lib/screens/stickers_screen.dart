@@ -1,8 +1,9 @@
 import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/backend/sticker_list.dart';
 import 'package:flutter/material.dart';
+import 'package:matomo/matomo.dart';
 
-class StickerScreen extends StatefulWidget {
+class StickerScreen extends TraceableStatefulWidget {
   const StickerScreen({Key? key}) : super(key: key);
 
   @override

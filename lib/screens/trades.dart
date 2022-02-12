@@ -7,9 +7,10 @@ import 'package:darkmodetoggle/screens/nav.dart';
 import 'package:darkmodetoggle/screens/trade_response.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:matomo/matomo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class TradeScreen extends StatefulWidget {
+class TradeScreen extends TraceableStatefulWidget {
   const TradeScreen({Key? key}) : super(key: key);
   @override
   _TradeScreenState createState() => _TradeScreenState();
@@ -26,6 +27,7 @@ class _TradeScreenState extends State<TradeScreen> {
   List<Trade> trades = [];
   @override
   Widget build(BuildContext context) {
+    MatomoTracker.trackScreen(context, 'visited trade screen');
     return Scaffold(
         appBar: _appBar(),
         body: RefreshIndicator(

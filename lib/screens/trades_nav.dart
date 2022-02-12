@@ -1,8 +1,9 @@
 import 'package:darkmodetoggle/screens/chat.dart';
 import 'package:darkmodetoggle/screens/trades.dart';
 import 'package:flutter/material.dart';
+import 'package:matomo/matomo.dart';
 
-class TradeNav extends StatefulWidget {
+class TradeNav extends TraceableStatefulWidget {
   const TradeNav({Key? key}) : super(key: key);
   @override
   _TradeNavState createState() => _TradeNavState();
@@ -13,8 +14,10 @@ class _TradeNavState extends State<TradeNav> {
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:
+        MatomoTracker.trackScreen(context, 'visited trade from trade nav');
         return const TradeScreen();
       case 1:
+        MatomoTracker.trackScreen(context, 'visited chat from trade nav');
         return const ChatScreen();
       default:
         return const Text("Error");

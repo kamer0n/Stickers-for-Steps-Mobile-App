@@ -3,8 +3,9 @@ import 'package:darkmodetoggle/backend/friends.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:matomo/matomo.dart';
 
-class FriendScreen extends StatefulWidget {
+class FriendScreen extends TraceableStatefulWidget {
   const FriendScreen({Key? key}) : super(key: key);
 
   @override

@@ -15,13 +15,15 @@ import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 import 'package:http/http.dart' as http;
 
+import 'package:matomo/matomo.dart';
+
 void main() {
   runApp(const MaterialApp(
     home: MyApp(),
   ));
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends TraceableStatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
@@ -33,6 +35,7 @@ class _MyAppState extends State<MyApp> {
     '5ceytf5njkme',
     //logLevel: Level.INFO,
   );
+  late String username = '';
 
   @override
   void initState() {

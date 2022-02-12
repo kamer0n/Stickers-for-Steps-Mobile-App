@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:matomo/matomo.dart';
 
 // ignore: must_be_immutable
 class StepsProgress extends StatefulWidget {

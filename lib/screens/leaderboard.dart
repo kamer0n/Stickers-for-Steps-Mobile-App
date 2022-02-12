@@ -2,8 +2,9 @@ import 'package:darkmodetoggle/backend/leaderboard.dart';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:matomo/matomo.dart';
 
-class LeaderboardScreen extends StatefulWidget {
+class LeaderboardScreen extends TraceableStatefulWidget {
   const LeaderboardScreen({Key? key}) : super(key: key);
 
   @override

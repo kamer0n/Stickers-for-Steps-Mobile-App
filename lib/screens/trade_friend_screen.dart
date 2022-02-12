@@ -3,9 +3,10 @@ import 'package:darkmodetoggle/backend/friend_trade_sticker_list.dart';
 import 'package:darkmodetoggle/backend/friends.dart';
 import 'package:darkmodetoggle/backend/sticker.dart';
 import 'package:flutter/material.dart';
+import 'package:matomo/matomo.dart';
 
 // ignore: must_be_immutable
-class TradeFriendScreen extends StatefulWidget {
+class TradeFriendScreen extends TraceableStatefulWidget {
   TradeFriendScreen(this.friend, this.trade, this.selected, {Key? key}) : super(key: key);
   Friend friend;
   bool trade;

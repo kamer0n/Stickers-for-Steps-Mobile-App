@@ -10,9 +10,10 @@ import 'package:darkmodetoggle/backend/trades.dart';
 import 'package:darkmodetoggle/screens/trade_friend_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:matomo/matomo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class TradeSelectScreen extends StatefulWidget {
+class TradeSelectScreen extends TraceableStatefulWidget {
   TradeSelectScreen({Key? key, required this.friend, this.trade}) : super(key: key);
   final Friend friend;
   Trade? trade;

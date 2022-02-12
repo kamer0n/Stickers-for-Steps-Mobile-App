@@ -7,9 +7,11 @@ import 'package:darkmodetoggle/components/progress.dart';
 import 'package:flutter/material.dart';
 
 import 'package:darkmodetoggle/screens/nav.dart';
+import 'package:matomo/matomo.dart';
 import 'package:scratcher/scratcher.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Home extends StatefulWidget {
+class Home extends TraceableStatefulWidget {
   const Home({Key? key}) : super(key: key);
 
   //int screen;
@@ -25,6 +27,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+    _track();
     super.initState();
     /* fetchStepsAndTarget().then((value) {
       setState(() {
@@ -35,6 +38,17 @@ class _HomeState extends State<Home> {
         }
       });
     }); */
+  }
+
+  _track() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    String username = preferences.getString('username')!;
+    await MatomoTracker().initialize(
+      siteId: 1,
+      url: 'https://hitlerpw.matomo.cloud/matomo.php',
+      visitorId: username,
+    );
   }
 
   Future<List<Sticker>> sticker(int id) async {
@@ -174,6 +188,8 @@ class _HomeState extends State<Home> {
     return showDialog(
         context: context,
         builder: (context) {
+          MatomoTracker.trackScreenWithName('Sticker Scratcher', 'user scratched a sticker');
+
           return stickerDialog(sticker);
         });
   }

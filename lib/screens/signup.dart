@@ -7,10 +7,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:darkmodetoggle/apis/api.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:matomo/matomo.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SignUp extends StatefulWidget {
+class SignUp extends TraceableStatefulWidget {
   const SignUp({Key? key}) : super(key: key);
 
   @override

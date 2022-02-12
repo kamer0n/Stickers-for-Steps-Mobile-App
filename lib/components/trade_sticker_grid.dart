@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:darkmodetoggle/backend/align_quantity.dart';
 import 'package:darkmodetoggle/backend/sticker.dart';
 import 'package:flutter/material.dart';
+import 'package:matomo/matomo.dart';
 
-class TradeStickerGrid extends StatefulWidget {
+class TradeStickerGrid extends TraceableStatefulWidget {
   TradeStickerGrid(this.friend, this.snapshot, this.trade, this.selected, this.collection, {Key? key})
       : super(key: key);
   dynamic snapshot;

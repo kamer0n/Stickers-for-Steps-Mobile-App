@@ -5,12 +5,13 @@ import 'package:darkmodetoggle/backend/collection.dart';
 import 'package:darkmodetoggle/backend/sticker.dart';
 import 'package:darkmodetoggle/backend/stickers_as_grid.dart';
 import 'package:flutter/material.dart';
+import 'package:matomo/matomo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:http/http.dart' as http;
 
 // ignore: must_be_immutable
-class StickerSelectScreen extends StatefulWidget {
+class StickerSelectScreen extends TraceableStatefulWidget {
   List<Collection> collections;
   String name;
 
