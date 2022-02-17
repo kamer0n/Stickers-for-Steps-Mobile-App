@@ -55,6 +55,9 @@ dependencies:
   matomo: ^1.1.0
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.9.2"
+
+
   flutter_test:
     sdk: flutter
 
@@ -69,6 +72,13 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "icon-512.png"
+  remove_alpha_ios: true
+
 flutter:
 
   # The following line ensures that the Material Icons font is

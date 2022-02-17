@@ -171,17 +171,17 @@ class _SignUpState extends State<SignUp> {
                                       }
                                       if (_nameController.text.isEmpty) {
                                         scaffoldMessenger
-                                            .showSnackBar(const SnackBar(content: Text("Please Enter Name")));
+                                            .showSnackBar(const SnackBar(content: Text("Please enter a username")));
                                         return;
                                       }
                                       if (!reg.hasMatch(_emailController.text)) {
                                         scaffoldMessenger
-                                            .showSnackBar(const SnackBar(content: Text("Enter Valid Email")));
+                                            .showSnackBar(const SnackBar(content: Text("Please enter a valid email")));
                                         return;
                                       }
                                       if (_passwordController.text.isEmpty || _passwordController.text.length < 6) {
                                         scaffoldMessenger.showSnackBar(
-                                            const SnackBar(content: Text("Password should be min 6 characters")));
+                                            const SnackBar(content: Text("Password should be at least 6 characters")));
                                         return;
                                       }
                                       signup(_nameController.text, _emailController.text, _passwordController.text);
@@ -250,7 +250,7 @@ class _SignUpState extends State<SignUp> {
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json",
-          "Authorization": "TOKEN 99f0855824c3cc4b97e90bfe63027ec88a7439dd"
+          "Authorization": "TOKEN 4d6c53127f964e6dddacc03fd2ad234cb4e2814e"
         },
         body: jsonEncode(data),
         encoding: Encoding.getByName("utf-8"));

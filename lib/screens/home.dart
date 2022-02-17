@@ -41,13 +41,9 @@ class _HomeState extends State<Home> {
   }
 
   _track() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    String username = preferences.getString('username')!;
     await MatomoTracker().initialize(
       siteId: 1,
-      url: 'https://hitlerpw.matomo.cloud/matomo.php',
-      visitorId: username,
+      url: 'https://stickersforstepsxyz.matomo.cloud/matomo.php',
     );
   }
 
@@ -134,6 +130,7 @@ class _HomeState extends State<Home> {
                   newPack(_data['sticker']),
                 ]);
               } else {
+                print(snapshot.data);
                 return const Center(
                   child: CircularProgressIndicator(),
                 );

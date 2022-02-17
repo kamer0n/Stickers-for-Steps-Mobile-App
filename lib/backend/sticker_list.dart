@@ -42,7 +42,7 @@ class _StickerListState extends State<StickerList> {
                             Image.memory(base64.decode(utf8.decode(widget.collections[index].icon))),
                             Text(
                               widget.collections[index].name,
-                              textScaleFactor: 1.5,
+                              textScaleFactor: 1.2,
                               style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ]),

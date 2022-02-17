@@ -51,13 +51,12 @@ TODO : useful error messages
 TODO : fix new sticker display
 
 - [x] potentially add it as a pop up with a delay
-- [ ] show all stickers received that day
 - [x] some sort of animation
 
 TODO : add all stickers
 
 - [x] add form to better upload stickers like rarity desc etc
-- [ ] add stickers into collections
+- [x] add stickers into collections
 
 TODO : wifi check
 
@@ -68,15 +67,6 @@ TODO : stretch goal: profile photos
 
 - [x] create selection of options and just make user pick one
 
-TODO : change S3 server name
-
-- [ ] try and quantify benefits of using Amazon S3
-
-TODO : change app name from darkmodetoggle
-
-TODO : attempt to make weekly progress reports - what did this mean
-
-TODO : secret stickers super extension
 
 TODO : dissertation prep
 
