@@ -1,5 +1,10 @@
 # Stickers for Steps
 
+## About
+
+This is a cross-platform app developed in Flutter and Dart. It connects to the back-end which is also a repo. 
+
+
 ## Build Instructions
 
 - Clone Repo
